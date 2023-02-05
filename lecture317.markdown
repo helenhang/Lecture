@@ -226,9 +226,16 @@ h ( n ) ≤ c ( n , a , n ′ ) + h ( n ′ )
 **我的天啊，AI是不会回去的，state是不会改变的，所以会无限生成state，来叠加，然后看看能不能生成一个对的state**
 
 之前的章节是聚焦在the problem in fully observable, deterministic, static,known environment, solution is a sequence of actions.
-**local search**
 
-Hill climbing
+# optimization
+- choosing the best option from a set of option
+## local search
+- Local search is a search algorithm that maintains a single node and searches by moving to a neighboring node. 
+- This type of algorithm is different from previous types of search that we saw. Whereas in maze solving, for example, we wanted to find the quickest way to the goal, local search is interested in finding the best answer to a question. 
+- Often, local search will bring to an answer that is not optimal but “good enough,” conserving computational power. 
+  ![picture 4](images/bb2c994470431669d21f95ac7c1eb0d00b108c3e732d9fd675b5221788675570.png)  
+
+## Hill climbing
 ```
 function HILL-CLIMBING(problem) returns a state that is a local maximum current←problem.INITIAL
 while true do
@@ -253,4 +260,31 @@ the **steepest ascent**. It terminates when it reaches a “peak” where no nei
 Hill climbing is sometimes called greedy local search because it grabs a good neighbor state without thinking ahead about where to go next. 
 **Stochastic hill climbing** chooses at random from among the uphill moves; 
 **First-choice hill climbing** implements stochastic hill climbing by generating successors randomly until one is generated that is better than the current state.
-Another variant is **random-restart hill climbing**, which adopts the adage, “If at first you don’t succeed, try, try again.” It conducts a series of hill-climbing searches from randomly 
+Another variant is **random-restart hill climbing**, which adopts the adage, “If at first you don’t succeed, try, try again.” It conducts a series of hill-climbing searches from randomly generated initial states, until a goal is found.
+
+**Simulated annealing** 
+```
+function SIMULATED-ANNEALING(problem,schedule) returns a solution state current←problem.INITIAL
+for t = 1 to ∞ do
+T ← schedule(t)
+if T = 0 then return current
+next ← a randomly selected successor of current ∆E←VALUE(current) – VALUE(next)
+∆E = how much better neighbor is than current
+if ∆E > 0 then current ← next
+else current ← next only with probability e−∆E /T
+```
+就是一直选比当前好的state，不选worse state。因为火灾，肯定选择温度更低的地方
+
+**4.2 Local Search in Continuous Spaces**
+One way to deal with a continuous state space is to discretize it. 
+
+
+##Linear Programming
+* minimize a cost function c1x1 + c2x2 +... + cnxn
+* with constraint of form  c1x1 + c2x2 +... + cnxn <= b
+* or of form c1x1 + c2x2 +... + cnxn = b
+* with bounds for each varible l <=xi <=ui
+Inference
+
+maintaining arc-consistency
+* when we make a new assignment to X, calls AC-3, starting with a queue of all arcs(Y,X)

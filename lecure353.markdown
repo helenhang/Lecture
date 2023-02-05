@@ -161,4 +161,9 @@ docker exec -it db1 bash
 ```sql
 CREATE DATABASE mydb;
 USE mydb;
+CREATE TABLE mytable (
+id
+username email PRIMARY KEY
+);
 ```
+relational database 

@@ -60,3 +60,14 @@ Benefit of exeption
   - ![picture 2](images/64205d221ba2be7df4def5124e1c5303d85f63359707fa3e97ecf93a5642c9c7.png)  
 **？？？**
 default means lazy evaluate
+
+# Lab Feb
+polymorphism Primer
+Polynro : the logiic of a method stays the same for different types
+```
+def drop(l)
+```
+implement foldRight or foldLeft
+def foldLeft
+def foldRight
+val 
