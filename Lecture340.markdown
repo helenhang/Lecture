@@ -333,7 +333,7 @@ Benefit of exeption
 **？？？**
 default means lazy evaluate
 
-# Lab Feb
+### Lab Feb 7
 polymorphism Primer
 Polynro : the logiic of a method stays the same for different types
 ```
@@ -343,3 +343,4 @@ implement foldRight or foldLeft
 def foldLeft
 def foldRight
 val 
+

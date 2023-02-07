@@ -118,7 +118,7 @@ mysql:
     	- not allow sql database to access the file system
 
 docker-compose.yml
-```
+```yml
 version: '3'
 services:
 mysql1:
@@ -144,9 +144,12 @@ MySQL:
 mysql -uroot -padmin
 
 more docker-compose.yml
-```
-node1:
+mysql package
+install npm mysql
+use it in code
 
+```yml
+node1:
 mysql1:
 image: mysql:5.7
 container_name: db1
@@ -167,3 +170,78 @@ username email PRIMARY KEY
 );
 ```
 relational database 
+###Lecture Feb 6
+
+测试一个server
+```shell
+docker -exec -it node1_hash
+npx loadtest -n 10 -c 1 -m POST -T 'application/x-www-form-urlencoded'' --data '{"'filename":"test", "data": "test"}' http://localhosthost:8080/save
+# -n 是说同时启动几个client
+#不是npm，而是npx
+#-c concurrency 同时hit几个server，sametime
+#如果-n 10 -c 10,所以同时发动100个request
+
+
+docker attack node1
+```
+next assignment is about fetch + mysql
+
+### MYSQL & Node(1)
+```js
+var mysql = requir('mysql');
+var commection = mysql.createConnection({
+	host : 'mysql1',
+	user: ''root,
+	password: 'admin'
+});
+connection.connect();
+```
+运行2个container？怎么互相访问？不是放在同一个container里面？
+
+Add SQL statements
+```js
+connection.query('', function(
+	error, results, fields){
+		if(error) throw error;
+		console.log('The solution is: ', results);
+	});
+
+```
+How to define your database
+1. MySQL comman
+   1. use the command tool and define table
+2. Write SQL init in your node code
+   ```js
+   app.get('init', ()=>{
+	connetion.query('Create database posts', function(error,results){
+		if(error) console.log(error);
+	}
+
+	)
+   })
+   connection.query('', function(
+	error, results, fields){
+		if(error) throw error;
+		console.log('The solution is: ', results);
+	});
+	
+   ```
+   ```js
+   app.get('init', (req,res)=>{
+	connetion.query('Create database posts', function(error,results){
+		if(error) console.log(error);
+	}
+
+	)
+   })
+    app.post('/greeting', (req,res)=>{
+	connetion.query('Create database posts', function(error,results){
+		if(error) console.log(error);
+	}
+
+	)
+   })
+   ```
+
+
+
