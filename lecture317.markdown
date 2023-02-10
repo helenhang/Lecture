@@ -273,7 +273,7 @@ next ← a randomly selected successor of current ∆E←VALUE(current) – VALU
 if ∆E > 0 then current ← next
 else current ← next only with probability e−∆E /T
 ```
-就是一直选比当前好的state，不选worse state。因为火灾，肯定选择温度更低的地方
+就是一直选比当前好的state，不选worse state。因为火灾，肯定选择温度更低的地方. 又种greedy的感觉
 
 **4.2 Local Search in Continuous Spaces**
 One way to deal with a continuous state space is to discretize it. 
@@ -288,3 +288,22 @@ Inference
 
 maintaining arc-consistency
 * when we make a new assignment to X, calls AC-3, starting with a queue of all arcs(Y,X)
+
+
+#### 约束满足问题（**Constraint satisfaction problem，CSPs**）
+是种数学的问题，其定义为一组物件（object），而这些物件需要满足一些限制或条件。CSPs将其问题中的单元（entities）表示成在变数上有限条件的一组同质（homogeneous）的集合，这类问题透过“约束满足方法”来解决。CSPs是人工智慧和运筹学的热门主题，因为它们公式中的规律，提供了共同基础来分析、解决很多看似不相关的问题。通常约束满足问题具有高度复杂性，需要同时透过启发式搜索和联合搜索的方法，来在合理的时间内解决问题。布林可满足性问题（SAT），可满足性的理论（SMT）和回答集程式设计（ASP）可以算是某种程度上的约束满足问题。
+
+**我的问题**：
+1. CSP能解决什么问题？什么样的问题能简化成数学问题？？我知道local search不能用于single agent的问题。那么CSP更进一步了？一个continuous envirenment的问题中，为什么需要CSP？直接用Local Search来逐步找到最佳值不就好了吗？ CSP是怎么出来的？
+
+
+##### 正式来说，约束满足问题定义为一个三元组
+![picture 5](images/4113e9d4ea9f2cee101a3eddc426d01621ac42122d1224b283c08d2293f424ba.png)  
+解决方法
+定义域有限的约束满足问题通常利用搜索方法来解决。最常用的技术是回溯法（**backtracking**）、约束传递**constraint propagation**，以及局部搜索**local search**的改良。
+
+**回溯法**是一种递回演算法，它保持部分变数的赋值。一开始，所有的变数都还没被赋值。在每一个步骤中，先选取一个变数，并且将所有可能的值依次赋予该变数。对于每一个值，在限制条件下的局部赋值的无矛盾性（**consistency**）都进行检查。在符合无矛盾（consistency）的情况下，就会递回地往下呼叫。当所有的值都试过，演算法则回溯上层。在这个基本回溯演算法中，无矛盾性（consistency）被定义为满足所有的条件限制，且这些条件限制的变数已被赋值。若干回溯变数存在。回溯法提高了检查无矛盾性的效率。回跳法可以使在某些在某些情况中，透过回溯”一个以上的变数“，来省去部分的搜寻。约束学习则借由减少新的条件限制，来避免部分的搜寻。可预见性也常常在回溯法中应用，用来去预期选择一个变数或值的影响，因此常常用来预先判定一个子问题什么时候满足或不满足。约束传递（**Constraint propagation**）技术是用来修饰一个CSP的方法。更精确地说，是一种方法，用来增强一种形式的局部一致性，是一种条件牵连到一组变数或条件限制的一致性。约束传播应用在各个领域。一来，它把问题转化为一个等价但通常是最简单的解决方法。二来，他可以用来验证满足或不满足于问题。一般来说他不保证会发生，但是它总是会发生一些形式的约束传递（Constraint propagation）或某些种类的问题。最有名的惯用的局部一致性是弧协调性，超弧一致性，和路径一致性。最流行的方法是AC-3约束传播演算法，该演算法可以执行弧的一致性。
+
+局部搜索方法是不完全满足的演算法。人们可能找到解决问题的方法，但这方法可能令我们失望。其反复更改变数来改进整个任务，而得以运作。在每一步，要更改少量变数的值，与整体目标数量的增加条件限制以满足的任务。最小冲突演算法是局部搜索演算法和基于特定CSPs原则。在实践中，局部搜索似乎工作当这些变化也受随机选择。整合搜索和局部搜索被开发了，导致混合演算法。
+
+如果一个定值不违反任何的条件限制，我们说这个定值是无矛盾的（consistent）。 如果一个定值包含了所有的变数，我们说这个定值是完备的（complete）。 如果一个定值无矛盾而且完备的，我们说这个定值是一个解（solution），这样的定值就是CSP的解。

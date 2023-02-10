@@ -44,6 +44,8 @@ def dropWhile[A](as: List[A])(f: A => Boolean): List[A] =
 val xs: List[Int] = List(1,2,3,4,5)
 val ex1 = dropWhile(xs)(x => x < 4)
 ```
+
+Scala 编译器通常可以推断出表达式的类型，因此你不必明确地声明它。
 ![picture 6](images/5f79cc5f11d984ada0426565b3daf2398b51d67f3e3919671b4c7166a2e8e53d.png)  
 上面和下面不一样的地方是，一个是dropWhile有两个参数，一个是dropWhile有一个参数，后面又跟了一个函数，一共两个argument list，但是实现起来，是先dropWhile(xs) return一个function，那个function 的参数是f。利用的是curring的原理。
 ![picture 7](images/70ef8beafd43c05beebb42aec34bb35fedd60f65bf3b74b327f1fdf0e367028f.png)  
@@ -162,3 +164,93 @@ sealed trait Either[+E, +A]
 case class Left[+E](value: E) extends Either[E, Nothing]
 case class Right[+A](value: A) extends Either[Nothing, A]
 ```
+
+mid-term next Wed 7:00, no class
+
+Usage Scenarios IV
+* orElse is similar to getOrElse, except that: 
+  - We return another Option if the first is undefined 
+  - This is often useful when we need to chain together possibly failing computations, trying the second if the first hasn’t succeeded
+
+我的问题： 为什么不把None做成Object的子类，像java一样，做一个check就可以了？？？
+
+Can convert None to an exception
+      - o.getOrElse(throw new Exception("FAIL")) 
+* General rule of thumb: 
+    - Use exceptions only if no reasonable program would ever catch 
+the exception
+    - If for some callers the exception might be a recoverable error, we use Option (or Either, discussed later) to give them flexibility 
+
+我懂了，因为一连串的计算，有很多种可能出错，用这个能指定是哪一种error，哪儿出错了
+
+• Returning errors as ordinary values can be convenient
+• Use of higher-order functions lets us achieve the same sort of 
+consolidation of error-handling logic as we would get from using 
+exceptions 
+• Note: We don’t have to check for None at each stage of the computation  
+• We can apply several transformations and then check for and 
+handle None when we’re ready 
+• We get additional safety, because Option[A] is a different type 
+from A, and the compiler won’t let us forget to explicitly defer or 
+handle the possibility of None
+
+#### L I F T I N G   F U N C T I O N S   T O   O P E R A T E   O N   
+O P T I O N 
+• May seem like our entire code will be infected with Options
+  - That every function will need to be modified to deal with Options
+  - But not really: We can lift ordinary functions to become functions which 
+deal with Options
+• map lets us operate on values of type Option[A] using a function of type A => B, 
+returning Option[B]
+  - Turns a function f of type A => B into a function of type Option[A] => Option[B] 
+  - Let’s make this explicit: 
+```
+def lift[A,B](f: A => B): Option[A] => Option[B] = _ map f
+= ((o:Option[A]) => o.map(f)
+= _ map f
+```
+• This tells us that any function can be transformed (via lift) to operate within the context 
+of a single Option value 
+
+example
+```scala
+val absO: Option[Double] => Option[Double] = lift(math.abs)
+```
+lift(f) returns a function which maps None to None and
+applies f to the contents of Some.
+  - f need not be aware of the Option type at all 
+
+![picture 11](images/372e348d65ab2053344a2476445873d341c8764aeb9b510e1e35dbf592923b6b.png)  
+
+![picture 12](images/2bf15ac2f0b74174604cf636d48ba62dfe3da09f86a12a82db247129f9a9f2e9.png)  
+
+try[A]: evaluate lazy, so it will go to the runtime
+Need to lift insuranceRateQuote
+def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
+ a flatMap (aa => b map (bb => f(aa, bb)))
+ ![picture 13](images/329495524d664eb0a37a7deb8b503c8714a9b42052aad14721c210094f2893f9.png)  
+
+### GENERALIZING TO LISTS
+change a List of Option, to Option of List, so inside the values are good values
+
+• What if we have to map over a list using a function that might fail?
+• May want to place the entire resulting list in an Option
+```
+ def sequence[A](a: List[Option[A]]): Option[List[A]] =
+ a match {
+  case Nil => Some(Nil)
+  case h :: t => h flatMap (hh => sequence(t) map (hh :: _))
+ }
+ def parseInts(a: List[String]): Option[List[Int]] =
+  sequence(a map (i => Try(i.toInt)))
+ ```
+ 所以，map不是一个数据结构在FP种，是一个方法，因为List本身也是一个map
+
+• Often need to sequence results of a map
+```scala
+ def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = a match {
+  case Nil => Some(Nil)
+  case h::t => map2(f(h), traverse(t)(f))(_ :: _)
+ }
+ ```
+ 
