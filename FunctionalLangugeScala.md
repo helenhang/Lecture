@@ -1,9 +1,9 @@
 ##Scala Datastructure
 1.2. 换行字符
 语法:
-`semi ::= „;‟ | nl{nl}`
+`semi ::= ";" | nl{nl}`
 Scala 是一个基于行的语言。分号和换行均可作为语句的结束。如果换行满足以下三
-个条件则会被认为是一个特殊符号‟nl‟:
+个条件则会被认为是一个特殊符号"nl":
 1. 换行之前的符号是一个语句的结束
 2. 换行之后的符号是一个语句的开始
 3. 符号处在一个允许多语句的区域中
@@ -12,25 +12,25 @@ Scala 是一个基于行的语言。分号和换行均可作为语句的结束�
 Java 中的字面值一致。
 语法：
 ```scala
-Literal ::= [„-„] integerLiteral
-| [„-„] floatingPointLiteral
+Literal ::= ["-"] integerLiteral
+| ["-"] floatingPointLiteral
 | booleanLiteral
 | characterLiteral
 | stringLiteral
 | symbolLiteral
-| „null‟
+| "null"
 ```
 ###3.2. 值类型
 Scala 中的每个值都有一个以下格式的类型。
 * 3.2.1. 单例类型
 语法：
-`SimpleType ::= Path „.‟ type`
+`SimpleType ::= Path "." type`
 单例类型具有 p.type 的形式，p 是一个路径，指向一个期望与 scala.AnyRef 一
 致(§6.1)的值。类型指一组为 null 的或由 p 表示的值。
 一个稳定类型指要么是一个单例类型，要么是特征 scala.Singleton 的子类型。
 * 3.2.2. 类型映射
 语法：
-SimpleType ::= SimpleType „#‟ id
+SimpleType ::= SimpleType "#" id
 类型映射 T#x 指类型 T 的类型成员 x。如果 x 指向抽象类型成员，那么 T 必须是一个
 稳定类型(§3.2.1)。
 语法：
@@ -38,7 +38,7 @@ SimpleType ::= SimpleType „#‟ id
 语法：
 ```scala
 SimpleType ::= SimpleType TypeArgs
-TypeArgs ::= „[‟ Types „]‟
+TypeArgs ::= "[" Types "]"
 ```
 参数化类型 T[U1,...,Un]包括类型指示 T 以及类型参数 U1,...,Un，n >=1。T 必
 须指向一个具有个参数类型 a1,...,an的参数构造方法。
@@ -54,7 +54,7 @@ List[I]
 List[List[Boolean]]
 * 3.2.5. 元组类型
 语法：
-`SimpleType ::= „(‟ Types [„,‟] „)‟`
+`SimpleType ::= "(" Types [","] ")"`
 元组类型(T1,...,Tn)是类 scala.Tuplen[T1,...,Tn](n>=2)的别名形式。此类
 型可以在结尾处有个额外的逗号，例：(T1,...,Tn,)。
 元组类是 case 类，其字段可以用选择器_1,...,_n 来访问。在对应的 Product 特
@@ -77,11 +77,11 @@ AnnotType ::= SimpleType {Annotation}
 * 3.2.7. 复合类型
 语法：
 ```scala
-CompoundType ::= AnnotType {„with‟ AnnotType} [Refinement]
+CompoundType ::= AnnotType {"with" AnnotType} [Refinement]
 | Refinement
-Refinement ::= [nl] „{‟ RefineStat {semi RefineStat} „}‟
+Refinement ::= [nl] "{" RefineStat {semi RefineStat} "}"
 RefineStat ::= Dcl
-| „type‟ TypeDef
+| "type" TypeDef
 |
 ```
 复合类型 T1 with ... with Tn {R}指一个拥有 T1,...,Tn 类型中的成员以及修
@@ -96,14 +96,14 @@ RefineStat ::= Dcl
 等价于类型应用 op[T1, T2]。中缀算符可以是除*之外的任意的标识符，因为*被保留作
 为重复参数类型的后缀(§4.6.2)。
 所有类型的中缀算符拥有同样的优先级；因此必须用括号来改变顺序。类型算符的结
-合性(§6.12)由其形式来决定：由‟:‟结尾的类型算符是右结合的，其他的是左结合的。
+合性(§6.12)由其形式来决定：由":"结尾的类型算符是右结合的，其他的是左结合的。
 在 一 个 连 续 的 类 型 中 缀 运 算 t0 op1 t1 op2...opn tn 里 ， 所 有 的 算 符
 op1,...,opn 必须具有相同的结合性。如果都是左结合的，该序列就被解析为(...(t0
 op1 t1) op2...) opn tn，否则会被解析为 t0 op1 (t1 op2 (...opn tn)..)。
 * 3.2.9. 函数类型
 语法：
-`Type ::= InfixType „=>‟ Type`
-`| „(‟ [„=>‟ Type] „)‟ „=>‟ Type`
+`Type ::= InfixType "=>" Type`
+`| "(" ["=>" Type] ")" "=>" Type`
 类型 (T1,...,Tn) => U 表示那些参数类型为 T1,...,Tn，并产生一个类型为 U 的
 结果的函数。如果只有一个参数类型则(T)=>U 可以简写为 T=>U。类型(=>T)=>U 表示以
 类型为 T 的传名(§4.6.1)参数并产生类型为 U 的结果。函数类型是右结合的，例：
@@ -131,10 +131,10 @@ trait ByNameFunction[-T, +R] {
 语法：
 ```scala
 Type ::= InfixType ExistentialClauses
-ExistentialClauses ::= „forSome‟ „{‟ ExistentialDcl
-{semi ExistentialDcl} „}‟
-ExistentialDcl ::= „type‟ TypeDcl
-| „val‟ ValDcl
+ExistentialClauses ::= "forSome" "{" ExistentialDcl
+{semi ExistentialDcl} "}"
+ExistentialDcl ::= "type" TypeDcl
+| "val" ValDcl
 ```
 既存类型具有 T forSome {Q}的形式，Q 是一个类型声明的序列(§4.3)。设
 t1[tps1]>:L1<:U1,...,tn[tpsn]>:Ln<:Un 是 Q 中声明的类型(任何类型参数部分
@@ -231,12 +231,12 @@ with ... with Tn {R}的基本类型。
 本类型。
     - 既存类型 T forSome {Q}的基本类型是所有 S forSome {Q}类型，S 是T 的基本类型
 2. 从前缀类型 S 中可见的类 C 中的类型 T 只在以下条件下起作用，前缀类型 S 有一
-个类型 C 的类型实例作为基本类型，即 S‟#C[T1,...,Tn]。我们有以下定义
+个类型 C 的类型实例作为基本类型，即 S"#C[T1,...,Tn]。我们有以下定义
     - 如果 S = ε.type，那么从 S 看到的 C 中的 T 就是 T 本身
-    - 否则，如果 S 是既存类型 S‟ forSome {Q}，从 S‟看 C 中的 T 将会是 T‟，那么从 S 看 T 中的 C 将会是 T‟ forSome {Q}
+    - 否则，如果 S 是既存类型 S" forSome {Q}，从 S"看 C 中的 T 将会是 T"，那么从 S 看 T 中的 C 将会是 T" forSome {Q}
     - 否则，如果 T 是某类 D 的第 i 个类型参数，那么
     - 如果 S 有基本类型 D[U1,...,Un]，[U1,...,Un]是类型参数，那么从S 中看到的 C 中的 T 就是 Ui
-    - 否则，如果 C 定义在类 C‟中，那么从 S 中看到的 C 中的 T 与在 S‟中看到的 C‟中的 T 是一样的
+    - 否则，如果 C 定义在类 C"中，那么从 S 中看到的 C 中的 T 与在 S"中看到的 C"中的 T 是一样的
     - 否则，如果 C 不是定义在其他类中，那么从 S 中看到的 C 中的 T 就是 T本身
     - 否则，如果 T 是某类 D 的单例类型 D.this.type，那么
     - 如果 D 是 C 的子类，S 的基本类型中有一个类 D 的类型实例，那么从 S中看到的 C 中的 T 就是 S
@@ -248,41 +248,41 @@ with ... with Tn {R}的基本类型。
 4. 基本声明与定义
 语法：
 ```scala
-Dcl ::= „val‟ ValDcl
-| „var‟ VarDcl
-| „def‟ FunDcl
-| „type‟ {nl} TypeDcl
-PatVarDef ::= „val‟ PatDef
-| „var‟ VarDef
+Dcl ::= "val" ValDcl
+| "var" VarDcl
+| "def" FunDcl
+| "type" {nl} TypeDcl
+PatVarDef ::= "val" PatDef
+| "var" VarDef
 Def ::= PatVarDef
-| „def‟ FunDef
-| „type‟ {nl} TypeDef
+| "def" FunDef
+| "type" {nl} TypeDef
 | TmplDef
 ```
 4.1. 值声明与定义
 语法：
 ```scala
-Dcl ::= "val‟ ValDcl
-ValDcl ::= ids „:‟ Type
-Def ::= „val‟ PatDef
-PatDef ::= Pattern2 {„,‟ Pattern2} [„:‟ Type] „=‟ Expr
-ids ::= id {„,‟ id}
+Dcl ::= "val" ValDcl
+ValDcl ::= ids ":" Type
+Def ::= "val" PatDef
+PatDef ::= Pattern2 {"," Pattern2} [":" Type] "=" Expr
+ids ::= id {"," id}
 ```
 4.2. 变量声明与定义
 语法：
-Dcl ::= „var‟ VarDcl
-Def ::= „var‟ VarDef
-VarDcl ::= ids „:‟ Type
+Dcl ::= "var" VarDcl
+Def ::= "var" VarDef
+VarDcl ::= ids ":" Type
 VarDef ::= PatDef
-| ids „:‟ Type „=‟ „_‟
+| ids ":" Type "=" "_"
 
 * 4.3. 类型声明与类型别名
 语法：
 ```scala
-Dcl ::= „type‟ {nl} TypeDcl
-TypeDcl ::= id [TypeParamClause] [„>:‟ Type] [„<:‟ Type]
+Dcl ::= "type" {nl} TypeDcl
+TypeDcl ::= id [TypeParamClause] [">:" Type] ["<:" Type]
 Def ::= type {nl} TypeDef
-TypeDef ::= id [TypeParamClause] „=‟ Type
+TypeDef ::= id [TypeParamClause] "=" Type
 ```
 type t[tps] = T 中的类型 T 不能直接或间接的引用到命名 t。如果抽象类型是其自身
 直接或间接的上界或下界也会导致错误。
@@ -296,26 +296,26 @@ type MyCollection[+X] <: Iterable[X]
 * 4.6. 函数声明与定义
 语法：
 ```scala
-Dcl ::= „def‟ FunDcl
+Dcl ::= "def" FunDcl
 FunDcl ::= FunSig : Type
-Def ::= „def‟ FunDef
-FunDef ::= FunSig [„:‟ Type] „=‟ Expr
+Def ::= "def" FunDef
+FunDef ::= FunSig [":" Type] "=" Expr
 FunSig ::= id [FunTypeParamClause] ParamClauses
-FunTypeParamClause ::= „[‟ TypeParam {„,‟ TypeParam} „]‟
-ParamClauses ::= {ParamClauses} [[nl] „(‟ „implicit‟ Params „)‟]
-ParamClause ::= [nl] „(‟ [Params] „)‟}
-Params ::= Param {„,‟ Param}
-Param ::= {Annotation} id [„:‟ ParamType]
+FunTypeParamClause ::= "[" TypeParam {"," TypeParam} "]"
+ParamClauses ::= {ParamClauses} [[nl] "(" "implicit" Params ")"]
+ParamClause ::= [nl] "(" [Params] ")"}
+Params ::= Param {"," Param}
+Param ::= {Annotation} id [":" ParamType]
 ParamType ::= Type
-        | „=>‟ Type
-        | Type „*‟
+        | "=>" Type
+        | Type "*"
 ```
 函数声明具有这样的形式：def f psig: T，f 是函数的名称，psig 是参数签名，T 是返回类型。
 函数定义 def f psig: T = e 还包括了函数体 e
 
 * 4.6.1. 叫名参数
 语法：
-`ParamType ::= „=>‟ Type`
+`ParamType ::= "=>" Type`
 值参数类型可以有前缀=>，例如: x: => T。这样一个参数的类型就是无参方法类型=>T。这表明对应的参数并没有在函数应用处求值，而是在函数中每次使用时才求值。也就是该参数以叫名的方式求值。
 示例 4.6.1 声明：
 `def whileLoop (cond: => Boolean) (start: => Unit): Unit`
@@ -323,8 +323,8 @@ ParamType ::= Type
 
 * 4.6.2. 重复参数
 语法：
-`ParamType ::= Type „*‟`
-参数段中的最后一个参数可以有后缀„*‟，例如：(…, x: T*)。方法中这样一个重复参数的类型就是序列类型 scala.Seq[T]。具有重复参数 T*的方法具有可变数目的类型为 T 的参数。也就是,如果方法 m 的类型(T1,…,Tn,S*)U 应用到参数(e1,…,ek)上，且有 k>=n，那么 m 就被认为在应用中具有类型(T1,…,Tn,S,…,S)U，S 重复 k-n 次。这个规则的唯一例外是如果最后一个参数用_*类型标注的方式被标记为一个序列参量。如果以上的m应用到参数(e1,…,en,e‟:_*) 上,那么该应用中m的类型就被认为(T1,…,Tn,scala.Seq[S])。
+`ParamType ::= Type "*"`
+参数段中的最后一个参数可以有后缀"*"，例如：(…, x: T*)。方法中这样一个重复参数的类型就是序列类型 scala.Seq[T]。具有重复参数 T*的方法具有可变数目的类型为 T 的参数。也就是,如果方法 m 的类型(T1,…,Tn,S*)U 应用到参数(e1,…,ek)上，且有 k>=n，那么 m 就被认为在应用中具有类型(T1,…,Tn,S,…,S)U，S 重复 k-n 次。这个规则的唯一例外是如果最后一个参数用_*类型标注的方式被标记为一个序列参量。如果以上的m应用到参数(e1,…,en,e":_*) 上,那么该应用中m的类型就被认为(T1,…,Tn,scala.Seq[S])。
 示例 4.6.2 以下方法定义计算了可变数目的整形参数的和：
 ```scala
 def sum(args: Int*) = {
@@ -348,7 +348,7 @@ sum(xs:_*)
 语法
 ```scala
 FunDcl ::= FunSig
-FunDef ::= FunSig[nl] „{‟Block„}‟
+FunDef ::= FunSig[nl] "{"Block"}"
 ```
 过程有特殊语法，例如，返回 Unit 值{}的函数。过程声明只是返回类型被忽略的函数声明。返回类型自动定义为 Unit 类型。例如 def f(ps)等价于 def f(ps):Unit。
 过程定义是返回类型及等号被忽略的函数定义；其定义表达式必须是一个代码块。例
@@ -370,7 +370,7 @@ object Terminal extends Writer{
 }
 ```
 * 4.6.4. 方法返回类型推断
-类成员定义 m 重载了基类 C 中的一些其他的函数 m‟可以略去返回类型，即使是递归的也无所谓。因此被重载的函数 m‟的返回类型 R‟(被认为是 C 的成员) 在对 m 的每次调用中被认为是 m 的返回类型。在以上方式中，m 右侧的类型 R 可以被确定，并作为 m 的返回类型。注意到 R 可以与 R‟不同，只要 R 与 R‟一致即可。
+类成员定义 m 重载了基类 C 中的一些其他的函数 m"可以略去返回类型，即使是递归的也无所谓。因此被重载的函数 m"的返回类型 R"(被认为是 C 的成员) 在对 m 的每次调用中被认为是 m 的返回类型。在以上方式中，m 右侧的类型 R 可以被确定，并作为 m 的返回类型。注意到 R 可以与 R"不同，只要 R 与 R"一致即可。
 示例 4.6.4 假定有以下定义：
 ```
 trait I {
@@ -385,9 +385,9 @@ class C extends I {
 5. 类与对象
 语法：
 ```scala
-TmplDef ::= [„case‟] „class‟ ClassDef
-| [„case‟] „object‟ ObjectDef
-| „trait‟ TraitDef
+TmplDef ::= ["case"] "class" ClassDef
+| ["case"] "object" ObjectDef
+| "trait" TraitDef
 ```
 Scala Trait(特征) 相当于Java 的接口，实际上它比接口还功能强大。 与接口不同的是，它还可以定义属性和方法的实现。 一般情况下Scala的类只能够继承单一父类，但是如果是Trait(特征) 的话就可以继承多个，从结果来看就是实现了多重继承。
 类(§5.3)与对象(§5.4)都用模板来定义。
@@ -396,14 +396,14 @@ Scala Trait(特征) 相当于Java 的接口，实际上它比接口还功能强�
 ```scala
 Modifier ::= LocalModifier
 | AccessModifier
-| „override‟
-LocalModifier ::= „abstract‟
-| „final‟
-| „sealed‟
-| „implicit‟
-| „lazy‟
-AccessModifier ::= („private‟ | „protected‟) [AccessQualifier]
-AccesQualifier ::= „[‟ (id | „this‟) „]‟
+| "override"
+LocalModifier ::= "abstract"
+| "final"
+| "sealed"
+| "implicit"
+| "lazy"
+AccessModifier ::= ("private" | "protected") [AccessQualifier]
+AccesQualifier ::= "[" (id | "this") "]"
 ```
 成员定义前的修饰符会影响其标定的标识符的可见性及使用。如果给出了多个修饰符，
 其顺序没有关系，但是同一个修饰符不能重复出现。重复定义前的修饰符将应用于所有定
@@ -438,83 +438,83 @@ private[C]不是，C 是一个标识符，在后者该成员称为限定私有�
 ###6. 表达式
 语法：
 ```scala
-Expr ::= (Bindings | id | "_‟) "=>‟ Expr| Expr1
-Expr1 ::= „if‟ „(‟ Expr „)‟ {nl} Expr [[semi] else Expr]
-| „while‟ „(‟ Expr „)‟ {nl} Expr
-| „try‟ „{‟ Block „}‟ [catch „{‟
-CaseClauses „}‟] [„finally‟ Expr]
-| „do‟ Expr [semi] „while‟ „(‟ Expr „)‟
-| „for‟ („(‟ Enumerators „)‟ |
-„{‟ Enumerators „}‟) {nl} [„yield‟] Expr
-| „throw‟ Expr
-| „return‟ Expr
-| [SimpleExpr „.‟] id „=‟ Expr
-| SimpleExpr1 ArgumentExprs „=‟ Expr
+Expr ::= (Bindings | id | "_") "=>" Expr| Expr1
+Expr1 ::= "if" "(" Expr ")" {nl} Expr [[semi] else Expr]
+| "while" "(" Expr ")" {nl} Expr
+| "try" "{" Block "}" [catch "{"
+CaseClauses "}"] ["finally" Expr]
+| "do" Expr [semi] "while" "(" Expr ")"
+| "for" ("(" Enumerators ")" |
+"{" Enumerators "}") {nl} ["yield"] Expr
+| "throw" Expr
+| "return" Expr
+| [SimpleExpr "."] id "=" Expr
+| SimpleExpr1 ArgumentExprs "=" Expr
 | PostfixExpr
 | PostfixExpr Ascription
-| PostfixExpr „match‟ „{‟ CaseClauses „}‟
+| PostfixExpr "match" "{" CaseClauses "}"
 PostfixExpr ::= InfixExpr [id [nl]]
 InfixExpr ::= PrefixExpr
 | InfixExpr id [nl] InfixExpr
-PrefixExpr ::= [„-‟ | „+‟ | „~‟ | „!‟] SimpleExpr
-SimpleExpr ::= „new‟ (ClassTemplate | TemplateBody)
+PrefixExpr ::= ["-" | "+" | "~" | "!"] SimpleExpr
+SimpleExpr ::= "new" (ClassTemplate | TemplateBody)
 | BlockExpr
-| SimpleExpr1 [„_‟]
+| SimpleExpr1 ["_"]
 SimpleExpr1 ::= Literal
 | Path
-| „_‟
-| „(‟ [Exprs [„,‟] „]‟
-| SimpleExpr „.‟ ids
+| "_"
+| "(" [Exprs [","] "]"
+| SimpleExpr "." ids
 | SimpleExpr TypeArgs
 | SimpleExpr1 ArgumentExprs
 | XmlExpr
-Exprs ::= Expr {„,‟ Expr}
-BlockExpr ::= „{‟ CaseClauses „}‟
-| „{‟ Block „}‟
+Exprs ::= Expr {"," Expr}
+BlockExpr ::= "{" CaseClauses "}"
+| "{" Block "}"
 Block ::= {BlockStat semi} [ResultExpr]
 ResultExpr ::= Expr1
-| (Bindings | (id | „_‟) „:‟ CompoundType) „=>‟ Block
-Ascription ::= „:‟ InfixType
-| „:‟ Annotation {Annotation}
-| „:‟ „_‟ „*‟
+| (Bindings | (id | "_") ":" CompoundType) "=>" Block
+Ascription ::= ":" InfixType
+| ":" Annotation {Annotation}
+| ":" "_" "*"
 ```
 
 * 6.16. 条件表达式
 语法：
-Expr1 ::= „if‟ „(‟ Expr „)‟ {nl} Expr [[semi] „else‟ Expr]
+Expr1 ::= "if" "(" Expr ")" {nl} Expr [[semi] "else" Expr]
 * 6.17. While 循环表达式
 语法：
-Expr1 ::= „while‟ „(‟ Expr „)‟ {nl} Expr
+Expr1 ::= "while" "(" Expr ")" {nl} Expr
 * 6.18. Do 循环表达式
 语法：
-Expr1 ::= „do‟ Expr [semi] „while‟ „(‟ Expr „)‟
+Expr1 ::= "do" Expr [semi] "while" "(" Expr ")"
 * 6.19. For 语句段
 语法：
-Expr1 ::= „for‟ („(‟ Enumerators „)‟ | „{‟ Enumerators
-„}‟) {nl} [„yield‟] Expr
+Expr1 ::= "for" ("(" Enumerators ")" | "{" Enumerators
+"}") {nl} ["yield"] Expr
 Enumerators ::= Generator {semi Enumerator}
 Enumerator ::= Generator
 | Guard
-| „val‟ Pattern1 „=‟ Expr
-Generator ::= Pattern1 „<-‟ Expr [Guard]
-Guard ::= „if‟ PostfixExpr
+| "val" Pattern1 "=" Expr
+Generator ::= Pattern1 "<-" Expr [Guard]
+Guard ::= "if" PostfixExpr
 * 6.20. Return 表达式
 语法：
-Expr1 ::= „return‟ [Expr]
+Expr1 ::= "return" [Expr]
 * 6.21. Throw 表达式
 语法：
-Expr1 ::= „throw‟ Expr
+Expr1 ::= "throw" Expr
 * 6.22. Try 表达式
 语法：
-Expr1 ::= „try‟ „{‟ Block „}‟ [„catch‟ „{‟ CaseClauses „}‟]
-[„finally‟ Expr]
+Expr1 ::= "try" "{" Block "}" ["catch" "{" CaseClauses "}"]
+["finally" Expr]
 * 6.23. 匿名函数
 语法：
 ```scala
-Expr ::= (Bindings | Id | „_‟) „=>‟ Expr
-ResultExpr ::= (Bindings | (Id | „_‟) „:‟ CompoundType) „=>‟ Block
-Bindings ::= „(‟ Binding {„,‟ Binding} „)‟
-Binding ::= (id | „_‟) [„:‟ Type]
+Expr ::= (Bindings | Id | "_") "=>" Expr
+ResultExpr ::= (Bindings | (Id | "_") ":" CompoundType) "=>" Block
+Bindings ::= "(" Binding {"," Binding} ")"
+Binding ::= (id | "_") [":" Type]
 ```
 匿名函数的占位符语法
 语法：
@@ -532,7 +532,7 @@ _.map(_ + 1) x => x.map(y => y + 1)
 语法：
 ```scala
 BlockStat ::= Import
-| [„implicit‟] Def
+| ["implicit"] Def
 | {LocalModifier} TmplDef
 | Expr1
 |
@@ -548,23 +548,23 @@ TemplateStat ::= Import
 8.1. 模式
 语法：
 ```scala
-Pattern ::= Pattern1 { „|‟ Pattern1 }
-Pattern1 ::= varid „:‟ TypePat
-| „_‟ „:‟ TypePat
+Pattern ::= Pattern1 { "|" Pattern1 }
+Pattern1 ::= varid ":" TypePat
+| "_" ":" TypePat
 | Pattern2
-Pattern2 ::= varid [„@‟ Pattern3]
+Pattern2 ::= varid ["@" Pattern3]
 | Pattern3
 Pattern3 ::= SimplePattern
 | SimplePattern {id [nl] SimplePattern}
-SimplePattern ::= „_‟
+SimplePattern ::= "_"
 | varid
 | Literal
 | StableId
-| StableId „(‟ [Patterns [„,‟]] „)‟
-| StableId „(‟[Patterns „,‟][varid „@‟] „_‟ „*‟ „)‟
-| „(‟ [Patterns [„,‟]] „)‟
+| StableId "(" [Patterns [","]] ")"
+| StableId "("[Patterns ","][varid "@"] "_" "*" ")"
+| "(" [Patterns [","]] ")"
 | XmlPattern
-Patterns ::= Pattern {„,‟ Patterns}
+Patterns ::= Pattern {"," Patterns}
 ```
 ![picture 1](images/8d60eef5f06c545ca66a784af87b0e8712119ebe975a0fc44a078929a72969c6.png)  
 
