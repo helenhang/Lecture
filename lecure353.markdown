@@ -700,3 +700,44 @@ function read() {
 </body>
 </html>
 ```
+
+### Lecture Feb 10
+### Docker-Compose health check
+healthcheck:
+test: ... # Command to check health.
+interval: 5s # Interval between health checks.
+timeout: 5s # Timeout for each health checking.
+retries: 20 # How many times retries.
+start_period: 10s # Estimated time to boot.
+
+```yml
+version: '3.9'
+services:
+mysql1:
+.....
+healthcheck:
+test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-padmin"]
+timeout: 20s
+retries: 10
+node1:
+....
+depends_on:
+mysql1:
+condition: service_healthy
+stdin_open: true
+tty: true
+```
+在msql的container里面，做一个ping来做一个health的check
+在node1的container里面做一个condition，serveice_healthy
+```yml
+healthcheck:
+test: "curl -f localhost:8080"
+interval: 5s
+timeout: 5s
+retries: 20
+```
+每20s做一个check，比如mysql能不能运行
+这是干啥呢
+
+
+

@@ -229,8 +229,10 @@ Need to lift insuranceRateQuote
 def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
  a flatMap (aa => b map (bb => f(aa, bb)))
  ![picture 13](images/329495524d664eb0a37a7deb8b503c8714a9b42052aad14721c210094f2893f9.png)  
-
+## Leture Feb10
+ midterm room 105 wed， 7:00pm
 ### GENERALIZING TO LISTS
+
 change a List of Option, to Option of List, so inside the values are good values
 
 • What if we have to map over a list using a function that might fail?
@@ -243,8 +245,10 @@ change a List of Option, to Option of List, so inside the values are good values
  }
  def parseInts(a: List[String]): Option[List[Int]] =
   sequence(a map (i => Try(i.toInt)))
+ 
  ```
  所以，map不是一个数据结构在FP种，是一个方法，因为List本身也是一个map
+ not very effient: makes two passes of the list
 
 • Often need to sequence results of a map
 ```scala
@@ -253,4 +257,111 @@ change a List of Option, to Option of List, so inside the values are good values
   case h::t => map2(f(h), traverse(t)(f))(_ :: _)
  }
  ```
- 
+ Scala provides a syntactic construct called **for-comprehension** that is automatically expanded to a series of flatMap and map calls
+ ##### for-comprehension
+• A for-comprehension consists of: 
+• A sequence of bindings — like aa <- a — inside a pair of braces
+•  A yield after the closing brace, which may make use of values on the left hand side of  <- binding. 
+• The compiler desugars the bindings to flatMap calls, with the final binding and **yield** being converted to a call to map. 
+• Example: map2 can be implemented using for-comprehension as follows:
+
+```scala
+def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = 
+     a flatMap (aa => 
+              b map (bb => 
+                            f(aa, bb)))
+
+def map2 [A,B,C] (a: Option[A], b: Option[B]) (f: (A, B) => C): Option[C] =  
+      for { 
+                aa  <- a  
+                bb <- b 
+      } yield f(aa, bb) 
+```
+因为上面的，不用修改已经存在的function
+Never have to modify an existing function
+
+#### L I M I T A T I O N S   O F   O P T I O N S 
+
+Option doesn’t tell us anything about what went wrong
+• It just gives us None, indicating that there’s no value
+•  Sometimes we want to know more 
+• We might want a String that gives more information
+• If an exception was raised, we might want to know what 
+that error actually was 
+option只能告诉出错了，得到了None，但是不能看到为什么，either就可以返回，left可以告诉出错了，同时，left的内容告诉了为什么出错
+
+E I T H E R   D A T A   T Y P E 
+A simple extension to **Option**, which lets us **track a reason for the failure**
+``` scala
+   sealed trait Either[+E, +A]
+   case class Left[+E](value: E) extends Either[E, Nothing] 
+   case class Right[+A](value: A) extends Either[Nothing, A]
+```
+#### E I T H E R   D A T A   T Y P E 
+• Either has only two constructors: each case carries a value
+• It represents — in a very general way — values that can be one of two 
+things (In other words, a disjoint union of two types)
+• Right is reserved for the success (i.e., right / correct) case 
+• Left is used for failure 
+       [We’ve used a suggestive E (for error) as the parameter name for left type]
+
+##### E X A M P L E :   M E A N 
+• Can return a string when undefined
+```
+     def mean(xs: IndexedSeq[Double]): Either[String, Double] =    
+        if (xs.isEmpty) 
+            Left("mean of empty list!")
+        else 
+            Right(xs.sum / xs.length)
+```
+• May want to return stack trace showing location of error
+  ```
+     def safeDiv(x: Int, y: Int): Either[Exception, Int] = 
+         try Right(x / y) 
+         catch { case e: Exception => Left(e) } 
+  ```
+• Can write a function Try to factor out this pattern to convert thrown exceptions into values
+```
+     def Try[A](a: => A): Either[Exception, A] = 
+          try Right(a) 
+          catch { case e: Exception => Left(e) } 
+```
+ midterm room 105
+我也是觉得奇怪，为什么会有either这个type
+老师意思是另一个solution，先别dismiss
+```scala
+def map[B](f: A => B): Either[E, B] = 
+  this match {
+    case Right(a) => Right(f(a))
+    case Left(e) => Left(e)
+  }
+def flatMap[EE >: E, B](f: A => Either[EE, B]): 
+  Either[EE, B] = this match {
+    case Left(e) => Left(e)
+    case Right(a) => f(a)
+  }
+  ```
+B A S I C   F U N C T I O N S   O N   E I T H E R
+```scala
+def orElse[EE >: E, AA >: A](b: => Either[EE, AA]): 
+  Either[EE, AA] = this match {
+    case Left(_) => b
+    case Right(a) => Right(a)
+  }
+def map2[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C): 
+  Either[EE, C] = for { a <- this; b1 <- b } yield f(a,b1)
+  ```
+For是干什么用的
+
+Either can be used in for-comprehensions:
+![picture 14](images/e52bcc5b2345e5e09059cda2237849bd676108ca8b87420119cd6b04b17dcf93.png)  
+
+Can implement versions of sequence and traverse for Either:
+![picture 15](images/d47c0b7e7a3eb8da4c8308eeedf696ee42fd3f3cc585bc626eb29f04877ef438.png)  
+
+![picture 16](images/6816ee90b78499eb2deb4eb10c9423aafacda3b71f80a492918cab5d2d1024c0.png)  
+
+
+
+
+
