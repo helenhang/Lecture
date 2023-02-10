@@ -1,4 +1,4 @@
-##Scala Datastructure
+## Scala Datastructure
 1.2. 换行字符
 语法:
 `semi ::= ";" | nl{nl}`
