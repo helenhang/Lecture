@@ -1,5 +1,51 @@
-#FUNCTIONAL DATASTRUCTURES 
 
+### Basic 语法
+```scala
+//In Scala we don't use loops or Iteration, we use Recursion!
+  val meaningOfLife: Int = 42 // const int meaningOfLife = 42
+  //int
+  val aBoolean = false //type is optional
+  val aString = "I love Scala"
+  val aComposeString = "Helen " + " Love " + "Scala"
+  //expression = structures that can be reduced to a value
+  val anExpression = 2 +3
+  //if-expression
+  val ifExpression = if (meaningOfLife > 43) 56 else 999
+  val chinedIfExpression = {
+    if (meaningOfLife > 43) 56
+    else if (meaningOfLife <0) -2
+    else if(meaningOfLife>999) 78
+    else 0
+  }
+
+  //code blocks
+  val aCodeBlock = {
+    //definition
+    val aLocalValue = 67
+
+    // value of block is the value of the last expression
+    aLocalValue + 3
+  }
+
+  //deine a function
+  def myFunction(x:Int, y:String): String = y + "" + x
+  def myFunction1(x:Int, y:String): String = {
+    y + "" + x
+  }
+
+  //recursive functions
+  def factorial(n:Int) : Int =
+    if(n<=1) 1
+    else n* factorial(n-1)
+
+  //In Scala we don't use loops or Iteration, we use Recursion!
+
+  // the Unit type = no meaningful value === "void" in other language
+  //type of SIDE EFFECTS
+  println("I love Scala")//===System.out.println,printf,print, console.log
+  val myUnit = ()//this is Unit, is ()
+```
+### FUNCTIONAL DATASTRUCTURES 
 * Operated on using only pure functions
 * Recall: pure functions do not: 
   * change data in place
@@ -361,7 +407,103 @@ Can implement versions of sequence and traverse for Either:
 
 ![picture 16](../images/6816ee90b78499eb2deb4eb10c9423aafacda3b71f80a492918cab5d2d1024c0.png)  
 
+```scala
+class Person(name: String){
+    def apply(age:Int) = println(s"I have aged $age years")
+  }
+  val bob = new Person("bob")
+  bob.apply(43)
+  bob (43) //invoking bob as a function === bob.apply(43)
 
+  /*
+  Scala runs on the JVM
+  Functional programming:
+  - compose functions
+  - pass functions as args
+  - return functions as results
 
+  conclusion: FunctionX = Function1, Function2...Function 22
+   */
+
+  val simpleIncrementer = new Function1[Int, Int]{
+    override def apply(arg: Int): Int = arg + 1
+  }
+
+  simpleIncrementer.apply(23) //24
+  simpleIncrementer(23) // simpleIncrementer.apply(23)
+  //defined a function!
+  //All SCALA FUNCTIONS ARE INSTANCES OF these function_x types
+
+  val stringConcatenator =  new Function2[String,String,String] {
+    override def apply(v1: String, v2: String): String = v1+v2
+  }
+
+  //syntax sugars
+  val doubler : Function1[Int,Int] = (x:Int)=>2 * x
+  doubler(4)//8
+
+  /*
+  equivalent to the much longer:
+  new Function[Int,Int] {
+    override def apply(v1: Int): Int = 2 * x
+  }
+   */
+//Higher-oirder functions: take functions as args / return functions as results
+
+  val aMappedList = List(1,2,3).map(x=>x+1)
+  println(aMappedList)
+  val aFlatMappedList = List(1,2,3).flatMap(x=>List(x, 2*x))
+  println(aFlatMappedList)
+  val aFilterList = List(1,2,3,4,5).filter(_<=3) // equivalent to x => x <=3
+  println(aFilterList)
+
+  //all pairs between the numbers 1, 2, 3 antd the letters 'a','b','c'
+  val allPairs = List(1,2,3).flatMap(number => List("a","b","c").map(letter=>s"$number-$letter"))
+  println(allPairs)
+
+  // for comprehensions
+  val alternativePairs = for {
+    number <- List(1,2,3)
+    letter <- List('a','b,'c')
+  }yield s"$number -$letter"
+
+  /*
+  Collections
+   */
+  //lists
+  val aList = List(1,2,3,4,5)
+  val firstElement = aList.head
+  val rest = aList.tail
+  val aPrependedList = 0 :: aList //List(0,1,2,3,4,5)
+  val anExtendedList = 0+: aList :+ 6 //List(1,2,3,4,5,6)
+
+  //sequences
+  val aSequence: Seq[Int] = Seq(1,2,4) //Seq.apply(1,2,3)
+  val accessedElement = aSequence(1) // the element at index 1 : 2
+
+  //vectors: fast Seq implement
+  val aVector = Vector(1,2,3,4,5)
+
+  //sets = no duplicates
+  val aSet = Set(1,2,3,4,5)//Set(1,2,3,4)
+  val setHas5 = aSet.contains(5)// false
+  val anAddedSet = aSet + 5 // Set(1,2,3,4)
+  val aRemovedSet = aSet - 3 //Set(1,2,4)
+
+  //ranges
+  val aRange = 1 to 1000
+  val twoByTwo = aRange.map(x=>2 * x).toList //List(2,4,6,8,...,2000)
+
+  //tuples
+  val aTuple = ("Bon Jovj","Helen",1982)
+
+  //maps
+  val aPhoneBook: Map[String,Int] = Map{
+    ("Jack",23232323)
+    ("Helen",22222)
+    "Ryan" -> 384934
+  }
+
+```
 
 
