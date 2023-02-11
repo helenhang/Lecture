@@ -153,7 +153,7 @@ status是XMLHttpRequest对象的一个属性，表示响应的http状态码
 503——服务器过载或暂停维修
 504——关口过载，服务器使用另一个关口或服务来响应用户，等待时间设定值较长
 505——服务器不支持或拒绝支请求头中指定的HTTP版本
-``
+```
 
 #### JSON
 * JavaScriptObjectNotation
