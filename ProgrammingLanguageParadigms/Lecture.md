@@ -43,12 +43,12 @@ PLP: Programming language Pragmatics
 Assignment: 40%
 Mid-term: 20%
 Final: 40%
-![picture 1](images/9d8641bee96690b3af07a95b161b696b22cf154b09d76c1d5484f23e04cd9040.png)  
+![picture 1](../images/9d8641bee96690b3af07a95b161b696b22cf154b09d76c1d5484f23e04cd9040.png)  
 
 **命令式**（**imperative**）语言是指一步步导向目标的一个过程。程序的执行往往限制在某些状态上。状态有global/local variable，它们是可以变化的。还有if else等control flow的结构。命令式语言常见的有C， C++，Java等等。大部分编程语言都有命令式的feature。
 **声明式**（**declarative**）语言描述目标，具体的执行由引擎，系统等等决定。function calls, high order functions, recursion等都是它的特点。比较常见的语言包括：Scala，Haskell，Lisp，Scheme等。
 
-![picture 2](images/7ef03cf3052cd1203e87292ef46bd1f96169ccc3643f20df60aea865d75bd3ee.png)  
+![picture 2](../images/7ef03cf3052cd1203e87292ef46bd1f96169ccc3643f20df60aea865d75bd3ee.png)  
 
 
 函数式语言当然还少不了以下特性：
@@ -151,7 +151,7 @@ There are three kinds of reduction:
   - α-conversion: changing bound variables;
   - β-reduction: applying functions to their arguments;
   - η-reduction: which captures a notion of extensionality.
-![picture 4](images/69638235183a2b304f0f100286385aa794480041e7d663d79e20d090f44623c2.png)  
+![picture 4](../images/69638235183a2b304f0f100286385aa794480041e7d663d79e20d090f44623c2.png)  
 
 **β-reduction**
 β-reduction captures the idea of function application. β-reduction is defined in terms of substitution: the β-reduction of (λx.M) N is M[x := N].[b]
@@ -159,14 +159,14 @@ There are three kinds of reduction:
 - For example, assuming some encoding of 2, 7, ×, we have the following β-reduction: (λn.n × 2) 7 → 7 × 2.
 
 - β-reduction can be seen to be the same as the concept of local reducibility in natural deduction, via the Curry–Howard isomorphism.
-![picture 3](images/b303d6cb6a9ad628e1eb27156296bb47b512d95696f23528dd0548b76f844ae6.png)  
+![picture 3](../images/b303d6cb6a9ad628e1eb27156296bb47b512d95696f23528dd0548b76f844ae6.png)  
 
 **η-reduction**
 - η-reduction (eta reduction) expresses the idea of extensionality,[24] which in this context is that two functions are the same if and only if they give the same result for all arguments. η-reduction converts between λx.f x and f whenever x does not appear free in f.
 
 - η-reduction can be seen to be the same as the concept of local completeness in natural deduction, via the Curry–Howard isomorphism.
-  ![picture 5](images/34c7ef98fb0f8239dc12559931968e74fd97292a4974178f27ef88c927b5a78e.png)  
-![picture 6](images/dd5ac53e640873cce085a7ac4407d0328df385cfd2cb8a19ff2fe7109e4a8b20.png)  
+  ![picture 5](../images/34c7ef98fb0f8239dc12559931968e74fd97292a4974178f27ef88c927b5a78e.png)  
+![picture 6](../images/dd5ac53e640873cce085a7ac4407d0328df385cfd2cb8a19ff2fe7109e4a8b20.png)  
 
 **Arithmetic in lambda calculus**
 There are several possible ways to define the natural numbers in lambda calculus, but by far the most common are the Church numerals, which can be defined as follows:
@@ -232,10 +232,10 @@ Scala functions are values:
 1. Inner functions: 代表function可以像value一样定义，使用
 	An inner function, or local definition.
 2. Higher-order functions: function可以当参数一样传入方法
-![picture 8](images/f9032318ede9ff991bb5ce62af19464d15f1139c5c1bc9f4c10fb01320dba147.png)  
+![picture 8](../images/f9032318ede9ff991bb5ce62af19464d15f1139c5c1bc9f4c10fb01320dba147.png)  
 3. Polymorphic functions：代表function可以当作参数一样传入另一个function，从而实现了多态。是generic吧，泛型。
 4. Anonymous Functions: 匿名函数，因为function可以像变量，structure一样，不用强定义一个名字。
-![picture 9](images/e0c32c59841aca6d6fd9920c12ed115e0bdb04e1d6d906bd695246767bced10f.png)  
+![picture 9](../images/e0c32c59841aca6d6fd9920c12ed115e0bdb04e1d6d906bd695246767bced10f.png)  
 https://medium.com/@ayanonagon/the-y-combinator-no-not-that-one-7268d8d9c46
 
 
@@ -318,7 +318,7 @@ Benefit of exeption
           - caller把如果是exception要做什么的function也传进来
 
 ###solution: option data type
-![picture 1](images/45fc76441d9cdf0cb89e5e3ec10882cef91e81d0441e150c4bd7337af945aa6f.png)  
+![picture 1](../images/45fc76441d9cdf0cb89e5e3ec10882cef91e81d0441e150c4bd7337af945aa6f.png)  
 
 - represent-explicitly- in return type that function may not always have an answer: Defer to the caller for error-handling
 - has tow cases: some, for when it is definded; None, for when it is underind
@@ -329,7 +329,7 @@ Benefit of exeption
   - frees us from writing boiler-plate that comes with exception-handling code
 ### basic functions on option
 - many List functions have their analogs for option:
-  - ![picture 2](images/64205d221ba2be7df4def5124e1c5303d85f63359707fa3e97ecf93a5642c9c7.png)  
+  - ![picture 2](../images/64205d221ba2be7df4def5124e1c5303d85f63359707fa3e97ecf93a5642c9c7.png)  
 **？？？**
 default means lazy evaluate
 

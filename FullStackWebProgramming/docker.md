@@ -18,4 +18,4 @@
 
 Ajax原来只是别用form就行
 不然会一直提交
-![picture 1](images/9c848bd2acf63e1692c6ca7f8d32f6d8a3f47682876a3db8a209f450fbfa8c06.png)  
+![picture 1](../images/9c848bd2acf63e1692c6ca7f8d32f6d8a3f47682876a3db8a209f450fbfa8c06.png)  

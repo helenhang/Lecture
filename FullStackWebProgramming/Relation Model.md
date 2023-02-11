@@ -31,7 +31,7 @@ Introduction
 | Identifier | Primary Key |
 | Pool of legal values | Domain|
 
-![picture 1](images/ce1ad2522976811df258d62a35e062d8aa86fbe33b93c03a8fd21275cca631fb.png)  
+![picture 1](../images/ce1ad2522976811df258d62a35e062d8aa86fbe33b93c03a8fd21275cca631fb.png)  
 
 #### Domain
 
@@ -109,7 +109,7 @@ Introduction
   - Selection
   - Projection
     - combine，是选列吗？对的，select 后面的，就是运用projection
-    - ![picture 2](images/19bcf433c939c979a928f9a941bab12d2153cf116ee7d709a3be81e925c306d5.png)  
+    - ![picture 2](../images/19bcf433c939c979a928f9a941bab12d2153cf116ee7d709a3be81e925c306d5.png)  
 
   - Cartesian Product
     - 笛卡尔乘积
@@ -121,16 +121,16 @@ Introduction
     - 合集-交集
   - Join(s)
     - inner join
-      - ![picture 4](images/7fc3dc223fea9ef83131f6845f71ff27dc06eff43b8ae49e629ee685fcfa4451.png)  
+      - ![picture 4](../images/7fc3dc223fea9ef83131f6845f71ff27dc06eff43b8ae49e629ee685fcfa4451.png)  
     - outter join
-      - ![picture 5](images/ed8447727a71bfabdcf8ca3a6df74be9d198de0174af034480c60ed038e6c5ee.png)  
+      - ![picture 5](../images/ed8447727a71bfabdcf8ca3a6df74be9d198de0174af034480c60ed038e6c5ee.png)  
     - natural join
       - `SELECT * FROM employee NATURAL JOIN department;`
   - Division
-![picture 6](images/afbe3ffdc5d60549ce1bfbc80b0ad0b00e319c1281d28a79eaa4f936089ac686.png)  
+![picture 6](../images/afbe3ffdc5d60549ce1bfbc80b0ad0b00e319c1281d28a79eaa4f936089ac686.png)  
 
 SQL 可以完成各种数据操作，例如过滤、分组、排序、限定数量等；所有这些操作的对象都是关系表，结果也是关系表。
-  ![picture 3](images/8e86c816019ab9d5b7ac33ff8e6f0b793b8c55010cffa5a882d461d1f0ced659.png)  
+  ![picture 3](../images/8e86c816019ab9d5b7ac33ff8e6f0b793b8c55010cffa5a882d461d1f0ced659.png)  
 
 那么岂不是，数据库需要所有的set相关的理论？和set 相关的理论都有哪些？我能想到的只是笛卡尔乘积
 

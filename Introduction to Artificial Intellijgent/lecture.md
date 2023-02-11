@@ -89,7 +89,7 @@ Solution:
 **Frontier**:
 •	Stack: LIFO. Depth-first-search.
 •	Queue: FIFO. Breadth-first-search.
-![picture 1](images/d4b2b9e0e7a56f1dd0766a456cc7a4d633dd57e3f0b2e793d9bcc0a744054f69.png)  
+![picture 1](../images/d4b2b9e0e7a56f1dd0766a456cc7a4d633dd57e3f0b2e793d9bcc0a744054f69.png)  
 
 BFS用于找到每个边的权值是一样的图的最短路径，如果图中每个边的权值不一样了，就用到了UCS。
 ##算法流程
@@ -101,7 +101,7 @@ BFS用于找到每个边的权值是一样的图的最短路径，如果图中�
 3.  如果frontier为空还没有找到终点，则没有到达终点的最短路径
 
 Search 算法分为两种：**知情算法**和**不知情算法**。
-![picture 2](images/0070d9630e522387d6fb452a7fa0b42439f4adb296e6c32735227b2bd1fbffbd.png)  
+![picture 2](../images/0070d9630e522387d6fb452a7fa0b42439f4adb296e6c32735227b2bd1fbffbd.png)  
 Uninformed Search，顾名思义就是消息不灵通的search，被蒙蔽的search，也可以叫做Blind Search（盲目搜索）或者Brute-force Search（也就是传说中的暴力解法）
 ### Uninformed Search不知情算法有：
 1. **Depth-First Search（DFS）深度优先**
@@ -233,7 +233,7 @@ h ( n ) ≤ c ( n , a , n ′ ) + h ( n ′ )
 - Local search is a search algorithm that maintains a single node and searches by moving to a neighboring node. 
 - This type of algorithm is different from previous types of search that we saw. Whereas in maze solving, for example, we wanted to find the quickest way to the goal, local search is interested in finding the best answer to a question. 
 - Often, local search will bring to an answer that is not optimal but “good enough,” conserving computational power. 
-  ![picture 4](images/bb2c994470431669d21f95ac7c1eb0d00b108c3e732d9fd675b5221788675570.png)  
+  ![picture 4](../images/bb2c994470431669d21f95ac7c1eb0d00b108c3e732d9fd675b5221788675570.png)  
 
 ## Hill climbing
 ```
@@ -244,7 +244,7 @@ if VALUE(neighbor) ≤ VALUE(current) then return current current ← neighbor
 ```
 **Local search** algorithms can also solve **optimization problems**, in which the aim is to find the best state according to an objective function.
 **Local search** algorithms operate by searching from a start state to neighboring states, without keeping track of the paths, nor the set of states that have been reached. That means they are not systematic
-![picture 3](images/c07a68110f3e9aa4205bc79cec5a09e249f98d2915f827dcfec0017b80f372d1.png)  
+![picture 3](../images/c07a68110f3e9aa4205bc79cec5a09e249f98d2915f827dcfec0017b80f372d1.png)  
 
 hill climbing variants
 | variant  | definition |
@@ -298,7 +298,7 @@ maintaining arc-consistency
 
 
 ##### 正式来说，约束满足问题定义为一个三元组
-![picture 5](images/4113e9d4ea9f2cee101a3eddc426d01621ac42122d1224b283c08d2293f424ba.png)  
+![picture 5](../images/4113e9d4ea9f2cee101a3eddc426d01621ac42122d1224b283c08d2293f424ba.png)  
 解决方法
 定义域有限的约束满足问题通常利用搜索方法来解决。最常用的技术是回溯法（**backtracking**）、约束传递**constraint propagation**，以及局部搜索**local search**的改良。
 
@@ -307,3 +307,9 @@ maintaining arc-consistency
 局部搜索方法是不完全满足的演算法。人们可能找到解决问题的方法，但这方法可能令我们失望。其反复更改变数来改进整个任务，而得以运作。在每一步，要更改少量变数的值，与整体目标数量的增加条件限制以满足的任务。最小冲突演算法是局部搜索演算法和基于特定CSPs原则。在实践中，局部搜索似乎工作当这些变化也受随机选择。整合搜索和局部搜索被开发了，导致混合演算法。
 
 如果一个定值不违反任何的条件限制，我们说这个定值是无矛盾的（consistent）。 如果一个定值包含了所有的变数，我们说这个定值是完备的（complete）。 如果一个定值无矛盾而且完备的，我们说这个定值是一个解（solution），这样的定值就是CSP的解。
+
+Random Guess
+Random Search
+Hill climbing
+Hill climbing  with long restart
+hill climbing with fast restart

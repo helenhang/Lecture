@@ -56,7 +56,7 @@ RUN npm add body-parser
 RUN npm add loadtest
 CMD ["/bin/bash"]
 ```
-![picture 1](images/754c347156c88142715efea98a80ea038eed5d9a1bcbf265c556b75468d33a14.png)  
+![picture 1](../images/754c347156c88142715efea98a80ea038eed5d9a1bcbf265c556b75468d33a14.png)  
 
 并没有执行npm add express
 只是缓存起来了
@@ -94,7 +94,7 @@ A promise can be in one of three states:
 * fulfilled — The operation has finished, and the promise is fulfilled with a value. This is analogous to returning a value from a synchronous function.
 * rejected — An error has occurred during the operation, and the promise is rejected with a reason. This is analogous to throwing an error in a synchronous function.
 懂了，是一个call back里面，用的是异步调用，不是同步
-![picture 2](images/6d25cf537716703a740090b7047daaafda42808a37d84f4a89836c51a0dd88e7.png)  
+![picture 2](../images/6d25cf537716703a740090b7047daaafda42808a37d84f4a89836c51a0dd88e7.png)  
 ```js
 const promise = new Promise((resolve, reject) => { // Perform some work (possibly asynchronous)
 // ...

@@ -12,9 +12,9 @@ are integers 3 or 4
 * List concatenation — written a ++ b — creates a new list, 
 without changing a or b
 * just like 3 + 4 creates a new number 7 without modifying 3 or 4  
-  ![picture 1](images/240dc6c170d31af33c5e2e040e7c3fb320ca4f878fd85874c171ffe7c945f304.png)  
-![picture 2](images/2a8f72d6f1404e74e4141bec0711aea3bf202cf2f8acc5527264827545eb094e.png)  
-![picture 3](images/bbf7bd03e74a3149230c7593d3d1bd8419d0f309fb0999bb59e3b69f7aeb6c72.png)  
+  ![picture 1](../images/240dc6c170d31af33c5e2e040e7c3fb320ca4f878fd85874c171ffe7c945f304.png)  
+![picture 2](../images/2a8f72d6f1404e74e4141bec0711aea3bf202cf2f8acc5527264827545eb094e.png)  
+![picture 3](../images/bbf7bd03e74a3149230c7593d3d1bd8419d0f309fb0999bb59e3b69f7aeb6c72.png)  
 
 Variadic functions in Scala
 The function apply in the object List is a variadic function, meaning it accepts zero or more arguments of type A:
@@ -23,7 +23,7 @@ def apply[A](as: A*): List[A] =
   if (as.isEmpty) Nil
   else Cons(as.head, apply(as.tail: _*))
 ```
-![picture 4](images/e977094d520f2990d06b57890c2e537b3752590d3c7f3f7d2e1a6b9ab80a9601.png)  
+![picture 4](../images/e977094d520f2990d06b57890c2e537b3752590d3c7f3f7d2e1a6b9ab80a9601.png)  
 
 ### DATA  SHARING 
 * How do we add / remove elements from an immutable data 
@@ -46,11 +46,11 @@ val ex1 = dropWhile(xs)(x => x < 4)
 ```
 
 Scala 编译器通常可以推断出表达式的类型，因此你不必明确地声明它。
-![picture 6](images/5f79cc5f11d984ada0426565b3daf2398b51d67f3e3919671b4c7166a2e8e53d.png)  
+![picture 6](../images/5f79cc5f11d984ada0426565b3daf2398b51d67f3e3919671b4c7166a2e8e53d.png)  
 上面和下面不一样的地方是，一个是dropWhile有两个参数，一个是dropWhile有一个参数，后面又跟了一个函数，一共两个argument list，但是实现起来，是先dropWhile(xs) return一个function，那个function 的参数是f。利用的是curring的原理。
-![picture 7](images/70ef8beafd43c05beebb42aec34bb35fedd60f65bf3b74b327f1fdf0e367028f.png)  
+![picture 7](../images/70ef8beafd43c05beebb42aec34bb35fedd60f65bf3b74b327f1fdf0e367028f.png)  
 image.png
-![picture 8](images/b420de503caea19587862a51747ab9ef4932e1598589b7e22a8fa05572b5c067.png)  
+![picture 8](../images/b420de503caea19587862a51747ab9ef4932e1598589b7e22a8fa05572b5c067.png)  
 
 
 ### Recursion over lists and generalizing to higher-order functions
@@ -66,7 +66,7 @@ def product(ds: List[Double]): Double = ds match {
 }
 ```
 
-![picture 5](images/4ec9d794160b2ca5a216339b9aec83bd03cfbd1b242021e7e88f896d8a0c7069.png)  
+![picture 5](../images/4ec9d794160b2ca5a216339b9aec83bd03cfbd1b242021e7e88f896d8a0c7069.png)  
 将f从foldRight的 参数放出来，是为了让f的输入列表不受foldRight的参数类型限制
 
 ##Lists in the Standard Library
@@ -101,7 +101,7 @@ Option[T] 是一个类型为 T 的可选值的容器： 如果值存在， Optio
 Option 有两个子类别，一个是 Some，一个是 None，
 * getOrElse() 方法
 你可以使用 getOrElse() 方法来获取元组中存在的元素或者使用其默认的值，实例如下：
-![picture 9](images/02985b2a176b4788dbc2778bb26858683c9ed5fd875ed3c27a333c1f4206b209.png)  
+![picture 9](../images/02985b2a176b4788dbc2778bb26858683c9ed5fd875ed3c27a333c1f4206b209.png)  
 option functinos: orelse
 ```scala
 def map [B] (f: A => B): Option[B] = this match {
@@ -153,7 +153,7 @@ soon as the first failure is encountered, without running f
 * Can use filter to convert successes into failures if the successful 
 values don’t match the given predicate
 * A common pattern is to transform an Option via calls to map, flatMap, and/or filter, and then use getOrElse to do error handling at the end
-![picture 10](images/8587fdc13982b74d717016c2a162e93f768e57c78e2b54fe315f1d443e1fb7cb.png)  
+![picture 10](../images/8587fdc13982b74d717016c2a162e93f768e57c78e2b54fe315f1d443e1fb7cb.png)  
 getOrElse converts from an Option[String] to a String, by 
 providing a default department in case the key "Joe" didn’t exist in 
 the Map or if Joe’s department was "Accounting"
@@ -220,15 +220,15 @@ lift(f) returns a function which maps None to None and
 applies f to the contents of Some.
   - f need not be aware of the Option type at all 
 
-![picture 11](images/372e348d65ab2053344a2476445873d341c8764aeb9b510e1e35dbf592923b6b.png)  
+![picture 11](../images/372e348d65ab2053344a2476445873d341c8764aeb9b510e1e35dbf592923b6b.png)  
 
-![picture 12](images/2bf15ac2f0b74174604cf636d48ba62dfe3da09f86a12a82db247129f9a9f2e9.png)  
+![picture 12](../images/2bf15ac2f0b74174604cf636d48ba62dfe3da09f86a12a82db247129f9a9f2e9.png)  
 
 try[A]: evaluate lazy, so it will go to the runtime
 Need to lift insuranceRateQuote
 def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
  a flatMap (aa => b map (bb => f(aa, bb)))
- ![picture 13](images/329495524d664eb0a37a7deb8b503c8714a9b42052aad14721c210094f2893f9.png)  
+ ![picture 13](../images/329495524d664eb0a37a7deb8b503c8714a9b42052aad14721c210094f2893f9.png)  
 ## Leture Feb10
  midterm room 105 wed， 7:00pm
 ### GENERALIZING TO LISTS
@@ -354,12 +354,12 @@ def map2[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C):
 For是干什么用的
 
 Either can be used in for-comprehensions:
-![picture 14](images/e52bcc5b2345e5e09059cda2237849bd676108ca8b87420119cd6b04b17dcf93.png)  
+![picture 14](../images/e52bcc5b2345e5e09059cda2237849bd676108ca8b87420119cd6b04b17dcf93.png)  
 
 Can implement versions of sequence and traverse for Either:
-![picture 15](images/d47c0b7e7a3eb8da4c8308eeedf696ee42fd3f3cc585bc626eb29f04877ef438.png)  
+![picture 15](../images/d47c0b7e7a3eb8da4c8308eeedf696ee42fd3f3cc585bc626eb29f04877ef438.png)  
 
-![picture 16](images/6816ee90b78499eb2deb4eb10c9423aafacda3b71f80a492918cab5d2d1024c0.png)  
+![picture 16](../images/6816ee90b78499eb2deb4eb10c9423aafacda3b71f80a492918cab5d2d1024c0.png)  
 
 
 

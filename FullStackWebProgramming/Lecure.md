@@ -6,8 +6,8 @@ Looking into the V8 engine
 * Callback Queue
 * Event Loop
 
-![picture 5](images/9e0b73583dd4e30fe00666600984cb9e6c5b2f7f03cba015130b5ef49a5d46c2.png)  
-![picture 6](images/6374af8ee9a44d80f5a30bee70f16013a5079fed537d4aeced476becc2fa7b51.png)  
+![picture 5](../images/9e0b73583dd4e30fe00666600984cb9e6c5b2f7f03cba015130b5ef49a5d46c2.png)  
+![picture 6](../images/6374af8ee9a44d80f5a30bee70f16013a5079fed537d4aeced476becc2fa7b51.png)  
 
 ### JS HTTP Requests
 JS & HTTP Requests
@@ -164,9 +164,9 @@ status是XMLHttpRequest对象的一个属性，表示响应的http状态码
   -  
 #### HTTP - Part 1
 * **Communication**
-  ![picture 7](images/dc362a480686db48b47b91ca918fb20b31aabb5a68b475e5579966e152006d4f.png)  
-![picture 8](images/aae8d06252649a488bac5a3adce8ac0c3585d256ff38bd27ffb15ebf3986ee53.png)  
-![picture 9](images/79c8bb463f314c5d28b7d2479c0189988ab17b97774e890d63b25c06cba2e35b.png)  
+  ![picture 7](../images/dc362a480686db48b47b91ca918fb20b31aabb5a68b475e5579966e152006d4f.png)  
+![picture 8](../images/aae8d06252649a488bac5a3adce8ac0c3585d256ff38bd27ffb15ebf3986ee53.png)  
+![picture 9](../images/79c8bb463f314c5d28b7d2479c0189988ab17b97774e890d63b25c06cba2e35b.png)  
 
 * **TCP & UDP**
 * **Transmission Control Protocol**
@@ -189,7 +189,7 @@ status是XMLHttpRequest对象的一个属性，表示响应的http状态码
 	- Web runs on TCP
 	- Guaranteed delivery
 	- Two-way communication
-![picture 10](images/d4208cf300d7e31f03e27bbee09de00ef2fd6c37fab3fbec9e3f845a79ce04dd.png)  
+![picture 10](../images/d4208cf300d7e31f03e27bbee09de00ef2fd6c37fab3fbec9e3f845a79ce04dd.png)  
 
 * **TCP/IP COMMUNICATION**
 
@@ -212,7 +212,7 @@ How does DNS work ?
   * Each computer knows IP of at least one DNS server
   * If your DNS server does not know the requested name it polls another DNS server
 * **HTTP – HYPERTEXT TRANSFER PROTOCOL**
-  ![picture 11](images/02195001442c712015b92b1fbdf98243c1e04dcdf2775f7b886dc4f32a4597fb.png)  
+  ![picture 11](../images/02195001442c712015b92b1fbdf98243c1e04dcdf2775f7b886dc4f32a4597fb.png)  
 * HTTP VERSIONS
   * HTTP 0.9 – supports only GET
   * HTTP/1.0 (1996)
@@ -221,17 +221,17 @@ How does DNS work ?
   * HTTP/3 (2022)
 	- QUIC
 	- 
-![picture 14](images/459c6520c0414a2e6e672a4a0e0a972967d02925c9a5ef0383a5a8d6aa4e64f0.png)  
-![picture 15](images/914c1006755c856ecebc61feb3e6b71ef709c3a83851433c993c10a97444f708.png)  
-![picture 16](images/c8a659dd67bbf06b351eeaf20f5ec7c420766881585ceb92b34d4e3633154b3b.png)  
+![picture 14](../images/459c6520c0414a2e6e672a4a0e0a972967d02925c9a5ef0383a5a8d6aa4e64f0.png)  
+![picture 15](../images/914c1006755c856ecebc61feb3e6b71ef709c3a83851433c993c10a97444f708.png)  
+![picture 16](../images/c8a659dd67bbf06b351eeaf20f5ec7c420766881585ceb92b34d4e3633154b3b.png)  
 
-![picture 17](images/2bad96cc07d5d0f58deed39d90a45f578f0b27c0f685d41d1dca20b44dc52de9.png)  
+![picture 17](../images/2bad96cc07d5d0f58deed39d90a45f578f0b27c0f685d41d1dca20b44dc52de9.png)  
 
-![picture 18](images/1f6eaedfed6e805cb9bcc6babbe032b10f946f80780b319929cb8842b2e95f2f.png)  
+![picture 18](../images/1f6eaedfed6e805cb9bcc6babbe032b10f946f80780b319929cb8842b2e95f2f.png)  
 
-![picture 19](images/483e29618c7fb54666647b928a4bd6e4e487706685072c356c240095b9a057a3.png)  
+![picture 19](../images/483e29618c7fb54666647b928a4bd6e4e487706685072c356c240095b9a057a3.png)  
 
-![picture 20](images/cd83e47126f6bdec202ec690fa77c81f36acf79ed0fb33b45cd234071f32a7f4.png) 
+![picture 20](../images/cd83e47126f6bdec202ec690fa77c81f36acf79ed0fb33b45cd234071f32a7f4.png) 
 
 * **HTTP 3**
 
@@ -431,8 +431,8 @@ router.route('/scifi/:bookid')
 .put((req, res, next) => {});
 ```
 
-![picture 3](images/605910ae5e50ddfe6ba3bdf5722c390d84f246698cb7eb5dcbb14bb2434d895e.png)  
-![picture 4](images/605910ae5e50ddfe6ba3bdf5722c390d84f246698cb7eb5dcbb14bb2434d895e.png)  
+![picture 3](../images/605910ae5e50ddfe6ba3bdf5722c390d84f246698cb7eb5dcbb14bb2434d895e.png)  
+![picture 4](../images/605910ae5e50ddfe6ba3bdf5722c390d84f246698cb7eb5dcbb14bb2434d895e.png)  
 
 
 ## Lecute Feb 3
