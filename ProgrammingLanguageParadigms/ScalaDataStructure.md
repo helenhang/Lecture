@@ -52,7 +52,7 @@
   * perform other side effects
 * Functional data structures are immutable
   
- Lists
+ #### Lists
 * An empty list — written List( ) or Nil — is as immutable as 
 are integers 3 or 4 
 * List concatenation — written a ++ b — creates a new list, 
@@ -62,7 +62,7 @@ without changing a or b
 ![picture 2](../images/2a8f72d6f1404e74e4141bec0711aea3bf202cf2f8acc5527264827545eb094e.png)  
 ![picture 3](../images/bbf7bd03e74a3149230c7593d3d1bd8419d0f309fb0999bb59e3b69f7aeb6c72.png)  
 
-Variadic functions in Scala
+**Variadic functions** in Scala
 The function apply in the object List is a variadic function, meaning it accepts zero or more arguments of type A:
 ```scala
 def apply[A](as: A*): List[A] =
@@ -129,7 +129,7 @@ case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]
 ```
 
-4.3.1. Usage patterns for Option
+#### 4.3.1. Usage patterns for Option
 Basic Functions on Option
 
 Listing 4.2. The Option data type
