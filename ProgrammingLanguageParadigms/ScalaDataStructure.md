@@ -114,7 +114,7 @@ def product(ds: List[Double]): Double = ds match {
 
 ![picture 5](../images/4ec9d794160b2ca5a216339b9aec83bd03cfbd1b242021e7e88f896d8a0c7069.png)  
 将f从foldRight的 参数放出来，是为了让f的输入列表不受foldRight的参数类型限制
-
+1In the standard library, map and flatMap are methods of List.
 ##Lists in the Standard Library
 * def take(n: Int): List[A] —Returns a list consisting of the first n elements of this
 * def takeWhile(f: A => Boolean): List[A] —Returns a list consisting of the longest valid prefix of this whose elements all pass the predicate f

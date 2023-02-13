@@ -568,3 +568,48 @@ Patterns ::= Pattern {"," Patterns}
 ```
 ![picture 1](../images/8d60eef5f06c545ca66a784af87b0e8712119ebe975a0fc44a078929a72969c6.png)  
 
+```scala
+  /**
+   * 1  - context parameters / arguments
+   */
+  val aList = List(2,1,3,4)
+  val anOrderedList = aList.sorted // contextual argument: (descendingOrdering)
+  //ordering
+  //val descendingOrdering: Ordering[Int] = Ordering.fromLessThan(_>_) //(a,b) => a>b
+  //Given descendingOrdering1: Ordering[Int] = Ordering.fromLessThan(_>_) //(a,b) => a>b
+
+  //analogous to an implicit val
+  trait Combinator[A]{
+    def combine(x:A, y:A):A
+  }
+  /*
+  def combineAll[A](list: List[A])(using combinator: Combinator[A]) : A =
+    list.reduce((a,b)=>combinator.combine(a,b))
+
+
+   */
+
+  //combineAll(List(1,2,3.4))
+
+  /*
+  Given places
+  - local scope
+  - imported scope: import yourpackage.given
+  - the companions of all the types involved in the call
+    - companion of List
+    - companion of Int
+   */
+
+  /*
+  context bounds
+   */
+  /*
+  2. extension methods
+   */
+  /*
+  extension(string:String)
+  def greet():String - new Person(string).
+
+   */
+```
+
