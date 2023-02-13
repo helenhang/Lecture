@@ -122,7 +122,7 @@ def product(ds: List[Double]): Double = ds match {
 * def exists(f: A => Boolean): Boolean —Returns true if any element of this passes the predicate f
 * scanLeft and scanRight—Like foldLeft and foldRight, but they return the List of partial results rather than just the final accumulated value
 
-###4.3. The Option data type
+### 4.3. The Option data type
 ```scala
 sealed trait Option[+A]
 case class Some[+A](get: A) extends Option[A]
