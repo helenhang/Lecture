@@ -1,5 +1,18 @@
 
 ## Functional Language: 
+Functional programs don’t update variables or modify 
+mutable data structures
+Questions:
+• What types of data structures?
+• How are they defined?
+• How are they used?
+Plan
+• Learn about:
+• Using functional data structures
+• Defining data types
+• Pattern Matching
+• Writing and generalizing pure functions
+
 ### First-class Functions as values
 Functions as values
 Scala functions are values:

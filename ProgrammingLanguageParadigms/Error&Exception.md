@@ -146,10 +146,16 @@ length: 6
  
 
 ### basic functions on option
-
-1. usage patterns for option
-   1. can factor out common patterns of error handling via higher-order functions
-      1. frees us from writing boiler-plate that comes with exception-handling code
+#### 4.3. The Option data type
+```scala
+sealed trait Option[+A]
+case class Some[+A](get: A) extends Option[A]
+case object None extends Option[Nothing]
+```
+Option是一个collection，最多只有一个element，要么是none，要么是里面的东西，这个东西可以是一个值类型，也可是是另一个collection
+##### 4.3.1. Usage patterns for Option
+1. can factor out common patterns of error handling via higher-order functions
+   1. frees us from writing boiler-plate that comes with exception-handling code
 
 2. **many List functions have their analogs for option**:
 所以把option可以看成只有一个element的List，要么none，要么Some
@@ -185,22 +191,8 @@ def filter (f: A => Boolean): Option[A] = this match {
 def filter (f: A => Boolean): Option[A] =
  flatMap(a => if (f(a)) Some(a) else None)
 ```
-### 4.3. The Option data type
-```scala
-sealed trait Option[+A]
-case class Some[+A](get: A) extends Option[A]
-case object None extends Option[Nothing]
-```
-Option是一个collection，最多只有一个element，要么是none，要么是里面的东西，这个东西可以是一个值类型，也可是是另一个collection
-#### 4.3.1. Usage patterns for Option
-Basic Functions on Option
+![picture 9](../images/02985b2a176b4788dbc2778bb26858683c9ed5fd875ed3c27a333c1f4206b209.png) 
 
-Listing 4.2. The Option data type
-
-Listing 4.3. Using Option
-
-
-Option functions: Map, get orelse
 ```scala
 def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = a flatMap (aa => b map (bb =>f(aa, bb)))
 ```
@@ -208,7 +200,7 @@ Option[T] 是一个类型为 T 的可选值的容器： 如果值存在， Optio
 Option 有两个子类别，一个是 Some，一个是 None，
 * getOrElse() 方法
 你可以使用 getOrElse() 方法来获取元组中存在的元素或者使用其默认的值，实例如下：
-![picture 9](../images/02985b2a176b4788dbc2778bb26858683c9ed5fd875ed3c27a333c1f4206b209.png)  
+ 
 option functinos: orelse
 ```scala
 def map [B] (f: A => B): Option[B] = this match {
