@@ -164,17 +164,20 @@ def flatMap [B] (f: A => Option[B]): Option[B] = this match {
     case Some(a) => f(a)
 }
 def flatMap [B] (f: A => Option[B]): Option[B] = map(f) getOrElse None
-```
-**？？？**
-default means lazy evaluate
 
-# Lab Feb
-polymorphism Primer
-Polynro : the logiic of a method stays the same for different types
+def orElse [B>:A](ob: => Option[B]): Option[B] = this match {
+ case None => ob 
+ case _ => this
+}
+def orElse [B>:A] (ob: => Option[B]): Option[B] = 
+ this map (Some(_)) getOrElse ob
+
+def filter (f: A => Boolean): Option[A] = this match {
+ case Some(a) if f(a) => this
+ case _ => None
+}
+
+def filter (f: A => Boolean): Option[A] =
+ flatMap(a => if (f(a)) Some(a) else None)
 ```
-def drop(l)
-```
-implement foldRight or foldLeft
-def foldLeft
-def foldRight
-val 
+
