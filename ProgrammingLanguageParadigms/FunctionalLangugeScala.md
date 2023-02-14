@@ -566,7 +566,7 @@ SimplePattern ::= "_"
 | XmlPattern
 Patterns ::= Pattern {"," Patterns}
 ```
-![picture 1](../images/8d60eef5f06c545ca66a784af87b0e8712119ebe975a0fc44a078929a72969c6.png)  
+![picture 1](../images/8d60eef5f06c545ca66a784af87b0e8712119ebe975a0fc44a078929a72969c6.png)
 
 ```scala
   /**

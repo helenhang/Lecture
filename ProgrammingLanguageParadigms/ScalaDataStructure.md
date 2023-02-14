@@ -393,7 +393,7 @@ Never have to modify an existing function
 
 for-comprehensions are syntactic sugar for the latter kind of nested use of a number of flatMap applications followed by an application of map.
 
-#### L I M I T A T I O N S   O F   O P T I O N S 
+#### LIMITATIONS OF OPTIONS 
 
 Option doesn’t tell us anything about what went wrong
 • It just gives us None, indicating that there’s no value
@@ -403,14 +403,14 @@ Option doesn’t tell us anything about what went wrong
 that error actually was 
 option只能告诉出错了，得到了None，但是不能看到为什么，either就可以返回，left可以告诉出错了，同时，left的内容告诉了为什么出错
 
-#### E I T H E R   D A T A   T Y P E 
+#### EITHER  DATA  TYPE 
 A simple extension to **Option**, which lets us **track a reason for the failure**
 ``` scala
 sealed trait Either[+E, +A]
 case class Left[+E](value: E) extends Either[E, Nothing] 
 case class Right[+A](value: A) extends Either[Nothing, A]
 ```
-#### E I T H E R   D A T A   T Y P E 
+#### EITHER   DATA   TYPE 
 • Either has only two constructors: each case carries a value
 * It represents — in a very general way — values that can be one of two things (In other words, a disjoint union of two types)
 * Right is reserved for the success (i.e., right / correct) case 
@@ -453,7 +453,7 @@ def flatMap[EE >: E, B](f: A => Either[EE, B]):
     case Right(a) => f(a)
   }
   ```
-B A S I C   F U N C T I O N S   O N   E I T H E R
+### BASIC   FUNCTIONS   ON EITHER
 ```scala
 def orElse[EE >: E, AA >: A](b: => Either[EE, AA]): 
   Either[EE, AA] = this match {
