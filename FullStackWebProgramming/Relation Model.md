@@ -217,4 +217,29 @@ RM versus Relational DBMS
 
 ### Lecture Feb 10
 
+### Lecture Feb 13
+#### join
+![picture 1](../images/578e63beea2fe3ab835a13891d5e27ebd73ee4929b83149172aa067b611c22c7.png)  
+
+#### view
+因为privileges的原因，view里面是已经生成的sql的result，然后可以在这些生成的view里面搜索
+`mysql> CREATE VIEW test.v AS SELECT * FROM t;`
+
+#### transaction
+
+```sql
+begin try
+  START TRANSACTION;
+  SET @transAmt = '500';
+  SELECT @availableAmt:=ledgerAmt FROM accTable WHERE customerId=1 FOR UPDATE; UPDATE accTable SET ledgerAmt=ledgerAmt-@transAmt WHERE customerId=1;
+  UPDATE accTable SET ledgerAmt=ledgerAmt+@transAmt WHERE customerId=2; COMMIT;
+end try
+begin catch
+  rollback transaction
+end catch
+```
+COMMIT , ROLLBACK and AUTOCOMMIT
+
+next react???
+
 

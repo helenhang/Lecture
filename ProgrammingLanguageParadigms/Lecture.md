@@ -394,6 +394,20 @@ Second: put your name -> draft paper
 
  **flatMap**,**comprehension**, either(no) 
  3 problem, one function, cases, dea with different sequenci hapeen, result
+![picture 1](../images/7d4dd913500d2b04e49bb94a96134ee7e94d7fd58361a8e8c3fc12f0a6c7806e.png)  
+
+#### Lab Feb 13
+
+remove option
+option
+review lecture and note
+quiz on note
+foldLeft
+HOF
+Why isn't functional
+non-functional
+
+textbook for exercise
 
 
 

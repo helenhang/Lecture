@@ -1,4 +1,73 @@
 
+## Functional Language: 
+### First-class Functions as values
+Functions as values
+Scala functions are values:
+•	Can be assigned to variables
+•	Can be stored in data structures
+•	Can be passed as arguments to functions
+
+1. Inner functions: 代表function可以像value一样定义，使用
+	An inner function, or local definition.
+2. Higher-order functions: function可以当参数一样传入方法
+![picture 8](../images/f9032318ede9ff991bb5ce62af19464d15f1139c5c1bc9f4c10fb01320dba147.png)  
+3. Polymorphic functions：代表function可以当作参数一样传入另一个function，从而实现了多态。是generic吧，泛型。
+4. Anonymous Functions: 匿名函数，因为function可以像变量，structure一样，不用强定义一个名字。
+![picture 9](../images/e0c32c59841aca6d6fd9920c12ed115e0bdb04e1d6d906bd695246767bced10f.png)  
+https://medium.com/@ayanonagon/the-y-combinator-no-not-that-one-7268d8d9c46
+
+
+
+### Singly Linked Lists
+*	List[+A] not only A type inside. But also the subtype of A
+*	Sealed : all implementations must be list in this file
+*	List(“a”,”b”) ===Cons(“a”, cons(“b”,Nil))
+* _:  is used instead of variable name to in
+* List(1,2,3) match {case _=>42}无论什么，都返回42
+* List(1,2,3) match {case Cons(h,_) =>h}这个是return head
+### Pattern matching:
+A pattern may contain:
+*	Literals
+*	Variables
+*	Data constructors(may be nested)
+
+A pattern matches the target if there exists an assignment of variables in the pattern to subexpressions of the target that make it structurally equivalent to the target.
+
+The resulting expression for a matching case will then have access to these variable assignments in its local scope.
+
+#### 伴生对象(companion object)
+当单例对象与某个类共享同一个名称时，它就被称为是这个类的伴生对象(companion object)。类和它的伴生对象必须定义在同一个源文件中。类被称为是这个单例对象的伴生类(companion class)。类和它的伴生对象可以互相访问其私有成员。
+```java
+class Account {
+    val id = Account.newUniqueNumber()
+    private var balance = 0.0
+    def deposit(amount: Double){ balance += amount }
+    ...
+}
+
+object Account { //伴生对象
+        private var lastNumber = 0
+        def newUniqueNumber() = { lastNumber += 1; lastNumber}
+    }
+```
+注意：
+- 类的伴生对象可以被访问，但并不在作用域当中。Account类必须通过Account.newUniqueNumber()来调用伴生对象的方法。
+- 在REPL中，要同时定义类和对象，必须用粘贴模式。键入:paste，然后键入或粘贴类和对象的定义，最后一Ctrl+D退出粘贴模式。
+
+将伴生对象作为工厂使用
+我们通常将伴生对象作为工厂使用。
+下面是一个简单的例子，可以不需要使用’new’来创建一个实例了。
+```java
+class Bar(foo: String)
+
+object Bar {
+  def apply(foo: String) = new Bar(foo)
+}
+```
+
+## Lecture Feb 3
+
+
 ### Basic 语法
 ```scala
 //In Scala we don't use loops or Iteration, we use Recursion!
@@ -71,7 +140,7 @@ def apply[A](as: A*): List[A] =
 ```
 ![picture 4](../images/e977094d520f2990d06b57890c2e537b3752590d3c7f3f7d2e1a6b9ab80a9601.png)  
 
-### DATA  SHARING 
+#### DATA  SHARING 
 * How do we add / remove elements from an immutable data 
 structure?
     - We don’t
@@ -79,7 +148,7 @@ structure?
     - We reuse the parts which are not changing (data 
 sharing)
     - Sharing is safe because the shared structure is immutable.
-### Improving type inference for higher-order functions
+#### Improving type inference for higher-order functions
 高阶函数，就能能把function赋值给一个变量，function能当参数
 ```scala
 def dropWhile[A](as: List[A])(f: A => Boolean): List[A] =
@@ -93,7 +162,10 @@ val ex1 = dropWhile(xs)(x => x < 4)
 
 Scala 编译器通常可以推断出表达式的类型，因此你不必明确地声明它。
 ![picture 6](../images/5f79cc5f11d984ada0426565b3daf2398b51d67f3e3919671b4c7166a2e8e53d.png)  
-上面和下面不一样的地方是，一个是dropWhile有两个参数，一个是dropWhile有一个参数，后面又跟了一个函数，一共两个argument list，但是实现起来，是先dropWhile(xs) return一个function，那个function 的参数是f。利用的是curring的原理。
+上面和下面不一样的地方是，
+  - 一个是dropWhile有两个参数，
+  - 一个是dropWhile有一个参数，后面又跟了一个函数，一共两个argument list，但是实现起来，是先dropWhile(xs) return一个function，那个function 的参数是f。
+    - 利用的是curring的原理。
 ![picture 7](../images/70ef8beafd43c05beebb42aec34bb35fedd60f65bf3b74b327f1fdf0e367028f.png)  
 image.png
 ![picture 8](../images/b420de503caea19587862a51747ab9ef4932e1598589b7e22a8fa05572b5c067.png)  
@@ -114,7 +186,7 @@ def product(ds: List[Double]): Double = ds match {
 
 ![picture 5](../images/4ec9d794160b2ca5a216339b9aec83bd03cfbd1b242021e7e88f896d8a0c7069.png)  
 将f从foldRight的 参数放出来，是为了让f的输入列表不受foldRight的参数类型限制
-1In the standard library, map and flatMap are methods of List.
+1. In the standard library, map and flatMap are methods of List.
 ##Lists in the Standard Library
 * def take(n: Int): List[A] —Returns a list consisting of the first n elements of this
 * def takeWhile(f: A => Boolean): List[A] —Returns a list consisting of the longest valid prefix of this whose elements all pass the predicate f
@@ -128,7 +200,7 @@ sealed trait Option[+A]
 case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]
 ```
-
+Option是一个collection，最多只有一个element，要么是none，要么是里面的东西，这个东西可以是一个值类型，也可是是另一个collection
 #### 4.3.1. Usage patterns for Option
 Basic Functions on Option
 
@@ -141,8 +213,6 @@ Option functions: Map, get orelse
 ```scala
 def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = a flatMap (aa => b map (bb =>f(aa, bb)))
 ```
-**option到底是个什么
-为什么不把None做成一个object of any type？**
 Option[T] 是一个类型为 T 的可选值的容器： 如果值存在， Option[T] 就是一个 Some[T] ，如果不存在， Option[T] 就是对象 None 
 Option 有两个子类别，一个是 Some，一个是 None，
 * getOrElse() 方法
@@ -183,8 +253,7 @@ def filter (f: A => Boolean): Option[A] =
      flatMap(a => if (f(a)) Some(a) else None)
 ```
 example:
-Variance function: If mean of sequence is m, variance is mean of 
-math.pow(x-m, 2).  
+Variance function: If mean of sequence is m, variance is mean of math.pow(x-m, 2).  
 * Implement this using flatMap
 ```scala
 def vaiance(xs:Seq[Doulb])): Option[Double]=
@@ -195,14 +264,14 @@ def vaiance(xs:Seq[Doulb])): Option[Double]=
 * Can construct a computation with multiple stages:
 * Any stage may fail, and the computation will abort as 
 soon as the first failure is encountered, without running f 
-
 * Can use filter to convert successes into failures if the successful 
 values don’t match the given predicate
 * A common pattern is to transform an Option via calls to map, flatMap, and/or filter, and then use getOrElse to do error handling at the end
+  
 ![picture 10](../images/8587fdc13982b74d717016c2a162e93f768e57c78e2b54fe315f1d443e1fb7cb.png)  
+
 getOrElse converts from an Option[String] to a String, by 
-providing a default department in case the key "Joe" didn’t exist in 
-the Map or if Joe’s department was "Accounting"
+providing a default department in case the key "Joe" didn’t exist in the Map or if Joe’s department was "Accounting"
 
 4.4. The Either data type
 ```scala
@@ -211,20 +280,18 @@ case class Left[+E](value: E) extends Either[E, Nothing]
 case class Right[+A](value: A) extends Either[Nothing, A]
 ```
 
-mid-term next Wed 7:00, no class
-
 Usage Scenarios IV
 * orElse is similar to getOrElse, except that: 
   - We return another Option if the first is undefined 
   - This is often useful when we need to chain together possibly failing computations, trying the second if the first hasn’t succeeded
 
 我的问题： 为什么不把None做成Object的子类，像java一样，做一个check就可以了？？？
+回答：为了去掉对于null的check，所以做了一个option，这样对于collection，null和没有数据是一样的处理
 
 Can convert None to an exception
       - o.getOrElse(throw new Exception("FAIL")) 
 * General rule of thumb: 
-    - Use exceptions only if no reasonable program would ever catch 
-the exception
+    - Use exceptions only if no reasonable program would ever catch the exception
     - If for some callers the exception might be a recoverable error, we use Option (or Either, discussed later) to give them flexibility 
 
 我懂了，因为一连串的计算，有很多种可能出错，用这个能指定是哪一种error，哪儿出错了
@@ -240,14 +307,12 @@ handle None when we’re ready
 from A, and the compiler won’t let us forget to explicitly defer or 
 handle the possibility of None
 
-#### L I F T I N G   F U N C T I O N S   T O   O P E R A T E   O N   
-O P T I O N 
+#### L I F T I N G   F U N C T I O N S   T O   O P E R A T E   O N   O P T I O N 
 • May seem like our entire code will be infected with Options
   - That every function will need to be modified to deal with Options
   - But not really: We can lift ordinary functions to become functions which 
 deal with Options
-• map lets us operate on values of type Option[A] using a function of type A => B, 
-returning Option[B]
+• map lets us operate on values of type Option[A] using a function of type A => B, returning Option[B]
   - Turns a function f of type A => B into a function of type Option[A] => Option[B] 
   - Let’s make this explicit: 
 ```
@@ -276,14 +341,14 @@ def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
  a flatMap (aa => b map (bb => f(aa, bb)))
  ![picture 13](../images/329495524d664eb0a37a7deb8b503c8714a9b42052aad14721c210094f2893f9.png)  
 ## Leture Feb10
- midterm room 105 wed， 7:00pm
-### GENERALIZING TO LISTS
+
+#### GENERALIZING TO LISTS
 
 change a List of Option, to Option of List, so inside the values are good values
 
 • What if we have to map over a list using a function that might fail?
 • May want to place the entire resulting list in an Option
-```
+```scala
  def sequence[A](a: List[Option[A]]): Option[List[A]] =
  a match {
   case Nil => Some(Nil)
@@ -305,11 +370,11 @@ change a List of Option, to Option of List, so inside the values are good values
  ```
  Scala provides a syntactic construct called **for-comprehension** that is automatically expanded to a series of flatMap and map calls
  ##### for-comprehension
-• A for-comprehension consists of: 
-• A sequence of bindings — like aa <- a — inside a pair of braces
-•  A yield after the closing brace, which may make use of values on the left hand side of  <- binding. 
-• The compiler desugars the bindings to flatMap calls, with the final binding and **yield** being converted to a call to map. 
-• Example: map2 can be implemented using for-comprehension as follows:
+* A for-comprehension consists of: 
+  - A sequence of bindings — like aa <- a — inside a pair of braces
+  - A yield after the closing brace, which may make use of values on the left hand side of  <- binding. 
+  -  The compiler desugars the bindings to flatMap calls, with the final binding and **yield** being converted to a call to map. 
+- Example: map2 can be implemented using for-comprehension as follows:
 
 ```scala
 def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = 
@@ -326,6 +391,8 @@ def map2 [A,B,C] (a: Option[A], b: Option[B]) (f: (A, B) => C): Option[C] =
 因为上面的，不用修改已经存在的function
 Never have to modify an existing function
 
+for-comprehensions are syntactic sugar for the latter kind of nested use of a number of flatMap applications followed by an application of map.
+
 #### L I M I T A T I O N S   O F   O P T I O N S 
 
 Option doesn’t tell us anything about what went wrong
@@ -336,19 +403,18 @@ Option doesn’t tell us anything about what went wrong
 that error actually was 
 option只能告诉出错了，得到了None，但是不能看到为什么，either就可以返回，left可以告诉出错了，同时，left的内容告诉了为什么出错
 
-E I T H E R   D A T A   T Y P E 
+#### E I T H E R   D A T A   T Y P E 
 A simple extension to **Option**, which lets us **track a reason for the failure**
 ``` scala
-   sealed trait Either[+E, +A]
-   case class Left[+E](value: E) extends Either[E, Nothing] 
-   case class Right[+A](value: A) extends Either[Nothing, A]
+sealed trait Either[+E, +A]
+case class Left[+E](value: E) extends Either[E, Nothing] 
+case class Right[+A](value: A) extends Either[Nothing, A]
 ```
 #### E I T H E R   D A T A   T Y P E 
 • Either has only two constructors: each case carries a value
-• It represents — in a very general way — values that can be one of two 
-things (In other words, a disjoint union of two types)
-• Right is reserved for the success (i.e., right / correct) case 
-• Left is used for failure 
+* It represents — in a very general way — values that can be one of two things (In other words, a disjoint union of two types)
+* Right is reserved for the success (i.e., right / correct) case 
+* Left is used for failure 
        [We’ve used a suggestive E (for error) as the parameter name for left type]
 
 ##### E X A M P L E :   M E A N 
