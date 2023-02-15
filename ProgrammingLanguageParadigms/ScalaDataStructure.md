@@ -93,8 +93,12 @@ val q = id(1)              // type: Int
 image.png
 ![picture 8](../images/b420de503caea19587862a51747ab9ef4932e1598589b7e22a8fa05572b5c067.png)  
 
-
+遍历List，两种方式
+1. recursion
+2. generalizing
 ### Recursion over lists and generalizing to higher-order functions
+* 在List里面recursion 来遍历，利用foldRight,foldLeft,map等
+* 下面是generalizing
 ```scala
 def sum(ints: List[Int]): Int = ints match {
   case Nil => 0
@@ -106,26 +110,76 @@ def product(ds: List[Double]): Double = ds match {
   case Cons(x, xs) => x * product(xs)
 }
 ```
-
+下面图片是两种，
+第一个是generalizing list，利用pattern match，组成generalizing 一个新的list来遍历。
+- Opportunity to generalize: 
+  - Pull out subexpressions into function arguments 
+  - If subexpression refers to local variables, turn subexpression into function that takes these variables as arguments
 ![picture 5](../images/4ec9d794160b2ca5a216339b9aec83bd03cfbd1b242021e7e88f896d8a0c7069.png)  
-将f从foldRight的 参数放出来，是为了让f的输入列表不受foldRight的参数类型限制
+**将f从foldRight的 参数放出来，是为了让f的输入列表不受foldRight的参数类型限制**
+![picture 1](../images/46dee8553d1fb19dfe391a95fc6a521e3e7a90978a5efc45cab9765a66d27908.png)  
+
+第二个是recursion list，比如在foldLeft中，就是通过recursion来遍历
+![picture 3](../images/08bf6aa1b2348bd351f02731bc923b76eaaac2b3b5cee0c6622da7afcb3c0b1e.png)  
+
+```scala
+def append[A](l: List[A], r: List[A]): List[A] = 
+                                foldRight(l, r)(Cons(_,_))
+def concat[A](l: List[List[A]]): List[A] = 
+                               foldRight(l, Nil:List[A])(append)
+```
+We're simply referencing the append function, without writing 
+something like `(x,y) => append(x,y) or append(_,_)`
+In Scala there is a distinction between functions defined as methods, 
+which are introduced with the def keyword, and function values, which 
+are the first-class objects we can pass to other functions, put in 
+collections, and so on.  
+There’s a way to convert a def into a function value — by writing 
+**append** _ or even `(x: List[A], y: List[A]) => append(x,y) `
+if the function is polymorphic and the type arguments aren't known — 
+but there are cases — like here — where Scala lets us pretend that the 
+distinction doesn’t exist
+
 1. In the standard library, map and flatMap are methods of List.
 ##Lists in the Standard Library
-* def take(n: Int): List[A] —Returns a list consisting of the first n elements of this
-* def takeWhile(f: A => Boolean): List[A] —Returns a list consisting of the longest valid prefix of this whose elements all pass the predicate f
-* def forall(f: A => Boolean): Boolean —Returns true if and only if all elements of this pass the predicate f
-* def exists(f: A => Boolean): Boolean —Returns true if any element of this passes the predicate f
-* scanLeft and scanRight—Like foldLeft and foldRight, but they return the List of partial results rather than just the final accumulated value
-* 
+```scala
+def take(n: Int): List[A] —Returns a list consisting of the first n elements of this
+def takeWhile(f: A => Boolean): List[A] —Returns a list consisting of the longest valid prefix of this whose elements all pass the predicate f
+def forall(f: A => Boolean): Boolean —Returns true if and only if all elements of this pass the predicate f
+def exists(f: A => Boolean): Boolean —Returns true if any element of this passes the predicate f
+scanLeft and scanRight—Like foldLeft and foldRight, but they return the List of partial results rather than just the final accumulated value
+
+```
+1. One difference: Cons is called ::
+* :: associates right
+* Example: 
+  - 1 :: 2 :: Nil is equal to 1 :: (2 :: Nil)
+  - Can also be written as List (1, 2)
+  - In pattern matching, case Cons (h, t) becomes case h :: t
+2.  An Algebraic Data Type (ADT) is a data type defined by one or 
+more data constructors, each of which may contain zero or more 
+arguments 
+  - We say that: 
+  - the data type is the sum or union of its data constructors 
+  - each data constructor is the product of its arguments
+  - Hence the name algebraic data type 
+  - Algebraic data types can be used to define other data structures
+3. A D T S   A N D   E N C A P S U L A T I O N 
+- Make type’s internal representation public 
+- Appears to violate encapsulation
+- FP approaches encapsulation differently:
+- Don’t have mutable state, which if exposed, could lead to bugs violations of invariants
+- Exposing data structures of types is often fine
+- Decide based on what the public API should be
+- Use ADTs where set of cases is closed (i.e., known to be fixed)
 ### First-class Functions as values
 Functions as values
 Scala functions are values:
-•	Can be assigned to variables
-•	Can be stored in data structures
-•	Can be passed as arguments to functions
+-	Can be assigned to variables
+-	Can be stored in data structures
+-	Can be passed as arguments to functions
 
-1. Inner functions: 代表function可以像value一样定义，使用
-	An inner function, or local definition.
+1. Inner functions: 代表function可以像value一样定义，使用An inner function, or local definition.
 2. Higher-order functions: function可以当参数一样传入方法
 ![picture 8](../images/f9032318ede9ff991bb5ce62af19464d15f1139c5c1bc9f4c10fb01320dba147.png)  
 3. Polymorphic functions：代表function可以当作参数一样传入另一个function，从而实现了多态。是generic吧，泛型。
