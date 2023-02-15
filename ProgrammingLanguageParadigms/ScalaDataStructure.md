@@ -96,7 +96,7 @@ image.png
 遍历List，两种方式
 1. recursion
 2. generalizing
-### Recursion over lists and generalizing to higher-order functions
+### Recursion over lists and generalizing List to higher-order functions
 * 在List里面recursion 来遍历，利用foldRight,foldLeft,map等
 * 下面是generalizing
 ```scala
@@ -128,17 +128,34 @@ def append[A](l: List[A], r: List[A]): List[A] =
 def concat[A](l: List[List[A]]): List[A] = 
                                foldRight(l, Nil:List[A])(append)
 ```
-We're simply referencing the append function, without writing 
-something like `(x,y) => append(x,y) or append(_,_)`
-In Scala there is a distinction between functions defined as methods, 
-which are introduced with the def keyword, and function values, which 
-are the first-class objects we can pass to other functions, put in 
-collections, and so on.  
-There’s a way to convert a def into a function value — by writing 
-**append** _ or even `(x: List[A], y: List[A]) => append(x,y) `
-if the function is polymorphic and the type arguments aren't known — 
-but there are cases — like here — where Scala lets us pretend that the 
-distinction doesn’t exist
+We're simply referencing the append function, without writing something like `(x,y) => append(x,y) or append(_,_)`
+In Scala there is a distinction between functions defined as methods, which are introduced with the def keyword, and function values, which are the first-class objects we can pass to other functions, put in collections, and so on.  
+There’s a way to convert a def into a function value — by writing **append** **_** or even `(x: List[A], y: List[A]) => append(x,y) `
+if the function is polymorphic and the type arguments aren't known — but there are cases — like here — where Scala lets us pretend that the distinction doesn’t exist
+
+##### map and flatMap
+Let's say you have a List:
+
+```scala
+val names = List("Benny", "Danna", "Tal")
+names: List[String] = List(Benny, Danna, Tal)
+```
+Now let's go with your example. Say we have a function that returns an Option:
+```scala
+def f(name: String) = if (name contains "nn") Some(name) else None`
+```
+The map function works by applying a function to each *element* in the list:
+```scala
+names.map(name => f(name))
+List[Option[String]] = List(Some(Benny), Some(Danna), None)
+```
+In the other hand, flatMap applies a function that **returns a sequence for each element in the list, and flattens the results into the original list**
+
+names.flatMap(name => f(name))
+List[String] = List(Benny, Danna)
+As you can see, the flatMap removed the Some/None layer and kept only the original list.
+
+
 
 1. In the standard library, map and flatMap are methods of List.
 ##Lists in the Standard Library
@@ -164,7 +181,7 @@ arguments
   - each data constructor is the product of its arguments
   - Hence the name algebraic data type 
   - Algebraic data types can be used to define other data structures
-3. A D T S   A N D   E N C A P S U L A T I O N 
+3. ADTS AND ENCAPSULATION 
 - Make type’s internal representation public 
 - Appears to violate encapsulation
 - FP approaches encapsulation differently:

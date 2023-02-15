@@ -143,7 +143,23 @@ scala> value1.map("length: " + _.length).foreach(println)
 length: 6
 ```
 透过这样「转换」的方法，我们一样可以达成想要的效果，而且同样不用去做「是否为 None」的判断。
- 
+#### Map vs flatMap
+Let's say you have a List:
+
+```scala
+val names = List("Benny", "Danna", "Tal")
+names: List[String] = List(Benny, Danna, Tal)
+```
+Now let's go with your example. Say we have a function that returns an Option:
+```scala
+def f(name: String) = if (name contains "nn") Some(name) else None`
+```
+The map function works by applying a function to each *element* in the list:
+```scala
+names.map(name => f(name))
+List[Option[String]] = List(Some(Benny), Some(Danna), None)
+```
+In the other hand, flatMap applies a function that **returns a sequence for each element in the list, and flattens the results into the original list**
 
 ### basic functions on option
 #### 4.3. The Option data type
@@ -240,7 +256,7 @@ Variance function: If mean of sequence is m, variance is mean of math.pow(x-m, 2
 * Implement this using flatMap
 ```scala
 def vaiance(xs:Seq[Doulb])): Option[Double]=
-  mean(xs) flatMap(m=>man(xs.map(x=>math.pow(x-m, 2))))
+  mean(xs) flatMap(m=>mean(xs.map(x=>math.pow(x-m, 2))))
 
 ``` 
 * None.flatMap(f) immediately returns None
@@ -253,8 +269,7 @@ values don’t match the given predicate
   
 ![picture 10](../images/8587fdc13982b74d717016c2a162e93f768e57c78e2b54fe315f1d443e1fb7cb.png)  
 
-getOrElse converts from an Option[String] to a String, by 
-providing a default department in case the key "Joe" didn’t exist in the Map or if Joe’s department was "Accounting"
+getOrElse converts from an Option[String] to a String, by providing a default department in case the key "Joe" didn’t exist in the Map or if Joe’s department was "Accounting"
 
 4.4. The Either data type
 ```scala
@@ -276,26 +291,27 @@ Can convert None to an exception
 * General rule of thumb: 
     - Use exceptions only if no reasonable program would ever catch the exception
     - If for some callers the exception might be a recoverable error, we use Option (or Either, discussed later) to give them flexibility 
+????没看懂
 
 我懂了，因为一连串的计算，有很多种可能出错，用这个能指定是哪一种error，哪儿出错了
-
-• Returning errors as ordinary values can be convenient
-• Use of higher-order functions lets us achieve the same sort of 
+Summary
+* Returning errors as ordinary values can be convenient
+* Use of higher-order functions lets us achieve the same sort of 
 consolidation of error-handling logic as we would get from using 
 exceptions 
-• Note: We don’t have to check for None at each stage of the computation  
-• We can apply several transformations and then check for and 
-handle None when we’re ready 
-• We get additional safety, because Option[A] is a different type 
-from A, and the compiler won’t let us forget to explicitly defer or 
-handle the possibility of None
+* Note: We don’t have to check for **None** at each stage of the computation  
+* We can apply several transformations and then check for and 
+handle **None** when we’re ready 
+* We get additional safety, because **Option[A]** is a different type 
+from **A**, and the compiler won’t let us forget to explicitly defer or 
+handle the possibility of **None**
 
-#### L I F T I N G   F U N C T I O N S   T O   O P E R A T E   O N   O P T I O N 
-• May seem like our entire code will be infected with Options
+#### LIFTING FUNCTIONS TO OPERATE ON  OPTION 
+
+* May seem like our entire code will be infected with Options
   - That every function will need to be modified to deal with Options
-  - But not really: We can lift ordinary functions to become functions which 
-deal with Options
-• map lets us operate on values of type Option[A] using a function of type A => B, returning Option[B]
+  - But not really: We can **lift** ordinary functions to become functions which deal with Options
+* **map** lets us operate on values of type Option[A] using a function of type A => B, returning Option[B]
   - Turns a function f of type A => B into a function of type Option[A] => Option[B] 
   - Let’s make this explicit: 
 ```
@@ -303,15 +319,16 @@ def lift[A,B](f: A => B): Option[A] => Option[B] = _ map f
 = ((o:Option[A]) => o.map(f)
 = _ map f
 ```
-• This tells us that any function can be transformed (via lift) to operate within the context 
-of a single Option value 
+* This tells us that any function can be transformed (via lift) to operate within the context of a single **Option** value 
+就是不管哪一个collection，都调用map(f)，而不是只调用f,因为map有能力把A=>B,turn to Option[A]=>Option[B]
 
-example
+example:
 ```scala
 val absO: Option[Double] => Option[Double] = lift(math.abs)
 ```
-lift(f) returns a function which maps None to None and
-applies f to the contents of Some.
+![picture 10](../images/f98b2a36efc8215b9be374a25c4ffe9769c6e02f15a2c192b26ef4861fbb1013.png)  
+
+**lift(f)** returns a function which maps None to None and applies f to the contents of Some.
   - f need not be aware of the Option type at all 
 
 ![picture 11](../images/372e348d65ab2053344a2476445873d341c8764aeb9b510e1e35dbf592923b6b.png)  
@@ -320,17 +337,20 @@ applies f to the contents of Some.
 
 try[A]: evaluate lazy, so it will go to the runtime
 Need to lift insuranceRateQuote
+```scala
 def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
  a flatMap (aa => b map (bb => f(aa, bb)))
- ![picture 13](../images/329495524d664eb0a37a7deb8b503c8714a9b42052aad14721c210094f2893f9.png)  
+```
+![picture 13](../images/329495524d664eb0a37a7deb8b503c8714a9b42052aad14721c210094f2893f9.png)  
 ## Leture Feb10
 
 #### GENERALIZING TO LISTS
 
 change a List of Option, to Option of List, so inside the values are good values
 
-• What if we have to map over a list using a function that might fail?
-• May want to place the entire resulting list in an Option
+* What if we have to map over a list using a function that might fail?
+* May want to place the entire resulting list in an Option
+  
 ```scala
  def sequence[A](a: List[Option[A]]): Option[List[A]] =
  a match {
@@ -341,10 +361,10 @@ change a List of Option, to Option of List, so inside the values are good values
   sequence(a map (i => Try(i.toInt)))
  
  ```
- 所以，map不是一个数据结构在FP种，是一个方法，因为List本身也是一个map
+ 所以，map不是一个数据结构在FP中，是一个方法，因为List本身也是一个map
  not very effient: makes two passes of the list
 
-• Often need to sequence results of a map
+* Often need to sequence results of a map
 ```scala
  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = a match {
   case Nil => Some(Nil)
@@ -360,29 +380,29 @@ change a List of Option, to Option of List, so inside the values are good values
 - Example: map2 can be implemented using for-comprehension as follows:
 
 ```scala
-def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = 
-     a flatMap (aa => 
-              b map (bb => 
-                            f(aa, bb)))
+def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): 
+Option[C] = 
+a flatMap (aa => 
+b map (bb => 
+f(aa, bb)))
 
-def map2 [A,B,C] (a: Option[A], b: Option[B]) (f: (A, B) => C): Option[C] =  
-      for { 
-                aa  <- a  
-                bb <- b 
-      } yield f(aa, bb) 
+def map2 [A,B,C] (a: Option[A], b: Option[B]) (f: (A, B) => C): Option[C] = for { 
+        aa  <- a  
+        bb <- b 
+    } yield f(aa, bb) 
 ```
 因为上面的，不用修改已经存在的function
 Never have to modify an existing function
 
-for-comprehensions are syntactic sugar for the latter kind of nested use of a number of flatMap applications followed by an application of map.
+for-comprehensions are syntactic sugar for the latter kind of nested use of a number of **flatMap** applications followed by an application of **map**.
 
 #### LIMITATIONS OF OPTIONS 
 
 Option doesn’t tell us anything about what went wrong
-• It just gives us None, indicating that there’s no value
-•  Sometimes we want to know more 
-• We might want a String that gives more information
-• If an exception was raised, we might want to know what 
+* It just gives us None, indicating that there’s no value
+* Sometimes we want to know more 
+* We might want a String that gives more information
+* If an exception was raised, we might want to know what 
 that error actually was 
 option只能告诉出错了，得到了None，但是不能看到为什么，either就可以返回，left可以告诉出错了，同时，left的内容告诉了为什么出错
 
@@ -394,32 +414,32 @@ case class Left[+E](value: E) extends Either[E, Nothing]
 case class Right[+A](value: A) extends Either[Nothing, A]
 ```
 #### EITHER   DATA   TYPE 
-• Either has only two constructors: each case carries a value
+* Either has only two constructors: each case carries a value
 * It represents — in a very general way — values that can be one of two things (In other words, a disjoint union of two types)
 * Right is reserved for the success (i.e., right / correct) case 
 * Left is used for failure 
        [We’ve used a suggestive E (for error) as the parameter name for left type]
 
-##### E X A M P L E :   M E A N 
-• Can return a string when undefined
+##### EXAMPLE: MEAN 
+* Can return a string when undefined
 ```
-     def mean(xs: IndexedSeq[Double]): Either[String, Double] =    
-        if (xs.isEmpty) 
-            Left("mean of empty list!")
-        else 
-            Right(xs.sum / xs.length)
+def mean(xs: IndexedSeq[Double]): Either[String, Double] =    
+    if (xs.isEmpty) 
+        Left("mean of empty list!")
+    else 
+        Right(xs.sum / xs.length)
 ```
-• May want to return stack trace showing location of error
-  ```
-     def safeDiv(x: Int, y: Int): Either[Exception, Int] = 
-         try Right(x / y) 
-         catch { case e: Exception => Left(e) } 
-  ```
-• Can write a function Try to factor out this pattern to convert thrown exceptions into values
+* May want to return stack trace showing location of error
 ```
-     def Try[A](a: => A): Either[Exception, A] = 
-          try Right(a) 
-          catch { case e: Exception => Left(e) } 
+def safeDiv(x: Int, y: Int): Either[Exception, Int] = 
+    try Right(x / y) 
+    catch { case e: Exception => Left(e) } 
+ ```
+* Can write a function Try to factor out this pattern to convert thrown exceptions into values
+```
+def Try[A](a: => A): Either[Exception, A] = 
+    try Right(a) 
+    catch { case e: Exception => Left(e) } 
 ```
  midterm room 105
 我也是觉得奇怪，为什么会有either这个type

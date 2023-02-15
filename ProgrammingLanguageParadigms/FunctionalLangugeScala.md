@@ -21,7 +21,7 @@ program evaluation called the substitution model.
 * Computation proceeds much like we’d solve an 
 algebraic equation, enabling equational reasoning 
 about programs.
-
+对纯粹度的概念进行形式化，有助于我们深入了解函数式编程为什么更加模块化。模 块化程序是由组件组成的，这些组件又是可理解、可复用，并独立于整体存在的。
 #### LOCAL REASONING 
 * Substitution model is simple to reason about because 
 effects of evaluation are purely local:
@@ -30,7 +30,7 @@ effects of evaluation are purely local:
 updates to understand a block of code. 
 * Understanding requires only local reasoning:
   - Simply look at the function’s definition and substitute the arguments into its body.
-
+因为对运算的影响纯粹是局部的（只对那些 赋值表达式产生影响），不需要先在内心模拟一系列状态的更新才理解这一段代码。只需要理解局部的推理（local reasoning），不必费心地去跟踪函数执行前后的状态变化，只用 简单地看一下函数的定义，把它替换成一个参数。即使没有用过“替代模型”这一名词， 你也一定用过这种方式来推理程序。
 
 #### MODULARITY, COMPOSABILITY 
 * Modular programs consist of composable components that can be understood and 
@@ -42,13 +42,13 @@ reused independently of the whole
   - It separates the logic of the computation itself from “what to do with the result” and “how to obtain the input”
     - Input is obtained exactly one way: via argument(s) to the function
     - Output is simply computed and returned
-
+整体程 序只取决于组件和它们组成的规则，也就是说它们是可组合的（composable）。纯函数是模 块化的、可组合的，因为它从“对结果做什么”和“如果获取输入”中分离了计算本身的逻辑，就像一个黑盒子。对输入的获取只有一种方式：通过参数传给函数。输出也只是简 单地将计算结果返回。
 #### REUSABILITY 
 * Separating these concerns makes the computation’s 
 logic more reusable:
   - We may reuse the logic wherever we want  
 without worrying about side effects
-
+把这些关注点分离开，计算也更容易被复用。我们可以复用这些逻 辑，而不必担心输入或输出对整个上下文引起的副作用。可以看到在 buyCoffee 的例子 里，消除了支付完成时的输出所引起的副作用，测试或者进一步组合（比如 buyCoffees 和 coalesce）时，函数更容易复用。
 ![picture 1](../images/8a5c2365c12ea310c9af94c93f8ef197f6ea0167fc7a4099ccb5366b45e67eaa.png)  
 REPL--> Read-Evaluate-Print Loop
 
@@ -75,7 +75,7 @@ REPL--> Read-Evaluate-Print Loop
   - Can tell Scala compiler when tail call elimination is 
 expected using tailrec annotation: compilation error if it’s unable to eliminate tail calls for the function
 2. POLYMORPHIC   FUNCTIONS 
-  - Specifically, parametric polymorphism
+  - Specifically, **parametric polymorphism**
   - Polymorphic functions can operate on any type of data
 3. ANONYMOUS FUNCTIONS 
    - We often want to write functions for one-time use of sending to an HOF.  Functional programming allows for anonymous functions or function literals.
