@@ -345,69 +345,10 @@ def foldRight
 val 
 
 ### Lecture Feb 12
-#### Midterm
-Thorvalson 105, 7pm, Wed
-60minutes
-22 problems for 100 points
-4 points--> 144 seconds
-5 points -> 180 senconds
-
-expect to 3 minutes for every 5 points worth of work.
-
-you need to work quickly through problems.
-Not everyone will be able to answer all problems.
-Don't leave blank
-First: put your name ->answer sheet
-Second: put your name -> draft paper
-
-30/100 **functional language**
-* what FP is, 
-* Side effect, 
-* Reference Parancy, some call example
-
-10/100 **lambda express**, 
-* lazy evaluation,
-* currying,
-
-30/100 **scala language**
-  - termnolegy, should call  generic code, missing code???
-  - short peice of code
-  - 2 line of code
-  - missing code
-  - experssion about this code
-**syntax sugar**
-- differently writing or sonething
-- signature
-- parameter passing
-- types, ty impiltation, **polymorphic** type, **signture**
- 
- 15/100 **data structure**
-  - define **List**, diff **HOF**, how HOF works
-  - 2 line missing code
-
- 30/100 **error handling**
-  - how to do with the **error handling**
-  - what's the problems
-  - try out **options**
-  - what thsese code do
-  - which is true, which is false
-
- **flatMap**,**comprehension**, either(no) 
- 3 problem, one function, cases, dea with different sequenci hapeen, result
-![picture 1](../images/7d4dd913500d2b04e49bb94a96134ee7e94d7fd58361a8e8c3fc12f0a6c7806e.png)  
 
 #### Lab Feb 13
 
-remove option
-option
-review lecture and note
-quiz on note
-foldLeft
-HOF
-Why isn't functional
-non-functional
 
-textbook for exercise
 
 
 
