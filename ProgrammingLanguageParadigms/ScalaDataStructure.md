@@ -42,12 +42,14 @@ def apply[A](as: A*): List[A] =
 * How do we add / remove elements from an immutable data 
 structure?
     - We don’t
-    - We construct a new data structure with the needed changes.
-    - We reuse the parts which are not changing (data 
-sharing)
+    - We **construct a new data structure with the needed changes.**
+    - We **reuse the parts which are not changing** (**data sharing**)
     - Sharing is safe because the shared structure is immutable.
+  
 #### Improving type inference for higher-order functions
-高阶函数，就能能把function赋值给一个变量，function能当参数
+高阶函数(higher-order function)，就是能把function赋值给一个变量，function能当参数传递，能保存在data structure中，比如一个List of functions。
+对于能传递function的function，可以把参数function放到外面，利用currying的原理，逐步展开，和直接放入参数里面是一样的效果。
+
 ```scala
 def dropWhile[A](as: List[A])(f: A => Boolean): List[A] =
   as match {
@@ -59,6 +61,29 @@ val ex1 = dropWhile(xs)(x => x < 4)
 ```
 
 Scala 编译器通常可以推断出表达式的类型，因此你不必明确地声明它。
+
+省略类型
+`val businessName = "Montreux Jazz Café"`
+编译器可以检测到 businessName 是一个 String。它的工作原理与方法类似：
+
+`def squareOf(x: Int) = x * x`
+编译器可以推断返回类型是一个 Int，所以不需要显式的返回类型。
+
+对于递归方法，编译器不能推断出结果类型。由于这个原因，下面的程序会使编译器失败：
+
+`def fac(n: Int) = if (n == 0) 1 else n * fac(n - 1)`
+当多态方法被调用或者泛型类被实例化时，也不用强制地指定类型参数。Scala 编译器会从上下文和实际方法/构造函数参数的类型中推断出这些缺失的类型参数。
+
+这里有两个例子：
+```scala
+case class MyPair[A, B](x: A, y: B);
+val p = MyPair(1, "scala") // type: MyPair[Int, String]
+
+def id[T](x: T) = x
+val q = id(1)              // type: Int
+//编译器使用 MyPair 的参数类型来确定 A 和 B 的类型。类似于 x 的类型。
+```
+如果把function当成参数穿进去，需要在函数的括号中写明x:Int=>x<4，需要明确写明输入的Type和输出的type，但是如果放在外面，只需要写操作就行了？？？
 ![picture 6](../images/5f79cc5f11d984ada0426565b3daf2398b51d67f3e3919671b4c7166a2e8e53d.png)  
 上面和下面不一样的地方是，
   - 一个是dropWhile有两个参数，
