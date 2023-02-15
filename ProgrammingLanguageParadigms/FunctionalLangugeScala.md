@@ -1,4 +1,163 @@
-## Scala Datastructure
+## Scala language
+* Functional programming is a restriction on how you 
+write code, not what you can express.  
+* You can do everything without side effects
+#### EXACTLY WHAT IS A (PURE) FUNCTION?
+*  A function f with input type A and output type B is: 
+     [written in Scala as a single type: **A => B**, pronounced “**A to B**” or “A arrow B”]
+* A computation that relates:  Every value a of type A to Exactly one value b of type B 
+* Such that b is determined solely by the value of a. 
+* Any changing state of an internal or external process is irrelevant to computing the result f(a).
+* For example, a function intToString having type Int => String will take every integer to a corresponding string. Furthermore, if it really is a function, it will do nothing else.
+#### REFERENTIAL TRANSPARENCY (RT)
+* An expression* e is referentially transparent if, for all programs p, all occurrences of e in p can be replaced by the result of evaluating e without affecting the meaning of p. 
+
+#### RT,PURITY AND THE SUBSTITUTION MODEL 
+* With referential transparency, everything a function 
+does is represented by the value that it returns, 
+according to the result type of the function. 
+* Enables a simple and natural way of reasoning about 
+program evaluation called the substitution model.  
+* Computation proceeds much like we’d solve an 
+algebraic equation, enabling equational reasoning 
+about programs.
+
+#### LOCAL REASONING 
+* Substitution model is simple to reason about because 
+effects of evaluation are purely local:
+  - They affect only the expression being evaluated
+  - Need not mentally simulate sequences of state 
+updates to understand a block of code. 
+* Understanding requires only local reasoning:
+  - Simply look at the function’s definition and substitute the arguments into its body.
+
+
+#### MODULARITY, COMPOSABILITY 
+* Modular programs consist of composable components that can be understood and 
+reused independently of the whole 
+  - Meaning of  the whole depends only on: 
+    - the meaning of the components, and 
+    - the rules governing their composition
+* A pure function is modular and composable because it is a black box: 
+  - It separates the logic of the computation itself from “what to do with the result” and “how to obtain the input”
+    - Input is obtained exactly one way: via argument(s) to the function
+    - Output is simply computed and returned
+
+#### REUSABILITY 
+* Separating these concerns makes the computation’s 
+logic more reusable:
+  - We may reuse the logic wherever we want  
+without worrying about side effects
+
+![picture 1](../images/8a5c2365c12ea310c9af94c93f8ef197f6ea0167fc7a4099ccb5366b45e67eaa.png)  
+REPL--> Read-Evaluate-Print Loop
+
+### MODULES,OBJECTS,NAMESPACES 
+1. Every value in Scala is an object
+2. Any object may have zero or more members
+  - Methods declared with def
+  - Other objects declared with val or object
+3. An object whose primary purpose is giving its members a namespace is sometimes called a module
+4. Members within an object can refer to each other unqualified, but need to use this. to access the enclosing object
+5. infix
+   - Method names can be used infix when being called with a single argument
+   - Example: MyModule.abs(-42) can be called by: MyModule abs -42
+6. An **object’s** member can be brought into scope by **importing** it
+7. **All** (nonprivate) members can be brought into scope by using an underscore
+   - import MyModule._
+8. Scala **functions** are values: 
+  - Can be assigned to variables
+  - Can be stored in data structures
+  - Can be passed as arguments to functions
+ 1. INNER FUNCTIONS  
+![picture 2](../images/98f58d7717f1c7eb213cf005cac913c9d89b144b1fd9fff3ed7dcf0c1c4dfa81.png)  
+  - Scala compiler detects this sort of self-recursion and compiles it to the same sort of byte code as would be for a while loop, so long as recursive call is in tail position
+  - Can tell Scala compiler when tail call elimination is 
+expected using tailrec annotation: compilation error if it’s unable to eliminate tail calls for the function
+2. POLYMORPHIC   FUNCTIONS 
+  - Specifically, parametric polymorphism
+  - Polymorphic functions can operate on any type of data
+3. ANONYMOUS FUNCTIONS 
+   - We often want to write functions for one-time use of sending to an HOF.  Functional programming allows for anonymous functions or function literals.
+   - `scala> findFirst(Array(7,9,3), (x: Int) => x == 9)`
+4. An object is being created with a method called apply
+res2: 
+  - An object with an apply method can be called as if it were the method
+    - 比如val as = List(1,3,5)，这个是因为List这个object，里面有一个apply方法，所以可以像调用方法一样
+  - When we write `(a, b) => a < b`, it is syntactic sugar for:
+  ```
+    val lessThan = new Function2[Int, Int, Boolean] {
+            def apply(a: Int, b: Int) = a < b
+    }
+  ```
+   lessThan has type **Function2**[Int, Int, Boolean],another way of writing `(Int, Int) => Boolean`.  **Function2 is a trait** (i.e., interface) with an apply method.
+   - When lessThan(10, 20) is called, actually its **apply** method is called:
+  ```
+  scala> val b = lessThan.apply(10, 20)
+            b: Boolean = true
+  ``` 
+  在Scala中，有22个Function0()，function1,function2, function...,function22
+#### FOLLOWING TYPES TO IMPLEMENTATIONS 
+* Consider this HOF for performing **partial application**:
+  `def partial1[A, B, C] (a: A, f: (A, B) => C): B => C`
+* Three type parameters: A, B, C
+* Two arguments: a (of type A) and f (function of type (A, B) => C)
+• Return type is a function of type B => C
+
+##### paritial application:
+```scala
+scala> def plainOldSum(x: Int, y: Int) = x + y
+plainOldSum: (x: Int,y: Int)Int
+scala> plainOldSum(1, 2)
+res4: Int = 3 
+
+scala> def curriedSum(x: Int)(y: Int) = x + y
+curriedSum: (x: Int)(y: Int)Int
+scala> curriedSum(1)(2)
+res5: Int = 3 
+```
+plainOldSum是旧式的求和函数，curriedSum是柯里化后的版本。你会看到，curriedSum函数是有两个参数列表的，也就是两对小括号。当你以curriedSum(1)(2)的形式去调用这个函数时实际上发生的动作是：curriedSum接受第一个参数1之后，会返回一个函数，这个返回的函数再来接受传入的第二个参数2，这是柯里化的运作方式。但是这并不意味着你可以这样去调用：
+```scala> def curriedSum(x: Int)(y: Int) = x + y
+curriedSum: (x: Int)(y: Int)Int
+
+scala> val first=curriedSum(1)
+<console>:8: error: missing arguments for method curriedSum;
+follow this method with `_' if you want to treat it as a partially applied function
+       val first=curriedSum(1)
+                           ^
+```
+你看到了，编译器报错了，因为前面我们说的是一个柯里化函数的后台运作方式，从调用的角度来看，curriedSum毕竟是需要两个参数集合的，如果你只给定一个，编译器自然会报错，除非你显式地告诉编译器：我想要得到“接受了第一个参数之后转化而来的那个函数”，具体的做法就是在curriedSum(1)加一个下划线。
+```scala
+scala> val first=curriedSum(1)_
+first: Int => Int = <function1>
+```
+上面的动作就是做了一个partially apply,下划线就是转化之后的函数的参数列表的占位符。但是这里有一个有意思的地方，按理说我们应该这样写：val first=curriedSum(1) _也就是在函数名后面加一个空格再跟下滑线，就像val p=println _一样,但是你不能写成val p=println_，因为println_永远是一个合法的标示符，因而发生了歧义，但是curriedSum(1)_则不会有歧义，所以是可以这样写的。但总的来说统一使用空格再加下划线更直观易读。
+
+柯里化技术的使用场景是把一个通用性或者讲叫泛化的函数向一个特定的方向去转化，进而得到一个需要的函数。
+`Most of time, we actually use in the other way by creating a specialized version of generalized function through curry function.`
+这里我们只是再通过改变参数的值的展示柯里化技术，更加丰富和生动的示例应该是发生在高阶函数里。
+
+最后提一下，Scala提供了相应的机制可以让函数在柯里化和非柯里化之间自由的转换：
+```
+scala> def plainOldSum(x: Int, y: Int) = x + y
+plainOldSum: (x: Int, y: Int)Int
+scala> val curriedSum = (plainOldSum _).curried
+curriedSum: Int => (Int => Int) = <function1>
+scala> curriedSum(1)(2)
+res2: Int = 3
+scala> val uncurriedSum = Function.uncurried(curriedSum)
+uncurriedSum: (Int, Int) => Int = <function2>
+scala> uncurriedSum(1,2)
+res4: Int = 3
+```
+##两种技术的对比
+
+只从最终实再的效果上来看，我认为两种技术是非常相似的，都是通过对函数参数进行部分应用（partially apply )将函数转换成了另一个函数。从灵活性上对比的话，显然Partially Applied Function更加灵活，因为它不需要像柯里化那样，必须针对参数列表集从左至右链式地进行转换。
+
+————————————————
+版权声明：本文为CSDN博主「Laurence Geng」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/bluishglc/article/details/51042940
+
 1.2. 换行字符
 语法:
 `semi ::= ";" | nl{nl}`
