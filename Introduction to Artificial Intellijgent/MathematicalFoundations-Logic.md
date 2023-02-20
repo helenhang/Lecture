@@ -1,7 +1,7 @@
 ## 数学基础：逻辑 (Mathematical foundations: logic)
 https://blog.csdn.net/weixin_44225602/article/details/121173926
 
-第一章 - 算法基础与算法分析 fundamentals of algorithms and algorithm analysis
+第一章 - 算法基础与算法分析 fundamentals of algorithms and algorithm analysis 
 1.1 数学基础：逻辑 (Mathematical foundations: logic)
 1.1.1 命题逻辑 - Propositional logic
 (1)、命题(Propositions)
@@ -165,6 +165,7 @@ p 与 q 是两个命题，实现 p 推导 q的操作，可以表示为句子：i
 p→q 也被称作条件语句(conditional statement)，因为q的结果取决于条件p的成立与否。
 
 真值表(truth table)：
+
 ![picture 4](../images/cfee2c86c510d0f48689abd803d018885a5e55d28cfbcfc34172f5bb2fd337ff.png)  
 
 注意真值表第三行！
