@@ -849,3 +849,103 @@ import Hello from './Hello';
 ```
 
 ???为什么有vi？没有vim？？？
+
+**为什么用react，一般的访问web server，也有react效果啊**？？
+```shell
+docker-compose up -d
+docker attach nodejs
+npm start
+
+```
+难道只是新建一个<app/>，然后在app.js 将这个App tag替换成innerHTML？
+我懂了，将所有的element 放在js来操作，不用全部画在htnl里面
+Nice！
+***tag=function***
+唯一的问题是，怎么控制css在这些自定义的tag？？？
+生成了那么多css，js，html tag，什么时候解析+转化的，那么客户端慢不慢？
+
+
+像做梦一样，我现在坐在国外的班里，听着外语，多年以前，怎么可能想象的到
+
+Return multiple tags
+```js
+import React from 'react';
+function Hello() {
+let isMorning = (new Date()).getHours() < 12;
+return isMorning
+? (
+<React.Fragment>
+<h3> Good Morning </h3>
+<h3> 5 New Posts </h3>
+</React.Fragment>
+)
+: (
+<>
+<h3> Good Morning </h3>
+<h3> 7 New Posts </h3>
+</>
+)
+```
+Explicit Export / Explicit Import
+```js
+export function Hello() {
+let isMorning = (new Date()).getHours() < 12;
+return isMorning
+? (
+.........
+
+import logo from './logo.svg';
+import './App.css';
+
+import {Hello} from './Hello';
+
+```
+
+Parameters -> Props
+```js
+import {Helloo} from './Helloo';
+
+function App() {
+let text = 'cool';
+let url = 'https://reactjs.org';
+
+return (
+<div className="App">
+<header className="App-header">
+
+<Helloo name="Ralph" posts={5} />
+
+import React from 'react';
+
+export const Helloo = ({name, posts}) => {
+let isMorning = (new Date()).getHours() < 12;
+let hellooHeader = isMorning
+? <h3> Good Morning {name} </h3>
+: <h3> Good Day {name} </h3> ;
+
+return (
+<>
+{hellooHeader}
+<h3> {posts} New Posts </h3>
+</>
+)
+}
+
+Condition Render
+
+import React from 'react';
+
+export const Helloo = ({name, posts}) => {
+if (!name) return null;
+let isMorning = (new Date()).getHours() < 12;
+let hellooHeader = isMorning
+? <h3> Good Morning {name} </h3>
+: <h3> Good Day {name} </h3> ;
+return (
+<>
+{hellooHeader}
+{posts === 0
+? null
+: <h3> {posts} New Posts </h3>}
+</> )}
+```

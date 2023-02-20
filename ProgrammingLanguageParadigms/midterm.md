@@ -82,3 +82,16 @@ Why isn't functional
 non-functional
 
 textbook for exercise
+
+有一道题：
+function()f:A,B,C=A=>B=>C=f(a)=>f(c)，问这是什么
+我答了decompose
+
+$x^2$ + $y^2$ -$z^2$
+用lambda表示
+$\lambda x$$\lambda y$$\lambda z$=(-(+($x^2$ $y^2$) $z^2$)
+
+flapmap.map
+(4,4),(3,3),(2,2)(1,1)(0,0)
+
+map的argument必须不是option什么的

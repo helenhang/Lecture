@@ -155,7 +155,51 @@ names.flatMap(name => f(name))
 List[String] = List(Benny, Danna)
 As you can see, the flatMap removed the Some/None layer and kept only the original list.
 
+flatMap是Scala集合（Collections）中常用的一种操作，它将**每个元素**映射为一个**集合**，然后**将这些集合合并为一个单独的集合**。
 
+在Scala中，flatMap是由map和flatten两个方法组合而成的。首先，map方法将每个元素映射为一个集合。然后，flatten方法将这些集合合并为一个单独的集合。因此，flatMap方法可以看作是将这两个操作组合到一起的结果。
+
+以下是一个示例代码，演示如何使用flatMap方法将一个列表中的每个元素映射为一个新的列表，并将所有结果合并为一个单独的列表：
+
+```scala
+val list = List(1, 2, 3, 4, 5)
+val flatMapResult = list.flatMap(x => List(x, x * 2))
+println(flatMapResult)
+```
+在这个例子中，列表list包含整数1到5。flatMap方法将每个元素映射为一个包含原始元素和它的两倍的新列表，然后将所有结果合并为一个单独的列表。因此，输出结果为
+`List(1, 2, 2, 4, 3, 6, 4, 8, 5, 10)`，其中每个元素都是原始列表中的元素或它的两倍。
+map和flatMap都是Scala集合（Collections）中常用的操作，它们的主要区别在于输出类型。
+
+map方法将每个元素映射为一个新值，然后将这些新值组成一个新的集合返回。这个新的集合的类型与原始集合的类型相同。
+
+flatMap方法将每个元素映射为一个集合，然后将这些集合合并为一个单独的集合返回。这个新的集合的类型可以与原始集合的类型不同。
+
+因此，**map和flatMap的区别在于它们的返回类型不同**。**map的返回类型与原始集合的类型相同**，**而flatMap的返回类型可能与原始集合的类型不同**。
+
+另外，flatMap方法相当于将map方法和flatten方法结合起来使用，因此使用flatMap方法可以将这两个操作同时执行，从而提高代码的简洁性和可读性。
+
+以下是一个示例代码，演示如何使用map和flatMap方法将一个整数列表中的每个元素进行平方计算：
+```scala
+val list = List(1, 2, 3, 4, 5)
+
+// 使用map方法计算每个元素的平方，并返回新的列表
+val mapResult = list.map(x => x * x)
+println(mapResult) // 输出: List(1, 4, 9, 16, 25)
+// 使用flatMap方法计算每个元素的平方，并将所有结果合并为一个列表
+val flatMapResult = list.flatMap(x => List(x * x))
+println(flatMapResult) // 输出: List(1, 4, 9, 16, 25)
+```
+在这个例子中，使用map方法和flatMap方法都可以将列表中的每个元素进行平方计算，然后返回一个新的列表。使用map方法返回的结果是一个包含所有平方结果的新列表，而使用flatMap方法返回的结果是一个包含所有平方结果的单独列表。
+
+```scala
+/*
+  This could also be implemented directly using `foldRight`.
+  */
+  def flatMap[A, B](l: List[A], f: A => List[B]): List[B] =
+    concat(map(l, f))
+  def map[A, B](l: List[A], f: A => B): List[B] =
+    foldRight(l, Nil: List[B], (h, t) => Cons(f(h), t))
+```
 
 1. In the standard library, map and flatMap are methods of List.
 ##Lists in the Standard Library

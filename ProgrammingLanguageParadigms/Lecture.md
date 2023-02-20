@@ -347,7 +347,34 @@ val
 ### Lecture Feb 12
 
 #### Lab Feb 13
+#### lecture Feb 17
+possible solutions
+* can re
 
+familiar examples of non-strict
+* short-circuiting boolean functions && and || are non-strict
+* if control construct in Scala
+  * if can be thought of as a function accepting 3 parameters: a Boolean, an expression of some type A, and another expression of the same type A
+    * Non-strict because
+
+Scala allows non-strict function
+* condider this
+````scala
+def if2[A](cond:Boolean,OnTrue:()=>A, onFalse:()=>A)A=
+ if(cond) onTrue() else onFalse
+
+ if2(a<22, ()=>println("a"), ()=>println("b"))
+
+
+ also can allows icer syntax:
+ def if2[A](cond:Boolean, onTrue:=>A, onFalse:=>A):A=
+  if(cond) onTrue else onFalse
+ ```
+  * not return a value right now, but put the return value inside the function, and later to evaluate.
+  * Arguments which we want to pass unevalu
+  * unevaluated form of an expression is called a thunk
+    * we can force a thunk to evaluate the expression and get a result
+看一下例子，为什么一个print了两次hi，一个只print了一次
 
 
 

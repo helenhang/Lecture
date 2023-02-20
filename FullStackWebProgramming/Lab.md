@@ -166,6 +166,40 @@ app.get('/',  myFunction1);
 #### Router
 
 
+### Lab Feb 16
+TODO
+1. mysql console
+2. node
+3. webpage
+  ```
+docker comtainer exec -it db1 bash
+
+mysql -u root -padmin
+* show databases
+show databases;
+* create database
+create database testdb;
+use testdb;
+* create table
+create table people (id int unsigned NOT NULL auto_increment, firstName varchar(100) NOT NULL, lastName varchar(100) NOT NULL, primary key(id));
+* alter table
+alter table people add email varchar(255) NOT NULL;
+* insert data to table
+insert into people (firstName, lastName, email) values ('Helen', 'Hang','helenhang1114@gmail.com');
+* select
+select * from people;
+
+docker attach nodeapp
+cd info folder
+node init -y
+npm install express body-parser mysql --save
+
+start your app: node app.js
+
+dcoker attach nodeapp
+
+curl -d '{"fname":"Sandra"}' -H "Content-Type:application/json" -X POST http://0.0.0:3000/addemployee
+
 
 
 
