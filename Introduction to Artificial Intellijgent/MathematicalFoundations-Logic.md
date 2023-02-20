@@ -1,45 +1,6 @@
 ## 数学基础：逻辑 (Mathematical foundations: logic)
 https://blog.csdn.net/weixin_44225602/article/details/121173926
 
-第一章 - 算法基础与算法分析 fundamentals of algorithms and algorithm analysis 
-1.1 数学基础：逻辑 (Mathematical foundations: logic)
-1.1.1 命题逻辑 - Propositional logic
-(1)、命题(Propositions)
-(2)、命题记法(Notation)
-(3)、逻辑运算符(Logic Operator)
-(3.1)、否定(Negation) - 逻辑 非
-(3.2)、连接、合取 (Conjunction) - 逻辑 与
-(3.3)、析取(Disjunction) - 逻辑 或
-(3.4)、推导(Implication) - 逻辑 条件
-(3.5)、逆反(Converse and contrapositive) - 逻辑 双条件(Biconditional statement)
-(4)、复合命题(Compound propositions)
-(5)、逻辑运算符的优先级(Precedence of logical operators)
-(6)、命题公式与真值赋值(Propositional formulas and truth assignments)
-(7)、重言式与矛盾式(Tautology and contradiction)
-(8)、逻辑等价(Logical equivalence)
-(8.1)、命题逻辑的基本等价定理(Fundamental equivalences of propositional logic theorem)
-(8.2)、使用条件语句的等价性定理( Equivalences using conditional statements theorem)
-(8.3)、使用双条件语句的等价性定理( Equivalences using biconditional statements theorem)
-1.1.2、谓词逻辑 - Predicate logic
-(1)、命题逻辑的限制(Limitations of propositional logic)
-(2)、谓词和命题函数(Predicates and propositional functions)
-(2.1)、单个变量
-(2.2)、多个变量
-(2.3)、n维谓词(n-ary predicates)
-(3)、全称量词(Predicates and propositional functions)
-(3.1)、'所有'一词的其他表达方式(Other ways of expressing `for all` in English)
-(3.2)、反例(counter examples)
-(4)、存在量词(Predicates and propositional functions)
-(4.1)、'存在'一词的其他表达方式(Other ways of expressing `there exists` in English)
-(4.2)、量词优先级(Precedence of quantifiers)
-(5)、否定量化表达式(Negating quantified expressions)
-(5.1)、全称量词的否定(Negating a universal quantification)：
-(5.2)、存在量词的否定(Negating an existential quantification)：
-(5.3)、量词的德摩根定律(De Morgan`s Laws for quantifiers)
-(6)、用谓词逻辑建模英语句子 (Modelling English sentences with predicate logic)
-(7)、嵌套量词(Nested Quantifiers)
-(7.1)、量词的顺序
-
 #### 1.1 数学基础：逻辑 (Mathematical foundations: logic)
 `逻辑`一词来自希腊语(Greek)：`logos`，等同于英语中的 logic(逻辑)、reason(推理)。它是计算机科学、数学、哲学、语言学和修辞学等的子学科。
 
