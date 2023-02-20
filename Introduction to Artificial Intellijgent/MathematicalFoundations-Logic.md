@@ -166,6 +166,7 @@ p→q 也被称作条件语句(conditional statement)，因为q的结果取决�
 
 真值表(truth table)：
 ![picture 4](../images/cfee2c86c510d0f48689abd803d018885a5e55d28cfbcfc34172f5bb2fd337ff.png)  
+
 注意真值表第三行！
 
 举例：
@@ -181,7 +182,7 @@ Politician: `If I am elected, then I will lower taxes`.
 
 only if 用来强调，或表示“唯一条件”，也就是“前提”，可以翻译为“前提是”、“只有”、“除非”。
 
-I`ll tell you, but only if you don`t tell anyone else.
+`I\'ll tell you, but only if you don\'t tell anyone else.`
 我会告诉你，但前提是你不告诉别人
 
 举例：
@@ -322,9 +323,9 @@ p∨¬p是一个永真式，p∧¬p 是一个永假式, 而 p → q 两者都不
 一般使用真值表进行证明：
 
 1:
-![picture 13](../images/dffb92d721ecd4d7e567f9accb16703533c0f21173cee0ca65ee4d58f7fba440.png)  <!--  -->
+![picture 13](../images/dffb92d721ecd4d7e567f9accb16703533c0f21173cee0ca65ee4d58f7fba440.png) 
 2:
-![picture 14](../images/f5ce1fb500a117d778f44482428edd12560bb67debc8173aac0a3dbf95fc3c83.png)  <!-- ¸ -->
+![picture 14](../images/f5ce1fb500a117d778f44482428edd12560bb67debc8173aac0a3dbf95fc3c83.png)  
 3:
 ![picture 15](../images/2c82567e9163b03e7274187d7b9c1613c38795712c88beeed342230ac8cc76dd.png)  
 
