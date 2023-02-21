@@ -72,7 +72,7 @@ It is not Friday today
 |T|	F|
 |F|T|
 
-(3.2)、连接、合取 (Conjunction) - 逻辑 与
+##### 连接、合取 (Conjunction) - 逻辑 与
 有时候，我们会将两个可能相关的语句组合在一起，
 假设 p  和 q 是两个命题，将p 和 q进行连接表示为句子 p and q 同样也是一个命题，符号表示可以写成 p∨q 。
 
@@ -322,6 +322,7 @@ q: `Miguel has a laptop.`
 例子2：逻辑等式的构建
 
 证明 ¬(p→q) 和 p∧¬q 为逻辑等价的。
+
 ![picture 16](../images/aa31382fd86b2b71b5791a667f5065b64373a4a4e91c818062fa2d2011203595.png)  ​
 
 ### 谓词逻辑 - Predicate logic

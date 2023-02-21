@@ -863,6 +863,8 @@ Nice！
 ***tag=function***
 唯一的问题是，怎么控制css在这些自定义的tag？？？
 生成了那么多css，js，html tag，什么时候解析+转化的，那么客户端慢不慢？
+那么到底是client end来解析，什么是server end来解析？
+js不是客户端解析的吗？
 
 
 像做梦一样，我现在坐在国外的班里，听着外语，多年以前，怎么可能想象的到
@@ -949,3 +951,47 @@ return (
 : <h3> {posts} New Posts </h3>}
 </> )}
 ```
+
+Review
+
+● Documentation
+○ https://reactjs.org/
+● Goals of React?
+● Approach?
+● Imperative vs Declarative
+● Steps
+
+Functions & Tags
+
+● What do Functions return?
+○ Why
+● **How to add styles?**
+	- 放在App.css中，然后在js中return html的时候，加在里面就好
+● How to pass arguments to functions?
+○ Why?
+
+index.js 中生成root.render，生成了App
+这些是所有的html的root tag
+
+Props
+```js
+<Helloo name="Ralph" posts={5} />
+
+var data = {fn="Ralph", ln= "Deters", posts=5}
+<Helloo name={data.fn}, posts={data.posts} />
+
+import React from 'react';
+
+export const Helloo = ({name, posts}) => {
+
+	So why is it called Props
+
+● export const Helloo = (props) => {
+○ props.name
+○ props.posts
+● export const Helloo = ({name, posts}) => {
+```
+
+哇，完全没有html了，全是js
+
+co-compiler???
