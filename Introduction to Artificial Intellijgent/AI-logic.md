@@ -241,6 +241,7 @@ backward chaining就是从KB出发，将所有为真的命题找出来，下面�
 
 ### Resolution Inference Rule
 Resolution
+
 刚才的方法虽然既满足Soundness，也满足Completeness，但是将语句限制在了Horn clauses，这无疑限制了逻辑的表达能力。
 
 我们可以使用更强大的inference rule，例如Resolution，对所有命题逻辑进行inference，同时保持它的Soundness和Completeness。
