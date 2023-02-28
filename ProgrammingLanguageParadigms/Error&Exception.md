@@ -564,7 +564,7 @@ class Person(name: String){
   val twoByTwo = aRange.map(x=>2 * x).toList //List(2,4,6,8,...,2000)
 
   //tuples
-  val aTuple = ("Bon Jovj","Helen",1982)
+  val aTuple = ("Bon Jovj","Helen",1840)
 
   //maps
   val aPhoneBook: Map[String,Int] = Map{

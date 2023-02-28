@@ -359,7 +359,7 @@ familiar examples of non-strict
 
 Scala allows non-strict function
 * condider this
-````scala
+```scala
 def if2[A](cond:Boolean,OnTrue:()=>A, onFalse:()=>A)A=
  if(cond) onTrue() else onFalse
 
@@ -369,13 +369,51 @@ def if2[A](cond:Boolean,OnTrue:()=>A, onFalse:()=>A)A=
  also can allows icer syntax:
  def if2[A](cond:Boolean, onTrue:=>A, onFalse:=>A):A=
   if(cond) onTrue else onFalse
- ```
-  * not return a value right now, but put the return value inside the function, and later to evaluate.
+```
+* not return a value right now, but put the return value inside the function, and later to evaluate.
   * Arguments which we want to pass unevalu
   * unevaluated form of an expression is called a thunk
     * we can force a thunk to evaluate the expression and get a result
 看一下例子，为什么一个print了两次hi，一个只print了一次
 
+
+Lecture Feb 27
+#### Lazy List
+
+
+#### Helper functions: ToList
+```scala
+def toListRecursive:List[A]=this match{
+  case Cons(h,t) => h()::t().toListRecursive
+  case _=> List()
+}
+
+def toList:List[A]={
+  @annotation.tailrec
+  def go(s:Stream[A], acc:List[A]):List[A]=s match {
+    case Cons(h,t)=>go(t(),h()::acc)
+    case _=> acc
+  }
+  go this, list().reverse
+}
+```
+
+##### takewhile
+```scala
+def take(n:Int):Stream[A] = this match{
+  ////the condition is cons(h,h) and n>1
+  case Cons(h,t) if n>1 => cons(h(), t().take(n-1))
+  case Cons(h,_) if n==1 ==> cons(h(),empty)
+  case _=>empty
+}
+def drop(n:Int):Stream[A] = this match {
+  //the condition is cons(_,h) and n>0
+  case Cons(_,h) if n>0 => t().drop(n-1)
+  case _ => this
+}
+//这些是不evaluate的，如果想要evaluate，
+//想要force to evaluate，直接加一个toList()就好了
+```
 
 
 
