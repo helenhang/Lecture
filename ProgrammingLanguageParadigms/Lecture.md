@@ -413,12 +413,59 @@ def drop(n:Int):Stream[A] = this match {
 }
 //这些是不evaluate的，如果想要evaluate，
 //想要force to evaluate，直接加一个toList()就好了
+
+def takeWhile(f:A=>Boolean):Stream[A] = this match {
+  case Cons(h,t) if (f(h()))=> cons(h(),t() takewhile f)
+  case _=> empty
+}
+
+
 ```
+#### separating program description from evaluation
+//什么意思？只是分离，但是不evaluate？
+* A major theme in functional programming is separation of concerns
+  * separate description of computation from actually running it
+  * Examples:
+    * First-class functions capture some computation in their bodies but only execute it once they receive their argumnts
+    * Option captures the fact that an error occured, where the decision of what to do about it became a separate concern
+    * with Stream, we are able to build up a computation that pro=duces a sequence of elements without runniing the steps of that computation until we acually need those elements.
+  //就是说，有了stream，我们可以分离一个list，or？但是不用运行他们。复用？
+
+  Lazyness 
 
 
+####  A powerful ability
+* to describe a larger expression than we need, and then evaluate only a protion of it
+* Example: function exists to check if a predicate p is true for an element in a stream
 
+```scala
+def exists(p:A=>Boolean) : Boolean = this match {
+  case Cons(h,t) => p(h()) || h().exists(p)
+  case _=> false
 
+}
+```
+* || is non-strict in its second argument: if (p(h())) return true, then exists terminates the traversal early and returns true
+* The tail 
+* exists is a general recurion
+* recall that a general recursion on a list could be implemented using foldRight
+  * the same can be done for stream but lazily
+  ```scala
+  def foldRight[B](z:=B)(f:(A, =>B) => B): B= this match{
+    case Cons(h,t) => f(h(),t().foldRight(z)(f))
+    case _=>z
+  }
+  ```
 
+  ???
 
+  #### Incremental implementations
+  * This implementation is incremental
+    * the computation to generate a Stream ta
+
+是不是只要传入的是function，就是lazy-evaluation的？
+
+是不是在functional language中，一切皆函数？所以可以认为是first-class ??
+就像在java中，一切皆对象？
 
 

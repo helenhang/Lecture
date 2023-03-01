@@ -271,12 +271,7 @@ values don’t match the given predicate
 
 getOrElse converts from an Option[String] to a String, by providing a default department in case the key "Joe" didn’t exist in the Map or if Joe’s department was "Accounting"
 
-4.4. The Either data type
-```scala
-sealed trait Either[+E, +A]
-case class Left[+E](value: E) extends Either[E, Nothing]
-case class Right[+A](value: A) extends Either[Nothing, A]
-```
+
 
 Usage Scenarios IV
 * orElse is similar to getOrElse, except that: 
@@ -393,8 +388,10 @@ def map2 [A,B,C] (a: Option[A], b: Option[B]) (f: (A, B) => C): Option[C] = for 
 ```
 因为上面的，不用修改已经存在的function
 Never have to modify an existing function
+#### for-comprehensions
+**for-comprehensions** are syntactic sugar for the latter kind of nested use of a number of **flatMap** applications followed by an application of **map**.
 
-for-comprehensions are syntactic sugar for the latter kind of nested use of a number of **flatMap** applications followed by an application of **map**.
+A for loop with a yield statement returns a result, the container type of which is determined by the first generator. 
 
 #### LIMITATIONS OF OPTIONS 
 
@@ -413,7 +410,7 @@ sealed trait Either[+E, +A]
 case class Left[+E](value: E) extends Either[E, Nothing] 
 case class Right[+A](value: A) extends Either[Nothing, A]
 ```
-#### EITHER   DATA   TYPE 
+
 * Either has only two constructors: each case carries a value
 * It represents — in a very general way — values that can be one of two things (In other words, a disjoint union of two types)
 * Right is reserved for the success (i.e., right / correct) case 
@@ -441,7 +438,8 @@ def Try[A](a: => A): Either[Exception, A] =
     try Right(a) 
     catch { case e: Exception => Left(e) } 
 ```
- midterm room 105
+![picture 11](../images/ad76189141f94826b6ecc5436d9d2a87cff6bba6f828f7284122678076d09d40.png)  
+
 我也是觉得奇怪，为什么会有either这个type
 老师意思是另一个solution，先别dismiss
 ```scala
@@ -455,9 +453,7 @@ def flatMap[EE >: E, B](f: A => Either[EE, B]):
     case Left(e) => Left(e)
     case Right(a) => f(a)
   }
-  ```
-### BASIC   FUNCTIONS   ON EITHER
-```scala
+
 def orElse[EE >: E, AA >: A](b: => Either[EE, AA]): 
   Either[EE, AA] = this match {
     case Left(_) => b
