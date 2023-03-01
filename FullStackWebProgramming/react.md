@@ -210,21 +210,21 @@ return (
 
 Review
 
-● Documentation
-○ https://reactjs.org/
-● Goals of React?
-● Approach?
-● Imperative vs Declarative
-● Steps
+* Documentation
+	 - https://reactjs.org/
+* Goals of React?
+* Approach?
+* Imperative vs Declarative
+* Steps
 
 Functions & Tags
 
-● What do Functions return?
-○ Why
-● **How to add styles?**
+* What do Functions return?
+	 - Why
+* **How to add styles?**
 	- 放在App.css中，然后在js中return html的时候，加在里面就好
-● How to pass arguments to functions?
-○ Why?
+* How to pass arguments to functions?
+	 - Why?
 
 index.js 中生成root.render，生成了App
 这些是所有的html的root tag
@@ -242,10 +242,10 @@ export const Helloo = ({name, posts}) => {
 
 	So why is it called Props
 
-● export const Helloo = (props) => {
-○ props.name
-○ props.posts
-● export const Helloo = ({name, posts}) => {
+* export const Helloo = (props) => {
+	 - props.name
+	 - props.posts
+* export const Helloo = ({name, posts}) => {
 ```
 
 哇，完全没有html了，全是js
@@ -257,6 +257,64 @@ co-compiler???
 Props re-render the DOM?
 
 ##### Splitting components
+Post Tag
+
+* Build post tag
+* Add css
+import './Post.css';
+
+export const Post = ({topic, data}) => {
+return (
+<div className="post">
+<p className ="post-topic">{topic}</p>
+<p className= "post-data">{data}</p>
+</div>
+)
+}
+
+export default Post;
+.post {
+padding: 16px;
+background-color: white;
+margin: 32px auto;
+
+width: 25%;
+border-radius: 12px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.post-topic {
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+background-color: rgb(173, 174, 114);
+margin-left: auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+border-radius: 8px;
+padding: 0.5em;
+margin: 0.5em;
+font-size: 1.2em;
+}
+.post-data {
+background-color: rgb(166, 199, 218);
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+margin-left: auto;
+margin-right: auto;
+font-size: 0.8em;
+margin-bottom: 0.5em;
+}
+Define our Sub Components
+* Create sub components
+	 - PostTopic
+	 - PostData
+Add Button
+<button onClick={pressMe}> Press me </button>
+Let's change the data in the page
+State (Hooks)
+* import React, {useState} from 'react';
+* const [myData, setData] = useState(data);
+Let’s use it
+
 * avoid large functions/components
 * example Post Tag
 ```js
@@ -276,9 +334,6 @@ exprot const Post2 = ({topic, data}) =>{
 
     )
 }
-
-
-
 
 exprot const Post2 = ({topic, data}) =>{
     var cunter = 0;
@@ -301,5 +356,281 @@ use App
 component = > functions
 prop  to set parameter to the functions
 
+Use Array
+``` js
+var data = [
+{topic: "JS", data: "JS runs in browsers ......................"},
+{topic: "React", data: "React is a JS library ......................"},
+{topic: "Node", data: "Node is a JS runtime ......................"},
+];
+
+<Post3 data= {data}> </Post3>
+
+return (
+<div>
+{props.data.map((item) => (
+<div className="post">
+<PostTopic topic = {item.topic}> </PostTopic>
+<p className= "post-data">{item.data}</p>
+
+</div>
+)) }
+</div>
+)
+```
+
+#### Data Server
+Handling Data in a “special” server
+```js
+'use strict';
+
+// load package
+const express = require('express');
+const app = express();
+
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: true }));
+
+const cors = require('cors');
+app.use(cors());
+
+const PORT = 8080;
+const HOST = '0.0.0.0';
+let data = [
+    {
+        id: 1,
+        text: 'bla 1',
+        time: '9:00',
+    },
+    {
+        id: 2,
+        text: 'bla, blai 2',
+        time: '9:02',
+    },
+    {
+        id: 3,
+        text: 'bla, bla,blai 3',
+        time: '9:05',
+    }
+];
+app.get('/data', (req, res) => {res.json(data);});
+
+app.post('/add', (req,res) => {
+let id = req.body.id;
+let text = req.body.text;
+let time = req.body.time;
+
+data.push({id: id, text: text, time: time});
+res.json(data);
+
+});
+
+app.listen(PORT, HOST);
+
+console.log('up and running');
+```
+CORS
+
+Cross-Origin Resource Sharing (CORS)
+https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+https://www.npmjs.com/package/cors
+
+only like the request from web page??
+spaceI, spaceCore, 
+ deny other request from others, not from ajax???
+cors is a npm page, what you want
+web security
+app.use, middleware, 
+cors let dorrs open
 
 
+docker-compose 定义两个server
+node1， node2
+
+一个react，另一个普通的nodeserver
+两个server:
+1. react: 用npm start来启动
+2. nodejs: node server.js
+
+package.json
+```json
+"dependencies": {
+"body-parser": "^1.20.2",
+"cors": "^2.8.5",
+"express": "^4.18.2"
+}
+```
+
+#### React-Router-Dom
+Single Page App
+
+* How to structure web app?
+	 - Break into “pages”
+	 - Show one page at a time
+	 - How to avoid reloading -> dom tree manipulation
+
+React-Router-Dom
+
+* https://www.npmjs.com/package/react-router-dom
+` npm add react-dom-router`
+"dependencies": {
+"@testing-library/jest-dom": "^5.16.5",
+"@testing-library/react": "^13.4.0",
+"@testing-library/user-event": "^13.5.0",
+"cors": "^2.8.5",
+"react": "^18.2.0",
+"react-dom": "^18.2.0",
+"react-router-dom": "^6.8.2",
+```yml
+version: '3.9'
+services:
+# mysql1:
+#  image: mysql:5.7
+#  container_name: db1
+#  volumes:
+#   - /Users/ralph/classes/353/dbfiles:/var/lib/mysql
+#  environment:
+#    MYSQL_ROOT_PASSWORD: admin
+#  healthcheck:
+#   test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-padmin"]
+#   timeout: 20s # Timeout for each health checking.
+#   retries: 10 # Hou many times retries.
+ node1:
+  build: .
+  container_name: nodejs1
+  ports:
+   - "80:8080"
+  volumes:
+   - /Users/ralph/classes/353:/usr/src/app
+#  depends_on:
+#   mysql1: 
+#    condition: service_healthy
+  stdin_open: true
+  tty: true
+ node2:
+  build: .
+  container_name: nodejs2
+  ports:
+   - "81:8080"
+  volumes:
+   - /Users/ralph/classes/353:/usr/src/app
+#  depends_on:
+#   mysql1: 
+#    condition: service_healthy
+  stdin_open: true
+  tty: true
+ 
+```
+
+App.js
+```js
+import './App.css';
+
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import {useState} from 'react';
+import {Landing} from './Landing';
+import {ShowPosts} from './ShowPosts';
+import {AddPosts} from './AddPosts';
+
+function App() {   
+  const [getList, setList] = useState([]);
+  if(getList.length <1) {fetch('http://localhost:81/data').then(response => response.json()).then(response => setList(response))};
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <div>
+        <Router>
+        <Link to="/showPosts">  <button> Show Posts </button> </Link>
+        <Link to="/addPosts">  <button> Add Posts </button>   </Link>
+         <Routes>
+         <!-- only one, so examc -->
+          <Route exact path='/' element={<Landing/>} />
+          <Route path="/showPosts" element={<ShowPosts get = {getList}/>} />
+          <Route path="/addPosts" element={ <AddPosts set = {setList} /> } />
+          </Routes>
+        </Router>
+        </div>
+      </header>
+      </div>
+  );
+}
+export default App;
+```
+
+Landing.js
+```js
+import React from 'react';
+export const Landing = () => {
+return (
+<h3> Landing </h3>
+);
+}
+```
+AddPosts.js
+```js
+import React from 'react';
+import {useState} from 'react';
+
+export const AddPosts = ({set}) => {
+const [getID, setID] = useState('');
+const [getText, setText] = useState('');
+const [getTime, setTime] = useState('');
+return (
+    <>
+<h3> AddPosts </h3>
+<div>
+<input
+type="text"
+placeholder="ID"
+value={getID}
+onChange={e => setID(e.target.value)} />
+</div>
+<button onClick={(e) => {
+fetch('http://localhost:81/add', {method: 'POST', body: `id=${getID}&text=${getText}&time=${getTime}`,
+headers: {'Content-type': 'application/x-www-form-urlencoded'}})
+.then(fetch('http://localhost:81/data')
+.then(response => response.json())
+.then(response => set(response))
+.then(alert(`ID: ${getID}, Text: ${getText}, Time: ${getTime} `))
+);
+}
+}> Submit</button>
+```
+ShowPosts
+
+ShowPosts.js
+```js
+import React from 'react';
+import './ShowPosts.css';
+
+export const ShowPosts = ({get}) => {
+
+return (
+
+        <>
+        {get.map(post => (
+
+            <div className="container">
+
+                <h3> {post.id} </h3>
+                <h3> {post.text} </h3>
+                <h3> {post.time} </h3>
+            </div>
+
+        ))}
+        </>
+);
+
+}
+```
+ShowPosts.css
+```css
+.container {
+    border: 2px solid white;
+    border-radius: 8px;
+    width: 400px;
+    margin-top: 16px
+}
+```

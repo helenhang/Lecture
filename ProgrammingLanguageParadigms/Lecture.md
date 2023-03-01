@@ -379,7 +379,9 @@ def if2[A](cond:Boolean,OnTrue:()=>A, onFalse:()=>A)A=
 
 Lecture Feb 27
 #### Lazy List
-
+```scala
+trait Stream???
+```
 
 #### Helper functions: ToList
 ```scala
@@ -469,3 +471,112 @@ def exists(p:A=>Boolean) : Boolean = this match {
 就像在java中，一切皆对象？
 
 
+有一点不懂，就是for-comprehension是flatMap + map
+
+### Lecutre Mar 1st
+avarage 56
+20/75 in class
+51% watch the videos
+
+#### incremental implementations
+* This implementation is incremental
+  * the computation to generate a Stream ta
+
+small cons???and big Cons, different
+
+This implementation is incremental
+• The computation to generate a Stream takes place only when another computation looks at the elements of the Stream
+• Then, only just enough work is done to generate the requested elements
+• We can call these functions one after another without fully instantiating the results
+
+![picture 2](../images/b667454cd54da7dc2229d6fca8d6186942895b4c132db2368c6a6a1fd71c343b.png)  
+
+![picture 3](../images/4e77e07d0dcf1434a636ef18da91c60ffce4ff5169cd4646e756c01cbc79a74f.png)  
+
+![picture 4](../images/16d5c03c7843fb4797a5adb8d3885b522ec0982a51c0a0598be656aecafa0641.png)  
+![picture 5](../images/4459e8a07668e90c68f59fc90616225b183aa2c9937fbf648adf3bacac15bdd6.png)  
+filter is lazy, so headOption is the first result , only find the first 
+![picture 6](../images/aa5990ed55dee80064f0229af47df5a7025b0901a57dd723940393382cf9a98e.png)  
+
+#### infinite streams and corecursion
+Functions on streams also work for infinite streams
+
+```
+val ones: Stream[Int]=Stream.cons(1,ones)
+```
+“Ones” is a stream that refers to itself; it generates an infinite series of 1‘s
+
+![picture 7](../images/47f569a19ac74752fb9eb441d1633b944bbca8456be8fb3064c388f7fd950bef.png)  
+
+```scala
+val ones: Stream[Int] = Stream.cons(1, ones)
+   scala> ones.take(5).toList
+   res0: List[Int] = List(1, 1, 1, 1, 1)
+   scala> ones.exists(_ % 2 != 0)
+   res1: Boolean = true
+More Examples:
+   ones.map(_ + 1).exists(_ % 2 == 0)
+   ones.takeWhile(_ == 1)
+   ones.forAll(_ != 1)
+   //In each case get back a result immediately
+What about:
+   ones.forAll(_ == 1)
+   //Forever need to inspect more of the series because it will never encounter an element that allows it to terminate: stack overflow
+```
+
+Need to watch out for expressions that:
+ones.exists(_ % 2 != 0)
+olean = true
+es:
+• don’t terminate
+• are not stack-safe
+```
+def constant[A](a: A): Stream[A] = {
+  lazy val tail: Stream[A] = Cons(() => a, () => tail)
+  //this is big Cons
+  tail
+}
+def from(n: Int): Stream[Int] =
+  cons(n, from(n+1))
+
+val fibs = {
+  def go(f0: Int, f1: Int): Stream[Int] =
+    cons(f0, go(f1, f0+f1))//small cons
+  go(0, 1)
+}
+
+```
+
+
+#### Corecursive functions
+```scala
+def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] =
+     f(z) match {
+}
+```
+Option is used to indicate when the Stream should be terminated, if at all
+如果是空，就是一个empty
+否则，生成了一个无限的
+
+Option is used to indicate when the Stream should be terminated, if at all A corecursive function:
+• Where a recursive function consumes data, a corecursive function produces data
+• Where recursive functions terminate by recursing on ever smaller inputs,
+corecursive functions need not terminate so long as they remain productive
+• i.e., we can always evaluate more of the result in a finite amount of time
+• Example: unfold is productive so long as f terminates
+
+corecursive 不需要停止自己，但是recursive需要停止自己
+ to indicate when the Stream should be terminate Terminology:
+unction:
+• Corecursion also called “guarded recursion”
+recursive function consumes data, a corecursive functi • Productivity also called cotermination
+
+val fibsViaUnfold =
+  unfold((0,1)) { case (f0,f1) => Some((f0,(f1,f0+f1))) }
+
+  val fibsViaUnfold =
+  unfold((0,1)) { case (f0,f1) => Some((f0,(f1,f0+f1))) }
+def fromViaUnfold(n: Int) =
+  unfold(n)(n => Some((n,n+1)))
+def constantViaUnfold[A](a: A) = unfold(a)(_ => Some((a,a)))
+val onesViaUnfold = unfold(1)(_ => Some((1,1)))
