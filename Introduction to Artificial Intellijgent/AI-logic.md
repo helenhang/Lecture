@@ -183,8 +183,9 @@ A->B为真，那么B也是真的。
 ![picture 19](../images/3fdcaf4a81b9db2b2ef0b9a59ca6c682d67b83e89dce39b9bb8ea46af8ebfbd4.png)  
 我们没办法仅仅通过Modus ponens推断出 f 是真的。（因为我们没有所谓的“短路机制”，在不知道Snow的情况下尚不能判断 Rain V Snow 的真假）
 
-Propositional logic: Syntax
-* Atomic sentences are represented by Capitalized
+Propositional logic: 
+
+* **Syntax**: Atomic sentences are represented by Capitalized
 strings, allowing subscripts.
 * E.g. P, Q1, Lost.
   - If a,b are sentences, then so are:
@@ -194,10 +195,10 @@ a ∧ b (conjunction)
 a ∨ b (disjunction)
 a ⇒ b (implication)
 a ⇔ b (biconditional)
-* We’ll use brackets to disambiguate.
+ We’ll use brackets to disambiguate.消除歧义
 ```
-Propositional logic: Semantics
-* A model m will indicate the truth value of an atomic
+Propositional logic: 
+* **Semantics**: A model m will indicate the truth value of an atomic
 sentence.
 * E.g. m = {P = True,Q1 = False}.
 * If a, b are sentences, and m is a model, then:
