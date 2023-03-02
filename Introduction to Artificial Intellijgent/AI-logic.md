@@ -242,19 +242,20 @@ backward chaining就是从KB出发，将所有为真的命题找出来，下面�
 而backward chaining与之相反，从f出发检查KB能否判断它为真。
 
 ### Resolution Inference Rule
-Resolution
+
+#### Resolution
 
 刚才的方法虽然既满足Soundness，也满足Completeness，但是将语句限制在了Horn clauses，这无疑限制了逻辑的表达能力。
 
 我们可以使用更强大的inference rule，例如Resolution，对所有命题逻辑进行inference，同时保持它的Soundness和Completeness。
 
-**resolution**将**两个析取式**合并为**一个析取式**，它的要求是这两个析取式中包含同一个文字的正好相反的形式
+**resolution**将**两个析取式 disjunction->or**合并为**一个析取式disjunction->or**，它的要求是这两个析取式中包含同一个文字的正好相反的形式
 ![picture 24](../images/8ba508d98082577fccf718f8c026fd9673863ee12401b8bfb57f1ea234da429b.png)  
 resolution的正确性很容易证明，只要把上面的命题拆成 f1Vf2Vf3...fm，和 g1Vg2...Vgm，然后根据真值表分类讨论即可。
 
 可以证明Resolution满足了Soundness和Completeness，在AIMA书中可以找到这个证明。
 
-Resolution要求KB中的每一个命题都是**析取式**，然后将所有析取式两两归并。但是，我们没办法保证将每一个命题都转化为一个析取式。但是，我们可以将一个命题转化为一个合析范式。
+Resolution要求KB中的每一个命题都是**析取式 disconjunction->or clause**，然后将所有析取式两两归并。但是，我们没办法保证将每一个命题都转化为一个析取式->disconjunction->or clause。但是，我们可以将一个命题转化为一个合析范式(a or b) and (b or c)。
 ![picture 25](../images/fb0989f7df8b82aab1298f7109f410478ff458dad549950d54b28de02ab34ecd.png)  
 
 CNF是过个析取式的合取，我们可以把KB看作一个大的命题（用合取将每一个命题连起来），在将其转化为CNF，这样就可以使用Resolution了。
@@ -264,7 +265,7 @@ CNF是过个析取式的合取，我们可以把KB看作一个大的命题（用
 可以证明，我们只需要下面6个rules，就可以将所有命题转化为CNF
 ![picture 27](../images/634854faed5e8aceda20b749abcb694c3c4e3717ae30eabfb1939dacc541063c.png)  
 遗憾的是，Resolution的时间复杂度是指数的，而Modus ponens的时间复杂度是线性的，这意味着尽管Resolution的表达能力强得多，我们仍在某些情况下需要**Modus ponens**。
-##### Modus ponens:
+##### **Modus ponens**:
 Suppose we have KB = (A ∨B) ∧(¬B ∨C).
 * We can easily show that KB |= (A ∨C).
 * We can turn this into a rule called **resolution**. For all sentences α,β,γ
@@ -294,8 +295,8 @@ logical syntax.
 ##### A KB in CNF
 This sentence is in CNF:
 (A ∨B) ∧(¬B ∨C ∨D) ∧F
-A **KB** is conceptually just one giant sentence.
-We often write each clause on its own line, with the ’ands’
+* A **KB** is conceptually just one giant sentence.
+* We often write each clause on its own line, with the ’ands’
 between each line being implicit.
 1. A ∨B
 2. ¬B ∨C ∨D
@@ -322,14 +323,14 @@ Resolution Theorem Proving Algorithm
 Add -a to the KB
 Convert -a to CNF if needed
 while there are clause pairs that have not been Resolved:
-choose two clauses from the KB
-(that have not yet been resolved)
-Resolve them to get a result
-if the result is the empty clause:
-return yes
+  choose two clauses from the KB
+  (that have not yet been resolved)
+  Resolve them to get a result
+  if the result is the empty clause:
+    return yes
 else:
  add the result to the KB
- return no
+return no
  ```
 
  ##### Inference as SearchMinimal Acceptable Conceptual Understanding
@@ -345,4 +346,26 @@ to apply Resolution
 * The Resolution Inference algorithm repeatedly applies
 Resolution until it generates the empty clause
 
-
+**Keywords**
+* reasoning 推理
+* Deductive reasoning(for a basic logic) 演绎推理
+* analogy 类比；比喻 /əˈnælədʒi/ 
+* definition of terminology  /ˌtɜːmɪˈnɒlədʒi/术语的定义
+* proposition/ˌprɒpəˈzɪʃn/命题
+* distinction/dɪˈstɪŋkʃn/n. 区别；差别
+* arithmetic /əˈrɪθmətɪk/ 算术，算法
+* anthropomorphize/,ænθrəpəʊ'mɔːfaɪz/vt. 赋与人性，人格化
+* knowledge base(KB) 知识库
+* connectionism /kə'nekʃənizəm/ 联结主义
+* retrieval /rɪˈtriːvl/n. 检索；恢复；取回；拯救
+* inference: 推理
+* entailment：蕴含
+* syntax:  /ˈsɪntæks/n. 语法；句法；
+* semantic: /sɪˈmæntɪk/adj. 语义的；语义学的
+* falsity: /ˈfɔːlsəti/n. 虚伪；错误；谎言；不真实
+* notation /nəʊˈteɪʃn/n. 符号
+* terminology：/ˌtɜːmɪˈnɒlədʒi/n. 术语，术语学；用辞
+* theorem/ˈθɪərəm/n. [数] 定理；原理
+* axiom: /ˈæksiəm/n. [数] 公理
+* iff: 当且仅当
+* K |= a是语义蕴含，K |- b是形式推演
