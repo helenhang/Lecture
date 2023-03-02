@@ -171,7 +171,7 @@ TODO
 1. mysql console
 2. node
 3. webpage
-  ```
+  
 docker comtainer exec -it db1 bash
 
 mysql -u root -padmin
@@ -200,6 +200,44 @@ dcoker attach nodeapp
 
 curl -d '{"fname":"Sandra"}' -H "Content-Type:application/json" -X POST http://0.0.0:3000/addemployee
 
+#### Lab Mar 2
+Objectives
 
+1. Install React
+2. Build componets
+3. Learn about data passing using props(short for **properties**)
+4. 
+
+### React JS
+- it's component-based
+
+##### Create a React App
+
+1. Create a directory for your projects
+2. `npx create-react-app my-app`
+3. cd to folder and run: `npm start`
+4. open the newly created project in your code editor e.g. VS code and inspect the content
+5. modify your codes according to your specific project/app
+6. installl the react devtools for chrome and firfox
+
+##### Sample Project: tic-tac-toe game
+https://reactjs.org/tutorial/tutorial..html
+
+components present in the project are:
+1. Game component
+2. Board component
+3. Square component
+
+componet types
+function component types?
+react components are class
+react componets are sub-class
+state hooks?
+create statment constructors
+src folder?
+
+Game component
+  - Board component
+    - sdquare component
 
 

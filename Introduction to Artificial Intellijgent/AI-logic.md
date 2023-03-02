@@ -369,3 +369,29 @@ Resolution until it generates the empty clause
 * axiom: /ˈæksiəm/n. [数] 公理
 * iff: 当且仅当
 * K |= a是语义蕴含，K |- b是形式推演
+
+What is a logic?#
+A logic consists of:
+A formal system for expressing knowledge about a domain consisting of
+Syntax: Sentences(well formed formulae)
+Semantics: Meaning
+A proof theory: rules of inference for deducing sentences from a knowledge base
+ 
+Provability#
+λ ⊢ ρ: we can construct a proof for ρ from λ using axioms and rules  of inference
+If λ is empty (i.e., 0⊢ρ) and ρ is a single formula, then we say that ρ is a theorem of the logic
+ 
+Entailment#
+λ |= ρ: whenever the formula(s) λ are true, one of the formula(s) in ρ is true
+In the case where ρ is a single formula, we can determine whether  λ |= ρ by constructing a truth table for λ and ρ. If, in any row of the  truth table where all the formulae in λ are true, ρ is also true, then  λ |= ρ.
+If λ is empty, we say that ρ is a tautology
+ 
+Soundness and Completeness
+* λ |= a是语义蕴含， λ |- b是形式推演
+  - An inference procedure (and hence a logic) is sound if and only if it  preserves truth
+* In other words ⊢ is sound iff whenever λ ⊢ ρ, then λ |= ρ
+Soundness 是说右侧推演的知识都是被λ蕴含的（推出来的知识都是正确的）
+* A logic is complete if and only if it is capable of proving all truths
+In other words, whenever λ |= ρ, then λ ⊢ ρ
+* Completeness 是说，左侧蕴含出来的知识都可以推演出来
+  - A logic is decidable if and only if we can write a mechanical procedure (computer program) which when asked λ ⊢ ρ it can eventually halt and answer “yes” or answer “no”
