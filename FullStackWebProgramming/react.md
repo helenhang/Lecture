@@ -634,3 +634,5 @@ ShowPosts.css
     margin-top: 16px
 }
 ```
+
+Use State to pass the data to all server

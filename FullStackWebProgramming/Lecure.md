@@ -22,10 +22,316 @@ Material:
 
 
 Javascript very slow, then python is slow
-Why?
+因为javascript 是解释性语言，边解释边执行
 Javascript non-block
-Explain docker
-python 
+
+#### HTML 5
+
+First steps
+Dom tree. Tree structure
+Background
+
+* Web starts in 1989
+	 -  (Sir) Tim Berners-Lee
+	 -  Enquirer 1980 - His personal project
+	 -  “Classical” Hypertext can be traced back to
+		 -  Jorge Francisco Isidoro Luis Borges Acevedo, The Garden of Forking Paths, 1941
+		 -  Vannevar Bush, Memex 1945
+	 -  Ideas similar to Hypertext can be traced back to
+		 -  Agostino Ramelli, Book-Wheel, 1588
+
+* Hypertext has been very active area starting in the 1960’s
+	 -  Ted Nelson = Xanadu
+
+* Web starts in 1989
+	 -  (Sir) Tim Berners-Lee
+	 -  Enquirer 1980 - His personal project
+	 -  “Classical” Hypertext can be traced back to
+		 -  Jorge Francisco Isidoro Luis Borges Acevedo, The Garden of Forking Paths, 1941
+		 -  Vannevar Bush, Memex 1945
+	 -  Ideas similar to Hypertext can be traced back to
+		 -  Agostino Ramelli, Book-Wheel, 1588
+
+* Hypertext has been very active area starting in the 1960’s
+	 -  Ted Nelson = Xanadu
+
+* Many different HTML versions
+* HTML5
+* Main trends ->
+	 -  Structure -> Trees
+	 -  Clear(er) semantics,
+	 -  Towards declarative constructs,
+	 -  Incorporating media
+	 -  Supporting evolving platforms
+* Web Standards try to be compatible to older versions
+* Web is based on best effort
+
+Doctype
+```html
+<! Doctype>
+<! DOCTYPE html>
+
+<!--
+Comment1
+.......
+CommentN
+-–>
+```
+Tags
+* Tags
+	 -  Markup
+	 -  <Tag .... > Something </Tag>
+	 -  Some tags have no end e.g.
+		 -  <br> -> line break
+<a href="http://www.cs.usask.ca"> link </a>
+* Tags can be nested
+Attributes
+
+* Tags have attributes
+	 -  <a href="http://www.cs.usask.ca"> link</a>
+* Common Attributes
+	 -  https://html.spec.whatwg.org/multipage/dom.html#global-attributes
+* Tag specific
+	 -  href
+	 -  target
+	 -  download
+	 -  ping
+	 -  rel
+	 -  hreflang
+	 -  type
+	 -  referrerpolicy
+
+Style
+1. Inline
+2. Style File
+   
+Style (example from html definition)
+```html
+<p>My sweat suit is 
+<span style="color: green; background: transparent">green</span> 
+and my eyes are
+ <span style="color: blue; background: transparent">blue</span>.
+</p>
+```
+* Inline style
+    - Use the style attribute (in tag) to declare a style for an individual element
+	-  Every CSS property is followed by a colon and the value of
+the attribute
+	- Multiple property declarations are separated by a semicolon
+```html
+<h1 style = "font-size: 18pt; color: #FF0000"> hello </h1>
+
+<!-- Style tag -->
+<style type = "text/css">
+h1 { font-family: helvetica, tahoma; color: #FFFF00}
+h2 { font-size: 18pt; color: #00FF00 }
+.ralph1 { color: #FF0000}
+#ralph2 {color: #00FF00}
+</style>
+...
+<body>
+<h1 style = "font-size: 18pt; color: #0000FF"> hello </h1>
+<h1> hello1 </h1>
+<h1 class="ralph1"> hello2 </h1>
+<h1 id="ralph2"> hello3 </h1>
+```
+* Style in Separate File
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Demo page</title>
+<link rel=stylesheet href= "test.css" type="text/css">
+</head>
+<body>
+
+......
+
+</body>
+</html>
+```
+1. CSS File
+```css
+h1 { font-family: helvetica, tahoma; color: #FFFF00}
+h2 { font-size: 18pt; color: #00FF00 }
+.ralph1 { color: #FF0000}
+#ralph2 {color: #00FF00}
+```
+CSS Statements
+* Style defines rules
+	 -  Each rule consists of selector and body
+	 -  Rule body begins with { and ends with }
+	 -  Different properties are separated by ;
+	 -  Different values are separated by ,
+```css
+ h1 { font-family: helvetica, tahoma; color: #FFFF00;}
+ Selector {attribute: value;}
+ Selector {attribute1: value; .....; attributeN: value; }
+```
+2. Selectors
+* Selector is name for rule/style
+* Selector Types
+	 -  Tag
+		 -  h1 { font-family: helvetica, tahoma; color: #FFFF00;}
+	 -  Class
+		 -  .ralph1 { color: #FF0000}
+	 -  ID
+		 -  #ralph2 {color: #00FF00}
+Grouping & Nesting
+1. Standalone
+	` h1 { font-family: helvetica, tahoma; color: #FFFF00;}`
+2. Grouping`
+	` h1, h2 { font-family: helvetica, tahoma; color: #FFFF00;}`
+3. Nested
+	` h1 h2 { font-family: helvetica, tahoma; color: #FFFF00;}`
+
+* .class
+	- class
+* #id
+	- id
+* tag
+	- standalone
+* tag1 tag2
+	- Select if tag2 is in tag1
+- tag1>tag2
+	- Select when tag1 is a parent of tag2
+* tag1+tag2
+	- Select tag2 that is right after tag1
+* [attribute]
+	- Select all tags with attribute
+* [attribute=value]
+	- Select all tags with attribute equal value
+* [attribute~=value]
+	- Select all tags with attribute containing value
+* :link
+	- Select unvisited links
+* :visited
+	- Select visited links
+* :active
+	- Select active link
+* :hover
+	- Select links with “mouse over”
+
+##### JavaScript in the Browser
+
+` <script type = "text/javascript"> ... </script>`
+1. JavaScript in Page
+	- Place in HEAD / BODY
+2. JavaScript in separate file
+	- Head
+```html 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+```
+
+##### Document Object Model (DOM)
+1. DOM
+   - https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model
+
+2. Document & element
+	- https://developer.mozilla.org/en-US/docs/Web/API/Document
+	- document.getElementByID(“ID”);
+	-  document.getElementByID(“ID”).style.color = “blue”;
+	-  https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML
+	-   document.createElement(“type”);
+#### Ajax
+##### Ajax： 这是一个异步获取server 数据的方式，不用全部html 提交到server
+##### JS & HTTP Requests
+
+* Why?
+	- Performance
+	- User Experience
+* XMLHttpRequest
+	- Ajax
+		- Basic concept
+		- Yes is is all about asynchronous calls
+* JS Libraries
+XMLHttpRequest
+- For simplicity the “old” onstatechange pattern will be used
+`http.onreadystatechange = function() {//Call a function when the state changes.`
+
+- The “newer” addEventListener pattern will be presented later
+Links for event listener
+`https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/load_event`
+Basic Design
+1. Creating request object
+2. Setting parameters of request object & submitting it
+3. Synchronous or asynchronous handling of response
+
+在一个container里面新加一个service
+`	Docker attach node11`
+Node server20 不需要node server20.js
+Class 用在一堆的dom中，需要tranversal  the dom tree
+用ID，getElementById()直接作用到那个id的dom tag
+**Javascript only one thread**
+??问了什么？？
+
+Ajax: JS HTTP Requests
+
+1996:
+JavaScript (JS)
+* How to add JavaScript (code) in Page?
+	 -  <script type = "text/javascript"> ... </script>
+* How to call JavaScript?
+	 -  Script -> interpreter, starts executing
+	 -  Script -> Function definitions & statements
+Python - Functions
+
+•	Named Function
+def foo:
+return 'hello'
+
+•	Unnamed/lambda function
+greet = lambda : print('Hello World')
+greet_user = lambda name : print('Hey there,', name)
+
+JS Functions
+
+* Named
+	 -  foo(Args ) { ..... };
+* Unnamed
+	 -  function(Args) { .... };
+		 -  let a = function() { .... };
+* a();
+		 -  foo( function(Args) { ...};
+* app.get(‘/something’, function(req,res) { .... } );
+
+2005: web traffic happened, 所以需要简化web client和server之间的数据
+
+Node code:
+```js
+app.post('/sayHello', (req,res) => {
+       var name = req.body.name;
+       var answer = "hello " + name;
+        res.send(answer);
+  });
+
+function sayHello()
+{
+var http = new XMLHttpRequest();
+var url = '/sayHello';
+var params = 'name=' + document.getElementById("input").value;
+
+http.open('POST', url, true);//true: background, false: frontground
+
+http.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+http.onreadystatechange = function(){
+	if(http.readyState == 4 && http.status == 200){
+		document.getElementById("answer").value = http.responseText;
+	}
+};
+http.send(params);
+};
+```
+* request.readyState
+* https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readySta
+te
+	 -  0 -> unsent
+	 -  1 -> opened
+	 -  2 -> headers_received
+	 -  3 -> loading
+	 -  4 -> done
+
 * request.readyState
 * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState
 
@@ -58,7 +364,7 @@ status是XMLHttpRequest对象的一个属性，表示响应的http状态码
 1xx：信息响应类，表示接收到请求并且继续处理
 2xx：处理成功响应类，表示动作被成功接收、理解和接受
 3xx：重定向响应类，为了完成指定的动作，必须接受进一步处理
-4xx：客户端错误，客户请求包含语法错误或者是不能正确执行
+4xx：客户端错误，客户请求包含语法错误或者是不能正确执行	
 5xx：服务端错误，服务器不能正确执行一个正确的请求
  
 100——客户必须继续发出请求
@@ -682,4 +988,90 @@ retries: 20
 这是干啥呢
 
 ### Leture Feb15
+### lecture March 1
+### Lecture March 3
+Project:
+General Coments
+* single person project
+* Due on 6th of April
+* There are no limits on the number/types of npm packages you use. However, make sure name and explain the use of the packages in the report and your video to avoid losing marks.
 
+Goal: channel-based Chat Tool
+1. Design and implement a chat tool that allows users to 
+   1. create channels
+   2. view all channel
+   3. select a channel and to post message in that channel
+   4. post replies to existing messages
+
+*The user interface must be implemented in Reactjs and all text data must be stored in  a mysql database
+
+Part 1 - Basic System(40%)
+* Design and implement the datase tables needed
+  * expose the mysql database using a separate nodejs server
+* Design and implement the user interface useing reactjs
+  * Your application should use react-dom-router and provide at least
+    * Landing page that offers a brief description/intro into your system
+    * page that allows users to see/create/select chnnel and see/create new messages or replies
+
+Part2 - adding User Accounts(20%)
+* Extend part 1 to enable users of your system to have accounts and enforce that only registered users can use your system.
+* An account should consist of at least:
+  * ID
+  * Password
+  * Name that is displayed in messages/replies/channels
+
+You can add additional elements e.g. avatar/image for the user
+* Make sure that users can create an ccount & that users must always first sign in before using your system
+* create one special account for a system administrator(can be hardcoded) that has the power to remove users channels, posts and replies.
+
+only 1 level posts
+
+
+我想到时候做几个虚拟用户，每一个虚拟用户又特殊任务，用AI技术，看看怎么样。
+坐一些有意思的测试
+以及游戏
+
+
+Parts - Nested Replies & Ratings(10%)
+* Expand/change your database and your Reactjs app to 
+  * allow your user to reply to replies
+  * visualize the nested replies
+???
+Part 4 - Search Feature(10%)
+* Allow your users to search the data in your system to answer questions like
+  * content that contain specific string e.g. list all content that contains the string "arrow function.
+  * content created by a specific user
+  * User with the most/least posts
+  * User with the highest/lowest ranking of messages/replies
+
+What to submit
+* docker-compose.yml file(and if needed additional dockerfile
+* all .js, .css files you created
+* package.json files
+* Design-reprot: 1-page report describing your architecture/design decisions of your database and the react application
+* Test-Report: 1-page test report demonstrating how you tested your system
+* A link to a 10 minute video of you presenting your system and demonstrating the features of your system(worth 10% of grade))
+
+
+### REST
+Represntational state transfer
+Design
+Rest: the server.js是一个pattern of REST
+use a web server as an interface
+stae transfer
+micro server is a REST app
+
+component
+modualization
+take functionality expose, use
+
+Roy Fielding
+* Born 1965(http://roy.gbiv.com)
+* key contributor to HTTP
+* Co-founder of Apache HTTP server
+* *Defined REST
+* 去读那个thesis
+
+REST
+* Representatinal State Transfer
+  * The term comes from Roy field
