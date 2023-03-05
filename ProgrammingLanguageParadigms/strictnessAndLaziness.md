@@ -235,14 +235,15 @@ Non-strictness makes foldRight reusable
 * For the example the gabage collector can relaim space allocated   for values 11 and 13 as soon as filter rejects them
 
 #### infinite streams and corecursion
-Functions on streams also work for infinite streams
-Example:
+Functions on streams also work for **infinite streams**
+* Example:
 ```
 val ones: Stream[Int]=Stream.cons(1,ones)
 ```
 “Ones” is a stream that refers to itself; it generates an infinite series of 1‘s
 
 ![picture 7](../images/47f569a19ac74752fb9eb441d1633b944bbca8456be8fb3064c388f7fd950bef.png)  
+Expressions that only evaluate a finite number of stream elements can accept an infinite stream as input
 
 ```scala
 val ones: Stream[Int] = Stream.cons(1, ones)
@@ -250,31 +251,29 @@ val ones: Stream[Int] = Stream.cons(1, ones)
    res0: List[Int] = List(1, 1, 1, 1, 1)
    scala> ones.exists(_ % 2 != 0)
    res1: Boolean = true
-More Examples:
+//More Examples:
    ones.map(_ + 1).exists(_ % 2 == 0)
    ones.takeWhile(_ == 1)
    ones.forAll(_ != 1)
    //In each case get back a result immediately
-What about:
+// What about:
    ones.forAll(_ == 1)
    //Forever need to inspect more of the series because it will never encounter an element that allows it to terminate: stack overflow
 ```
 
 Need to watch out for expressions that:
-ones.exists(_ % 2 != 0)
-olean = true
-es:
-* don’t terminate
-* are not stack-safe
+1. don't terminate
+2. are not stack-safe
+
 ```
 def constant[A](a: A): Stream[A] = {
   lazy val tail: Stream[A] = Cons(() => a, () => tail)
-  //this is big Cons
+  //this is big Cons,
   tail
 }
 def from(n: Int): Stream[Int] =
   cons(n, from(n+1))
-
+//this is small cons, cons are for lazyness
 val fibs = {
   def go(f0: Int, f1: Int): Stream[Int] =
     cons(f0, go(f1, f0+f1))//small cons
@@ -282,7 +281,6 @@ val fibs = {
 }
 
 ```
-
 
 #### Corecursive functions
 ```scala
@@ -293,34 +291,30 @@ def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] =
     }
 }
 ```
-Option is used to indicate when the Stream should be terminated, if at all
+
 如果是空，就是一个empty
 否则，生成了一个无限的
 
-Option is used to indicate when the Stream should be terminated, if at all A corecursive function:
-* Where a recursive function consumes data, a corecursive function produces data
-* Where recursive functions terminate by recursing on ever smaller inputs,
-corecursive functions need not terminate so long as they remain productive
-* i.e., we can always evaluate more of the result in a finite amount of time
-* Example: unfold is productive so long as f terminates
+Option is used to indicate when the Stream should be terminated, if at all 
+A corecursive function:
+* Where a recursive function **consumes** data, a corecursive function **produces** data
+* Where recursive functions terminate by recursing on ever smaller inputs, corecursive functions need not terminate so long as they remain **productive**
+  * i.e., we can always evaluate more of the result in a finite amount of time
+  * Example: unfold is productive so long as f terminates
 
 corecursive 不需要停止自己，但是recursive需要停止自己
- to indicate when the Stream should be terminate Terminology:
-unction:
+Terminology:
 * Corecursion also called “guarded recursion”
-recursive function consumes data, a corecursive functi * Productivity also called cotermination
+* Productivity also called co-termination
 ```scala
-val fibsViaUnfold =
+val fibsViaUnfold = 
   unfold((0,1)) { case (f0,f1) => Some((f0,(f1,f0+f1))) }
-
-val fibsViaUnfold =
-  unfold((0,1)) { case (f0,f1) => Some((f0,(f1,f0+f1))) }
-def fromViaUnfold(n: Int) =
+def fromViaUnfold(n: Int) = 
   unfold(n)(n => Some((n,n+1)))
+
 def constantViaUnfold[A](a: A) = unfold(a)(_ => Some((a,a)))
 val onesViaUnfold = unfold(1)(_ => Some((1,1)))
 
- 
 def mapViaUnfold[B](f: A => B): Stream[B] =
   unfold(this) {
     case Cons(h,t) => Some((f(h()), t()))
@@ -348,20 +342,21 @@ def takeWhileViaUnfold(f: A => Boolean): Stream[A] =
 // special case of `zipWith`
 def zip[B](s2: Stream[B]): Stream[(A,B)] =
   zipWith(s2)((_,_))
+
 def zipAll[B](s2: Stream[B]): Stream[(Option[A],Option[B])] =
   zipWithAll(s2)((_,_))
 
-  def zipWithAll[B, C](s2: Stream[B])(f: (Option[A], Option[B]) => C): Stream[C] =
+def zipWithAll[B, C](s2: Stream[B])(f: (Option[A], Option[B]) => C): Stream[C] =
   Stream.unfold((this, s2)) {
     case (Empty, Empty) => None
     case (Cons(h, t), Empty) => Some(f(Some(h()), Option.empty[B]) -> (t(), empty[B]))
     case (Empty, Cons(h, t)) => Some(f(Option.empty[A], Some(h())) -> (empty[A] -> t()))
     case (Cons(h1, t1), Cons(h2, t2)) => Some(f(Some(h1()), Some(h2())) -> (t1() -> t2()))
 }
-//-> instead of comma
-//Option.empty[B] means None
- 
+// -> instead of comma
+// Option.empty[B] means None
 ```
+
 example: HAS SUB SEQUENCE
 ```scala
 @annotation.tailrec
@@ -379,21 +374,24 @@ def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = sup match {
 
 def startsWith[A](s: Stream[A]): Boolean = zipAll(s).takeWhile(!_._2.isEmpty) forAll {
     case (h,h2) => h == h2
-  }
+}
+def tails: Stream[Stream[A]] = unfold(this) {
+    case Empty => None
+    case s => Some((s, s drop 1))
+} append Stream(empty)
+
  def hasSubsequence[A](s: Stream[A]): Boolean = tails exists (_ startsWith s)
  ```
-
- #### Generalize tails to scanRight, which is like a foldRight which returns a stream of the intermediate results
+#### ScanRight
+Generalize tails to scanRight, which is like a foldRight which returns a stream of the intermediate results
 scala> Stream(1,2,3).scanRight(0)(_ + _).toList res0: List[Int] = List(6,5,3,0)
 ```scala
  def scanRight[B](z: B)(f: (A, => B) => B): Stream[B] =
     foldRight((z, Stream(z)))((a, p0) => {
-      // p0 is passed by-name and used in by-name args in
-         f and cons. So use lazy val to ensure only one
-         evaluation...
+      // p0 is passed by-name and used in by-name args in f and cons. So use lazy val to ensure only one evaluation...
       lazy val p1 = p0
       val b2 = f(a, p1._1)
       (b2, cons(b2, p1._2))
 })._2
-
+```
 //这个期末final exam会考
