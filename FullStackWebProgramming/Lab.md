@@ -240,4 +240,24 @@ Game component
   - Board component
     - sdquare component
 
+Lab Mar 9
+
+CORS
+* Backend: Nodejs
+  1. Initialize app: `npm init -y`
+  2. Install dependencies:
+     1. `npm install exrepress cors body-parser --save`
+  3. write code: 
+   `Data Server = Array[{id:1, text:"Hello", "time":"10:00"}]`
+  4. start app: node server.js
+   
+Frontend: Reactjs
+1. initialize app: `npx create-react-app react-frontend`
+2. install dependencies: `npm install  react-router-dom cors`
+3. add files
+   1. AddPost.js
+   2. Landing.js
+4. start app: `npm start`
+
+
 

@@ -328,8 +328,8 @@ while there are clause pairs that have not been Resolved:
   Resolve them to get a result
   if the result is the empty clause:
     return yes
-else:
- add the result to the KB
+  else:
+    add the result to the KB
 return no
  ```
 
@@ -389,7 +389,7 @@ If λ is empty, we say that ρ is a tautology
 Soundness and Completeness
 * λ |= a是语义蕴含， λ |- b是形式推演
   - An inference procedure (and hence a logic) is sound if and only if it  preserves truth
-* In other words ⊢ is sound iff whenever λ ⊢ ρ, then λ |= ρ
+    * In other words ⊢ is sound iff whenever λ ⊢ ρ, then λ |= ρ
 Soundness 是说右侧推演的知识都是被λ蕴含的（推出来的知识都是正确的）
 * A logic is complete if and only if it is capable of proving all truths
 In other words, whenever λ |= ρ, then λ ⊢ ρ

@@ -81,8 +81,8 @@ npm start
 ##### explore folder
 * src
 	 - Index.js
-		■ Called when node is started
-		■ Processed before going to client
+				 * Called when node is started
+				 * Processed before going to client
           - <App /> -> this is not a tag !!!
 
 	- Import ReactDom
@@ -636,3 +636,162 @@ ShowPosts.css
 ```
 
 Use State to pass the data to all server
+
+#### Lecture Mar 8
+Rest2
+
+Possible REST Level 2 Response
+```json
+[
+{
+id: 1, text: 'bla 1', time: '9:00',
+},
+{
+id: 2, text: 'bla, blai 2', time: '9:02',
+},
+{
+id: 3,text: 'bla, bla,blai 3',time: '9:05',
+}
+]
+```
+Possible REST Level 3 Response
+```json
+{ posts:
+[{ id: 1, text: 'bla 1', time: '9:00', },
+{ id: 2, text: 'bla, blai 2', time: '9:02',},
+{ id: 3,text: 'bla, bla,blai 3',time: '9:05',}],
+addPost: '/posts/channel'
+}
+```
+URL in REST
+
+* URL
+  * Uniform Resource Locator
+  * Type of URI
+  * protocol://host:port/path?args
+* URI
+  * Each Resource has at least one (1) URL
+  * A Resource can have multiple URLs
+
+Naming Conventions
+http://host:80/service/v1/posts/{id}
+Use nouns NOT verbs
+Use pluralized nouns
+Use hyphens “-” for readability
+Use / to indicate hierarchy
+Avoid file extensions (e.g. .json)
+Use versions
+Support query arguments (e.g. ?key=value)
+Avoid simple number scheme e.g. (1,2,3, ..... 10,11, ....)
+const crypto = require('crypto');
+crypto.randomBytes(16).toString('hex',0,16)
+How to make HTTP Requests in Node
+* Nodejs http
+- https://nodejs.org/api/http.html
+* Axios
+- https://www.npmjs.com/package/axios
+
+Provisioning Resources
+
+* Scale Up/Down to meet demand
+  * UP: Start more docker containers
+  * Down: Reduce number of containers
+* Need for load balancer
+  * nginx
+
+Nginx
+writen in C
+* https://hub.docker.com/_/nginx
+* https://nginx.org/en/docs/
+* Yes, there are now better tools
+	 * https://www.phoronix.com/news/CloudFlare-Pingora-No-Nginx#:~:text=Cloudflare%20has%20long%20relied%20upon,the%20CPU%2
+0and%20memory%20resources.
+	 *
+什么意思？后来用rust 写了？ 之前一直是C写的
+* Example
+	 * Nginx
+	 * docker-compose.yml
+	 * lb
+		 * dockerfile
+		 * nginx.conf
+	 * s1
+		 * dockerfile
+		 * server.js
+	 * s2
+		 * dockerfile
+		 * server.js
+load balancer??这是干什么的？
+
+nginx.con:
+> 
+> upstream backend {
+>   server nodejs1:6060
+>   server nodejs2:8080
+> }
+> server{
+> proxy
+> }
+```yml
+version: '3.9'
+services:
+ node1:
+  build: ./s1
+  container_name: nodejs1
+  ports:
+   - "81:8080"
+  volumes:
+   - /Users/ralph/classes/353/nginx/s1:/usr/src/app
+  stdin_open: true
+  tty: true
+ node2:
+  build: ./s2
+  container_name: nodejs2
+  ports:
+   - "82:8080"
+  volumes:
+   - /Users/ralph/classes/353/nginx/s2:/usr/src/app
+  stdin_open: true
+  tty: true
+ lb:
+  build: ./lb
+  container_name: lb
+  ports:
+   - "80:80"
+  stdin_open: true
+  tty: true
+ 
+```
+Emergence of microservices
+* Maintenance
+* Deployments are now zero-trust
+	 * mTLS
+* Side-Car
+	 * Have a dedicated component for control of microservice/container
+* Service Mesh
+	 * https://istio.io/latest/about/service-mesh/
+
+
+
+node server
+
+docker-compose up -d
+node server(not node server.js)
+docker attach lb
+
+htmp://localhost/hello
+
+
+#### State
+* How is state managed?
+	 * N instance of a microservice?
+* Use of Stateful backend service
+	 * E.g. DBMS
+	 * https://www.npmjs.com/package/mysql#transactions
+
+Revisiting HTTP Status Codes
+
+* https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+Revisiting HTTP Headers
+
+* https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers

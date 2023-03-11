@@ -52,10 +52,10 @@ Final: 40%
 
 
 函数式语言当然还少不了以下特性：
-•	高阶函数（Higher-order function）
-•	偏应用函数（Partially Applied Functions）
-•	柯里化（Currying）
-•	闭包（Closure）
+*	高阶函数（Higher-order function）
+*	偏应用函数（Partially Applied Functions）
+*	柯里化（Currying）
+*	闭包（Closure）
 高阶函数就是参数为函数或返回值为函数的函数。有了高阶函数，就可以将复用的粒度降低到函数级别，相对于面向对象语言，复用的粒度更低。
 
 Functional programming is how you can code, not what you can express. Why?
@@ -225,9 +225,9 @@ fac = rec(λf. λn. ? )
 ### First-class Functions as values
 Functions as values
 Scala functions are values:
-•	Can be assigned to variables
-•	Can be stored in data structures
-•	Can be passed as arguments to functions
+*	Can be assigned to variables
+*	Can be stored in data structures
+*	Can be passed as arguments to functions
 
 1. Inner functions: 代表function可以像value一样定义，使用
 	An inner function, or local definition.
@@ -290,14 +290,14 @@ object Bar {
 ## Lecture Feb 3
 Error and exception
 Basic idea:
-•	Can represent failures and exceptions with ordinary values
-•	Can write higher-order functions that abstract out common patterns of error handiling and recovery
-•	Advantages
+*	Can represent failures and exceptions with ordinary values
+*	Can write higher-order functions that abstract out common patterns of error handiling and recovery
+*	Advantages
     o	Safer and retains referential 
 Plan
-•	Recreate option and either type
-•	Exception break RT and introduce context dependence.
-•	They don’t work for higher-order functions
+*	Recreate option and either type
+*	Exception break RT and introduce context dependence.
+*	They don’t work for higher-order functions
     o	HOF cannot be avare of exceptions that could be raised by their arguments
 
 Benefit of exeption
@@ -485,9 +485,9 @@ avarage 56
 small cons???and big Cons, different
 
 This implementation is incremental
-• The computation to generate a Stream takes place only when another computation looks at the elements of the Stream
-• Then, only just enough work is done to generate the requested elements
-• We can call these functions one after another without fully instantiating the results
+* The computation to generate a Stream takes place only when another computation looks at the elements of the Stream
+* Then, only just enough work is done to generate the requested elements
+* We can call these functions one after another without fully instantiating the results
 
 ![picture 2](../images/b667454cd54da7dc2229d6fca8d6186942895b4c132db2368c6a6a1fd71c343b.png)  
 
@@ -499,6 +499,142 @@ filter is lazy, so headOption is the first result , only find the first
 ![picture 6](../images/aa5990ed55dee80064f0229af47df5a7025b0901a57dd723940393382cf9a98e.png)  
 
 
-```
 #### Lecture Mar 3
+
+#### Lecture Mar 6
+### Concurrent programming
+
+Sequential vs Concurrent
+1. Sequential Program
+  * Sequence of actions that produce a result(statements + variables)
+  * called a process, task, or thread (of control)
+  * scheduler
+2. concurrent Program
+   1. Two or more processes that work together
+      为什么？ multiple processeor, 
+      因为多个core？
+      a process run in more threads
+      simulation
+      到底是哪一个？应该是多个processor，每一个运行一个process，然后他们互相communication and sysnchronization to each other
+    2. communication
+    3. synchronization
+       1. shared variables or **message passing**
+ 3. Hardware
+    1. single processor
+    2. multiprocessor -- shared memory
+    3. multicomputer -- separate memories
+    4. network -- slower communication
+   IMage
+   1. Single processor
+      1. image
+      2. 策略就是一个CPU，有多个cache ， memory
+   2.  Multiprocessor： SharedMemory
+       1.  image
+       2.  一个CPU，一个cache，通过interconnection network互相连接
+       3.  这个interconnection network是什么？好想OS没有学啊
+   3. multithreaded applicatons
+      1. what? more than 1 thread(usually share CPU time)
+      2. why? good way to organize modern software systems
+         1. OS --timeshareing, servers
+         2. PC --windows
+         3. brower --applets
+         4. user --unix pipes
+   4. Parallel applications
+      1. what? processes execute on their own processors
+      2. why? Solve a problem faster -- or solve a larger problem
+         1. AWS?? free for user??
+      3. Two main algorithm / programming styles:
+         1. Iterative -- toops, divide them up
+         2. Recursive -- divide and conquer, with calls in parallel
+   5. Distributed application
+      1. what? processes communicate over a network
+      2. why? offload work -- servers
+         1. connect to remote data -- internet, airlines, banks
+         2. Scalable parallel computing on multicomputers and networks
+   6. Programming Paradigms
+      1. iterative parallelism
+      2. recursive parallelism
+      3. producers and consumers
+      4. Clients and Servers
+      5. Interacting Peers
+   7. Asynchronous Message Passing
+      1. Message Passing
+         1. p, ->send -> channel p2
+      2. Channel
+         1. unbounded queue of meeages
+            1. channel name(id1:type1;..;idN:typeN)
+            2. (with libraries, messages are just streams of bytes, possibly with self-describing tags to indicate types of fields)
+         2. Message Passing Primitives
+            1. `send name(expr1,..., exprN)`
+            2. types and number of fields must match
+            3. Effect:
+               1. Evaluate the expressions and produce a message M
+               2. Atomically append M to the end of the named channel
+               3. 这种情况只是使用这些messages没有order的关系
+            4. Send is nonblocking (asynchronous)
+               1. Example:
+  ```
+   chan ch(int)
+   process A:
+    send ch(1)
+    send ch(2)
+  process B:
+    receive ch(x)
+    receive ch(y)
+  ```
+What is received now?  
+x will get 1 or 3 and y will get 3 or 1
+u will get 2 or 4 and v will get 4 or 2
+
+* Who has a name? 
+* Processes? No
+* Channels? Yes
+Actors
+Actors are self-contained, interactive, autonomous 
+components of a computing system that communicate 
+by asynchronous message passing 
+Basic primitives 
+  send ( a , v ) sends message v to actor a 
+  newactor ( e ) creates a new actor and returns 
+name
+channel contail full of processors
+
+who create the new actor, will have the name of actor
+
+actor是什么！肯定不是演员，那么是什么呢
+actors go throught the queue one by one
+我以前怎么不找掉这个东西
+Actor:
+1. unique name
+2. State，means  have the local varibles
+3. method, local method
+4. thread, has its thread
+5. schedudling 
+每一个space里面有很多的actors，他们互相不能通信
+acotor can create another actors
+distributed
+
+
+actors
+1. actors have names
+2. what does that mean?
+   1. each channel only has one recipient
+
+Process interaction Patterns
+1. Filters: one way
+2. Client/server: Two say as controller/respondeer
+3. Interacting peers: Two way as equals
+
+Filter Process To Assemble Characters
+![picture 8](../images/2b7b236262bc62251e849912e3e714e0e15fc58fad37ab775a280d7dbce95c8e.png)  
+Merge Process and Sorting Network
+![picture 9](../images/5188c2a07a9570e0131072f010694fa3420098c4dd1ba093298d836f77250ea4.png)  
+
+![picture 10](../images/dd192f110cfc0784b3573d830c54cf41fb6223354c5d2f158fb34ef027a06691.png)  
+
+#### Lecture Mar 8
+#### Lecture Mar 10
+
+
+
 

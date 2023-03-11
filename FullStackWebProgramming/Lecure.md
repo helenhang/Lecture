@@ -1075,3 +1075,244 @@ Roy Fielding
 REST
 * Representatinal State Transfer
   * The term comes from Roy field
+
+#### Lecture March 6
+
+##### Integrating Integrating Legacy Software/Components/Systems
+![picture 7](../images/4e10349d34adbc18de4fee21f8af8be1962f9a11c57b4677a0810837ee2cc393.png)  
+
+How to expose legacy systems
+![picture 8](../images/3e13801a72d8ff6647519073088d8c5f0371e04f3fdb6f7f14a92650212cec1b.png)  
+
+
+Using Post to send data to server & invoke method
+```html
+POST / HTTP/2.0
+Host: myserver.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 45
+
+method=CheckPassword&PW=mysecret&Account=me
+```
+Why not make it more readable?
+```html
+<method> CheckPassword
+<args>
+<account> me </account>
+<password> mysecret <password>
+</args>
+</method>
+```
+
+* How to enable other programs access to legacy system
+  * How to enable other programs access to DBMS
+    * ![picture 9](../images/d85a19ebaeb7bfc8242e741ff29505f11c865f36c7e4622ad7bd9b4a9a8a0c8f.png)  
+
+    * how to enable other programs specify access privileges
+    * Develop Proxy
+      * many options
+      * How about useing "web technology"
+        * how about using HTTP
+      * Why web/http
+        * widely used "technology"
+      * Fist appproach
+        * Build object with methods
+          * methods are functionality that will be exposed
+          * DBMS
+            * Check password
+            * addPost
+            * listAllPosts
+            * ...
+          * How to expose object
+* Using different Instances for different Clients
+  * ![picture 10](../images/e70cde50ba2d9f3d1d59823afb048f2c6648ba897a88e47cd487fee3657d70eb.png)  
+  ![picture 12](../images/dba9c901ba1ee384431a30ca6d68cd5a46889a2b47703cad48ae8477a8e846d6.png)  
+
+#### SOAP Web Services
+* Service Oriented Architecture
+	* 1996 - Gartner (concept)
+	*  SOAP Web Services
+* Simple Object Access Protocol	
+	* ![picture 11](../images/af9db6708ce9cbbea596949dac68415bb469a5fbbd948f36aa78949c9635a045.png)  
+So where is the problem????
+* How are the “methods” exposed?
+	 * We define a invoke route
+		 * /invoke
+		 * /invoke/instance1
+
+* All traffic goes to ONE server
+* All traffic goes to ONE route
+* No use of HTTP
+	 * Safe
+	 * Idempotent
+    	 * you can do many times, but won't change anything
+    	 * post method 不是一个idempotent，因为会add 很多posts
+#### REST - Representational State Transition
+* Roy Fielding
+	* Ph.D. 2000
+	* Architectural Styles and the Design of Network-based Software
+Architectures
+![picture 13](../images/07c9f903db5b99e58724334701a91ef29f034feb65437b5da9b68a0347eb79b7.png)  
+Uniform interface
+
+* Resources are identified by ONE resource identifier mechanism
+* Access methods are the same for all resources
+* Resources are manipulated by exchanging representations
+* Representations are in self-descriptive messages
+* Hypermedia acts as the engine of application state
+
+#### Generic process to design RESTful services
+
+* Identify resources
+* Design URIs
+* Expose a subset of the uniform interface
+* Design the representations from and to the client
+* Integrate this resource into existing resources, using hypermedia links and forms
+* Consider typical flows
+* Consider error condition
+
+RESTful design of del.icio.us services (1)
+![picture 14](../images/56db6c8c1a566936fa5da0e83287d52bb62eee8e054be634101d57fc2b85254c.png)  
+![picture 15](../images/0afdd9185d2763f503dd5c27d01192c3a4071c1960b7ca96f3d6c5c7060eb2a7.png)  
+![picture 16](../images/c905e910b450e30ed7ba4413ec77bf7a14adfa2328aecda36bac86eae5d19f48.png)  
+Web Maturity Model
+![picture 17](../images/623a06fb6717bfe6545564c5cd4883aefefb9cbce4c6271b8bf19e691ee57c37.png)  
+
+level 2就是当你输入一个add的url,可以增加，用delete 的url， 可以删除，用show可以浏览，所以将url当作resource一样
+Coffee Shop -> REST style
+* Level 1: Lo-REST
+* Resources & GET + POST
+
+* Level 2: CRUD
+* Resources & full HTTP
+
+* Level 3: Hypermedia Controls
+* Resource & full HTTP & links
+
+CRUD
+* Create -> POST
+* Read -> GET
+* Update -> PUT/PATCH
+* Delete -> DELETE
+
+Hypermedia Controls
+* Create -> POST
+* Read -> GET
+* Update -> PUT/PATCH
+* Delete -> DELETE
+
+* Add links into xml documents
+```html
+ <order>
+ <items>
+ <item> double espresso </item>
+ <cost> 2.47 </cost>
+ </items>
+ <bill> 2.47 </bill>
+ <status> not paid </status>
+ <link rel=“payment” href=“https://my.coffeestore.com/payment/order12345”>
+ </order>
+```
+这个和网页上提供几个button有什么区别？
+
+#### Lecture Mar 10
+Provisioning Resources
+1. Scale Up/Down to meet demand
+   1. UP: Start more docker containers
+   2. Down: Reduce number of containers
+2. Need for load balancer
+   1. nginx
+
+Nginx
+load balance:好像是用来做balance的
+Emergence of microservices
+maintennance
+deployments a re now zero-trust
+	- mTLS
+- Side-Car
+  - -have a dedicated component for control of microservice/container
+- Service Mesh
+
+Revisiting HTTP Staus Codes
+
+http response:
+100
+200 success ,but more info
+300 比如已经转移了，所以告诉licent，原本在，现在转移了
+400: client problem
+一半100，200，300，400，都是说明什么地方出错了，但是100+，200+，300+，400+只是想通过状态说更多
+500: server
+
+Revisiting HTTP Headers
+ETag: can be a number, sequence of charactors
+cache??
+
+State
+1. How is state managed?
+   1. N instance of a microservice?
+   2. 尽量不要保留State，如果必须要有，需要一个database
+2. use of stateful backend service
+   1. E.g. SQL or NoSQL Database
+      1. maysql ->
+
+ N哦SQL：don't only use sql
+ why?
+ 1. Massive increase in new data
+ 2. storage
+ 3. unstructured data
+ 4. SQL
+    1. B-Tree
+    2. Support fast reads
+ 5. NoSQL
+    1. LSM - Log structured Merge Tree
+    2. support fast writes
+
+Storing Data in SQL (high-level)
+1. Binary Tree
+   1. O(n)->Space
+   2. Search/insert/Delete?
+   3. Balanced Tree(B-Tree)
+      1. O(n) -> Space
+      2. O(log(n)) for search/insert/delete
+2. B-Tree of order M
+   1. Rudolf Bayer, Edward M. McCreight
+   2. balanced Tree
+   3. All nodes have at most M child nodes
+   4. every internal node has at least 2 child nodes
+   5. All leaf nodes are on the same level
+   6. Every non-leaf node with K children has K-1 keyss
+3. Nodes in a B-Tree
+   1. internal/Inner Nodes
+      1. All nodes that are not root or leaf
+      2. Root Node
+      3. leaf nodes
+
+SQL -> Use of B-Trees
+1. Fast reads
+2. Costly updates -> disk operations
+3. limits intake of 
+
+NoSQL -> LSM: Log structure 
+1. Writes in LSM
+   1. Write to memtable
+   2. ordered by key
+   3. balanced Binary Tree
+2. If memtable is full -> write to disk as immutable sorted string table(SST)
+   1. key value pairs stored in sorted sequence
+   2. fast write -> sequential write
+   3. last SST is most recent segment of LSM tree
+	什么意思，直接写入memtable，然后写入硬盘？？？那读起来不方便吧， 哦哦，只有full的时候，才写入disk
+
+Immutable SST
+1. update
+   1. new entry added into new SST
+2. Delete
+   1. add marker (tombstone
+3. Read
+   1. check memtable
+   2. search SST starting with most recent SST
+   3. SST->sorted->fast reads
+4. Problem of SST growth
+   1. compacting & Merging
+   2. Merging is simple(merging sorted items)) => merge sort
+   想不通，根据什么字段去sorting，
