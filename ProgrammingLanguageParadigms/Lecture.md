@@ -634,7 +634,77 @@ Merge Process and Sorting Network
 
 #### Lecture Mar 8
 #### Lecture Mar 10
+##### Operations:
+![picture 11](../images/cd2c762951115c132b395ebcd4415dbe866a8b9399cda48fca736e67879550c7.png)  
+##### multiple Operations:
+![picture 12](../images/e858da1e48d41a6dba595414c4a845b2ca194b1c8bddf00758d5f4e19ebf2ba2.png)  
+##### Resource Allocation Using Message Passing
+![picture 13](../images/3f1d5aaab588093bbd1b6a6923cb783c20c9d2a7a0a63cf5680ad4660a6dced1.png)  
+![picture 14](../images/64575188684f0d2a90c3c2a2bc1676286829ccc48317d6f6cfcb5f51afb0d818.png)  
+##### Self-Scheduling Disk Server
+ section 7.3.2
+
+#### Lecture Mar 13
+
+  Moving-Head DISK
+ 
+![picture 15](../images/8e208dd72daaf7b7a35e82b3d7b65b6e829efbf18f089900866e8c45fbf873ef.png)  
+ scheduling structure
+all the platter collected is call the cylinder
+Tom alone??? 计算机组织结构的expert
+
+Self-scheduling Disk Driver
+![picture 16](../images/558e5e8e2460c9817ddef1d01846c09a0bdbbdb469181c4df8ab4592ae69bd58.png)  
+ Self-Scheduling Disk Driver
+ ![picture 17](../images/9b1f34dd1393a668f49f800a937ee2a1d2209401ed82c22c2b83ca5108013f9b.png)  
+
+left is keep tracking left
+right is keeping tracking right
+preminitor??? what is this?
+是不是在硬盘中，怎么搜索
+
+File Server Problem
+* Setting
+             C1        S1
+             ...       ...
+             Cm        Sn
+* client interface:
+    - open; 打开一个文件
+    - (read + write)*;  读写操作
+    - close  关闭这个文件
+  * need rendezvous (open) plus conversation 
+* * channels:
+open              1
+open_reply        m, one per client
+access            n, one per file server
+access_reply      m, one per client
+这些channels是什么？不是queue吗
+* Rendezvous part
+   * client:  
+     * send open(myid, ...); 
+     * receive open_reply[myid](serverid);
+   * server:  
+     * receive open(clientid); ...; 
+     * send open_reply[clientid](myid);
+* Conversation part:  one client to one server,
+* using clientid and serverid
+  ![picture 18](../images/1ec4ba8ac036b39cddc40a0923d556d4b890e4575a443074d90cf4d36a20146f.png)  
+receive is dangous and implicit
+没听懂啊
+这是在干什么
+在file system, 或者，不是File system, but File Server Problem
+
+![picture 19](../images/5a51d04ad0a52ddd948d2f020649a69109ffc1f15470b927c92c688e37230487.png)  
 
 
-
-
+#### What if No Global channel with multiple Receivers?
+* Use a separate manager process:
+  receive open(...); pick a server; send a
+  message to it (forward open)
+* Also need done messages from servers to the
+ manager to say they are free
+   * This implies that the manager receives two
+   kinds of messages:
+      *  opens from clients
+      * dones from servers
+   
